@@ -4,6 +4,7 @@ import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import PageFooter from "../../sections/page-footer/page-footer";
 import Catalog from "../../sections/catalog/catalog";
+import {connect} from "react-redux";
 
 const MainPage = ({promoMovie}) => {
 
@@ -14,7 +15,6 @@ const MainPage = ({promoMovie}) => {
         <Catalog filter={true}/>
         <PageFooter/>
       </InnerLayout>
-
     </MainLayout>
   );
 };
@@ -24,4 +24,8 @@ MainPage.propTypes = {
   ...MovieCard.propTypes
 };
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  promoMovie: state.promoMovie
+});
+
+export default connect(mapStateToProps)(MainPage);

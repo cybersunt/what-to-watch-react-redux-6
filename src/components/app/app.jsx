@@ -1,5 +1,4 @@
 import React from 'react';
-import MainPage from "../pages/main/main";
 import NotFound from "../pages/not-found/not-found";
 import MyList from "../pages/my-list/my-list";
 import Player from "../pages/player/player";
@@ -10,14 +9,13 @@ import {Router, Route, Switch} from "react-router-dom";
 import {RoutePath} from "../../constants/routes";
 import browserHistory from "../../browser-history";
 import PrivateRoute from "../blocks/private-route/private-route";
+import MainPage from "../pages/main/main";
 
-const App = ({promoMovie}) => {
+const App = () => {
   return (
     <Router history={browserHistory}>
       <Switch>
-        <Route path={RoutePath.ROOT} exact render={
-          () => <MainPage promoMovie={promoMovie}/>
-        }/>
+        <Route path={RoutePath.ROOT} exact component={MainPage}/>
         <Route path={RoutePath.LOGIN} exact component={SignIn}/>
         <PrivateRoute exact path={RoutePath.MY_LIST} render={()=> <MyList/>}/>
         {/* FIXME: провалидировать несуществующией страницы из-за отсутствия id*/}

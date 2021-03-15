@@ -4,9 +4,9 @@ import {RoutePath} from "../../../../constants/routes";
 import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
-import promoMovie from "../../../../mocks/promo-movie";
+import {connect} from "react-redux";
 
-const MovieCardButtons = ({fullVersion}) => {
+const MovieCardButtons = ({fullVersion, promoMovie}) => {
   const history = useHistory();
   const {id} = useParams();
 
@@ -33,7 +33,12 @@ const MovieCardButtons = ({fullVersion}) => {
 };
 
 MovieCardButtons.propTypes = {
-  fullVersion: PropTypes.bool
+  fullVersion: PropTypes.bool,
+  promoMovie: PropTypes.object
 };
 
-export default MovieCardButtons;
+const mapStateToProps = (state) => ({
+  promoMovie: state.promoMovie
+});
+
+export default connect(mapStateToProps)(MovieCardButtons);
