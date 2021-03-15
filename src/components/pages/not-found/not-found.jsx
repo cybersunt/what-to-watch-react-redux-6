@@ -4,7 +4,7 @@ import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import PageFooter from "../../sections/page-footer/page-footer";
 import PageHeader from "../../sections/page-header/page-header";
 import {Link} from "react-router-dom";
-import {RoutePath} from "../../constants/routes";
+import {RoutePath} from "../../../constants/routes";
 
 const pageHeaderHeight = `98px`;
 const pageFooterHeight = `94px`;

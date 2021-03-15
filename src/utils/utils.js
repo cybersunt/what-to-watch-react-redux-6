@@ -58,4 +58,41 @@ export const getGenresItems = (movies) => {
   return genresArray;
 };
 
+export const transformMovie = (movie) => {
+  const adaptedMovie = ({
+    ...movie,
+    posterImage: movie.poster_image,
+    previewImage: movie.preview_image,
+    backgroundImage: movie.background_image,
+    backgroundColor: movie.background_color,
+    runTime: movie.run_time,
+    scoresCount: movie.scores_count,
+    isFavorite: movie.is_favorite,
+    videoLink: movie.video_link,
+    previewVideoLink: movie.preview_video_link
+  });
+
+  delete adaptedMovie.poster_image;
+  delete adaptedMovie.preview_image;
+  delete adaptedMovie.background_image;
+  delete adaptedMovie.background_color;
+  delete adaptedMovie.run_time;
+  delete adaptedMovie.scores_count;
+  delete adaptedMovie.is_favorite;
+  delete adaptedMovie.video_link;
+  delete adaptedMovie.preview_video_link;
+
+  return adaptedMovie;
+};
+
+export const transformUserData = (authInfo) => {
+  const adaptedUserData = ({
+    ...authInfo,
+    avatarUrl: authInfo.avatar_url
+  });
+
+  delete adaptedUserData.avatar_url;
+
+  return adaptedUserData;
+};
 

@@ -1,7 +1,7 @@
 import React from "react";
 import {reviewsItems} from "../../../../mocks/reviews";
 import Review from "../../review/review";
-import {getTwoArraysFromOne} from "../../../utils/utils";
+import {getTwoArraysFromOne} from "../../../../utils/utils";
 
 const reviews = getTwoArraysFromOne(reviewsItems);
 

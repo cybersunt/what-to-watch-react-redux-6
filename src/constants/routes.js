@@ -8,3 +8,8 @@ export const RoutePath = {
   FILM_ID: `/films/:id`,
   FILM_REVIEW: `/films/:id/review`
 };
+
+export const APIRoute = {
+  FILMS: `/films`,
+  LOGIN: `/login`,
+};

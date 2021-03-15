@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
 import PropTypes from 'prop-types';
-import {RoutePath} from "../../../constants/routes";
+import {RoutePath} from "../../../../constants/routes";
 import Link from "../../link/link";
 
 // eslint-disable-next-line react/display-name

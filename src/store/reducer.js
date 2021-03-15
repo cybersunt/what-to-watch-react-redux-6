@@ -1,10 +1,12 @@
 import {ActionType} from "./actions";
-import {AuthorizationStatus} from "../components/constants/auth";
-import {MOVIES_COUNT_PER_STEP} from "../components/constants/common";
+import {AuthorizationStatus} from "../constants/auth";
+import {MOVIES_COUNT_PER_STEP} from "../constants/common";
 
 export const initialState = {
   isDataLoaded: false,
+  isUserDataReceived: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authInfo: {},
   movies: [],
   currentGenre: `All genres`,
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
@@ -28,13 +30,28 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
       };
+    case ActionType.LOAD_AUTH_INFO:
+      return {
+        ...state,
+        authInfo: action.payload,
+        isUserDataReceived: true
+      };
+    case ActionType.LOG_OUT:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
     case ActionType.CHANGE_FILTER:
       return {
         ...state,
         currentGenre: action.payload
       };
     case ActionType.RESET_FILTER:
-      return {...initialState};
+      return {
+        ...state,
+        currentGenre: `All genres`,
+        renderedMoviesCount: MOVIES_COUNT_PER_STEP
+      };
     default:
       return state;
   }

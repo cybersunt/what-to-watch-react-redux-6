@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getMovieRatingText, getStringRatingMovie} from "../../utils/utils";
+import {getMovieRatingText, getStringRatingMovie} from "../../../utils/utils";
 
 const MovieCardRating = ({rating, scoresCount}) => {
 

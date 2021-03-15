@@ -1,5 +1,5 @@
 import React from "react";
-import {getCommentDate, getCommentDateTime, getStringRatingMovie} from "../../utils/utils";
+import {getCommentDate, getCommentDateTime, getStringRatingMovie} from "../../../utils/utils";
 import PropTypes from "prop-types";
 
 const Review = ({user, comment, date, rating}) => {

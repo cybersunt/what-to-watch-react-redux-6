@@ -4,7 +4,7 @@ import MovieCard from "../../sections/movie-card/movie-card";
 import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import Catalog from "../../sections/catalog/catalog";
 import PageFooter from "../../sections/page-footer/page-footer";
-import useMovie from "../../hooks/use-movie";
+import useMovie from "../../../hooks/use-movie";
 import {connect} from "react-redux";
 
 const MoviePage = ({movies}) => {

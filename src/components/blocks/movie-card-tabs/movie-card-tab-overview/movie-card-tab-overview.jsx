@@ -1,6 +1,6 @@
 import React from "react";
 import MovieCardRating from "../../movie-card-rating/movie-card-rating";
-import {getStringFromArray} from "../../../utils/utils";
+import {getStringFromArray} from "../../../../utils/utils";
 import movieCardTabPropTypes from "../move-card-tab.prop";
 
 const MovieCardTabOverview = ({rating, scoresCount, description, director, starring}) => {

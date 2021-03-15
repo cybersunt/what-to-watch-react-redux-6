@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import {Link} from "react-router-dom";
-import {RoutePath} from "../../constants/routes";
+import {RoutePath} from "../../../constants/routes";
 
 const LinkWrapper = ({children, activeLink = false, className = null}) => {
   return activeLink ?

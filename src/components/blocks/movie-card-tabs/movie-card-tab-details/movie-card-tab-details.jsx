@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getRuntimeInHours, getStringFromArray} from "../../../utils/utils";
+import {getRuntimeInHours, getStringFromArray} from "../../../../utils/utils";
 import movieCardTabPropTypes from "../move-card-tab.prop";
 
 const MovieCardTextCol = ({children}) => <div className="movie-card__text-col">{children}</div>;

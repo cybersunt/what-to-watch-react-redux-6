@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import MovieCardInfo from "../../blocks/movie-card-info/movie-card-info";
-import MovieCardTabContent from "../../hocs/movie-card-tab-content";
+import MovieCardTabContent from "../../../hocs/movie-card-tab-content";
 
 const movieCardPropTypes = {
   ...MovieCardInfo.propTypes,

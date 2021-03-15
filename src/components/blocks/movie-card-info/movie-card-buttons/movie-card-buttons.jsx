@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {RoutePath} from "../../../constants/routes";
+import {RoutePath} from "../../../../constants/routes";
 import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";

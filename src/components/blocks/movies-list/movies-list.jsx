@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ActiveVideoPlayer from "../../hocs/active-video-player";
+import ActiveVideoPlayer from "../../../hocs/active-video-player";
 
 const MoviesList = ({movieItems}) => {
 
