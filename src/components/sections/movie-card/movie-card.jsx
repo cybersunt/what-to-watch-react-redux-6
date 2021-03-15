@@ -4,6 +4,7 @@ import MovieCardFull from "./movie-card-full/movie-card-full";
 import MovieCardShort from "./movie-card-short/movie-card-short";
 import MovieCardReview from "./movie-card-review/movie-card-review";
 import movieCardPropTypes from "./move-card.prop";
+import {connect} from "react-redux";
 
 const getMovieCard = (type, currentMovie) => {
   switch (type) {
@@ -18,8 +19,13 @@ const getMovieCard = (type, currentMovie) => {
   }
 };
 
-const MovieCard = ({type, currentMovie}) => getMovieCard(type, currentMovie);
+const MovieCard = ({type, promoMovie}) => getMovieCard(type, promoMovie);
 
 MovieCard.propTypes = {...movieCardPropTypes, type: PropTypes.string};
 
-export default MovieCard;
+const mapStateToProps = (state) => ({
+  promoMovie: state.promoMovie
+});
+
+export {MovieCard};
+export default connect(mapStateToProps)(MovieCard);

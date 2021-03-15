@@ -8,6 +8,7 @@ export const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   authInfo: {},
   movies: [],
+  promoMovie: {},
   currentGenre: `All genres`,
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
 };
@@ -19,6 +20,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         movies: action.payload,
         isDataLoaded: true
+      };
+    case ActionType.LOAD_PROMO_MOVIE:
+      return {
+        ...state,
+        promoMovie: action.payload
       };
     case ActionType.SHOW_MORE:
       return {
