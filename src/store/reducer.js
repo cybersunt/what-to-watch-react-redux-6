@@ -5,10 +5,12 @@ import {MOVIES_COUNT_PER_STEP} from "../constants/common";
 export const initialState = {
   isDataLoaded: false,
   isUserDataReceived: false,
+  isCurrentMovieLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   authInfo: {},
   movies: [],
   promoMovie: {},
+  currentMovie: {},
   currentGenre: `All genres`,
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
 };
@@ -25,6 +27,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         promoMovie: action.payload
+      };
+    case ActionType.LOAD_CURRENT_MOVIE:
+      return {
+        ...state,
+        currentMovie: action.payload,
+        isCurrentMovieLoaded: true
       };
     case ActionType.SHOW_MORE:
       return {

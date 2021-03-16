@@ -1,4 +1,12 @@
-import {loadAuthInfo, loadMovies, loadPromoMovie, logOut, redirectToRoute, requireAuthorization} from "./actions";
+import {
+  loadAuthInfo,
+  loadCurrentMovie,
+  loadMovies,
+  loadPromoMovie,
+  logOut,
+  redirectToRoute,
+  requireAuthorization,
+} from "./actions";
 import {AuthorizationStatus} from "../constants/auth";
 import {APIRoute, RoutePath} from "../constants/routes";
 import {transformMovie, transformUserData} from "../utils/utils";
@@ -13,6 +21,12 @@ export const fetchPromoMovie = () => (dispatch, _getState, api) => (
   api.get(APIRoute.PROMO_FILM)
     .then(({data})=> transformMovie(data))
     .then((data) => dispatch(loadPromoMovie(data)))
+);
+
+export const fetchCurrentMovie = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.FILMS}/${id}`)
+    .then(({data})=> transformMovie(data))
+    .then((data) => dispatch(loadCurrentMovie(data)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

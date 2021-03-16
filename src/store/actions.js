@@ -3,6 +3,7 @@ export const ActionType = {
   RESET_FILTER: `movies/resetFilter`,
   LOAD_MOVIES: `movies/loadMovies`,
   LOAD_PROMO_MOVIE: `movies/loadPromoMovie`,
+  LOAD_CURRENT_MOVIE: `movies/loadCurrentMovie`,
   SHOW_MORE: `movies/showMoreMovies`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_AUTH_INFO: `user/loadAuthInfo`,
@@ -26,6 +27,11 @@ export const loadMovies = (movies) => ({
 
 export const loadPromoMovie = (movie) => ({
   type: ActionType.LOAD_PROMO_MOVIE,
+  payload: movie
+});
+
+export const loadCurrentMovie = (movie) => ({
+  type: ActionType.LOAD_CURRENT_MOVIE,
   payload: movie
 });
 
