@@ -6,12 +6,14 @@ export const initialState = {
   isDataLoaded: false,
   isUserDataReceived: false,
   isCurrentMovieLoaded: false,
+  isReviewsLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   authInfo: {},
   movies: [],
   promoMovie: {},
   currentMovie: {},
   currentGenre: `All genres`,
+  reviews: [],
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
 };
 
@@ -33,6 +35,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentMovie: action.payload,
         isCurrentMovieLoaded: true
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+        isReviewsLoaded: true
       };
     case ActionType.SHOW_MORE:
       return {

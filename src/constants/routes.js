@@ -11,6 +11,7 @@ export const RoutePath = {
 
 export const APIRoute = {
   FILMS: `/films`,
+  COMMENTS: `/comments`,
   LOGIN: `/login`,
   PROMO_FILM: `/films/promo`,
   FILM_ID: `/films/:id`,

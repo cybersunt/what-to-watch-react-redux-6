@@ -2,7 +2,7 @@ import {
   loadAuthInfo,
   loadCurrentMovie,
   loadMovies,
-  loadPromoMovie,
+  loadPromoMovie, loadReviews,
   logOut,
   redirectToRoute,
   requireAuthorization,
@@ -27,6 +27,11 @@ export const fetchCurrentMovie = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.FILMS}/${id}`)
     .then(({data})=> transformMovie(data))
     .then((data) => dispatch(loadCurrentMovie(data)))
+);
+
+export const fetchReviews = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.COMMENTS}/${id}`)
+    .then(({data}) => dispatch(loadReviews(data)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
