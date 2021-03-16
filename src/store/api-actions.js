@@ -1,6 +1,6 @@
 import {
   loadAuthInfo,
-  loadCurrentMovie,
+  loadCurrentMovie, loadFavoriteMovies,
   loadMovies,
   loadPromoMovie, loadReviews,
   logOut,
@@ -17,16 +17,22 @@ export const fetchMoviesList = () => (dispatch, _getState, api) => (
     .then((data) => dispatch(loadMovies(data)))
 );
 
+export const fetchCurrentMovie = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.FILMS}/${id}`)
+    .then(({data})=> transformMovie(data))
+    .then((data) => dispatch(loadCurrentMovie(data)))
+);
+
 export const fetchPromoMovie = () => (dispatch, _getState, api) => (
   api.get(APIRoute.PROMO_FILM)
     .then(({data})=> transformMovie(data))
     .then((data) => dispatch(loadPromoMovie(data)))
 );
 
-export const fetchCurrentMovie = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.FILMS}/${id}`)
-    .then(({data})=> transformMovie(data))
-    .then((data) => dispatch(loadCurrentMovie(data)))
+export const fetchMyMoviesList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.MY_LIST)
+    .then(({data}) => data.length === 0 ? data : data.map((item) => transformMovie(item)))
+    .then((data) => dispatch(loadFavoriteMovies(data)))
 );
 
 export const fetchReviews = (id) => (dispatch, _getState, api) => (

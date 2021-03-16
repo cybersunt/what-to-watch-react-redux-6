@@ -7,12 +7,14 @@ export const initialState = {
   isUserDataReceived: false,
   isCurrentMovieLoaded: false,
   isReviewsLoaded: false,
+  isMyDataLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   authInfo: {},
   movies: [],
+  favoriteMovies: [],
   promoMovie: {},
   currentMovie: {},
-  currentGenre: `All genres`,
+  currentFilterGenre: `All genres`,
   reviews: [],
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
 };
@@ -24,6 +26,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         movies: action.payload,
         isDataLoaded: true
+      };
+    case ActionType.LOAD_FAVORITE_MOVIES:
+      return {
+        ...state,
+        favoriteMovies: action.payload,
+        isMyDataLoaded: true
       };
     case ActionType.LOAD_PROMO_MOVIE:
       return {
@@ -66,12 +74,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_FILTER:
       return {
         ...state,
-        currentGenre: action.payload
+        currentFilterGenre: action.payload
       };
     case ActionType.RESET_FILTER:
       return {
         ...state,
-        currentGenre: `All genres`,
+        currentFilterGenre: `All genres`,
         renderedMoviesCount: MOVIES_COUNT_PER_STEP
       };
     default:

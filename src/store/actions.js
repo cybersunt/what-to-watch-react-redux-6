@@ -1,9 +1,10 @@
 export const ActionType = {
   CHANGE_FILTER: `movies/changeFilter`,
   RESET_FILTER: `movies/resetFilter`,
+  LOAD_FAVORITE_MOVIES: `favorite/loadMovies`,
   LOAD_MOVIES: `movies/loadMovies`,
-  LOAD_PROMO_MOVIE: `movies/loadPromoMovie`,
   LOAD_CURRENT_MOVIE: `movies/loadCurrentMovie`,
+  LOAD_PROMO_MOVIE: `movies/loadPromoMovie`,
   LOAD_REVIEWS: `reviews/loadReviews`,
   SHOW_MORE: `movies/showMoreMovies`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
@@ -23,6 +24,11 @@ export const resetFilter = () => ({
 
 export const loadMovies = (movies) => ({
   type: ActionType.LOAD_MOVIES,
+  payload: movies
+});
+
+export const loadFavoriteMovies = (movies) => ({
+  type: ActionType.LOAD_FAVORITE_MOVIES,
   payload: movies
 });
 
