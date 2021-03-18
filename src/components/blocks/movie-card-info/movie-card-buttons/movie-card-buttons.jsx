@@ -5,12 +5,23 @@ import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
+import {addMovie} from "../../../../store/api-actions";
 
-const MovieCardButtons = ({fullVersion, promoMovie}) => {
+const STATUS_ADD_MOVIE = 1;
+
+const MovieCardButtons = ({fullVersion, promoMovie, onSubmit, favoriteMovies}) => {
   const history = useHistory();
   const {id} = useParams();
 
   const onButtonPlayClick = ()=> id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
+
+  const handleSubmit = () => {
+    return id === undefined ?
+      onSubmit({filmId: promoMovie.id, status: STATUS_ADD_MOVIE}) :
+      onSubmit({filmId: id, status: STATUS_ADD_MOVIE});
+  };
+
+  console.log(favoriteMovies);
 
   return (
     <div className="movie-card__buttons">
@@ -20,7 +31,7 @@ const MovieCardButtons = ({fullVersion, promoMovie}) => {
         </svg>
         <span>Play</span>
       </button>
-      <button className="btn btn--list movie-card__button" type="button">
+      <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
         <svg viewBox="0 0 19 20" width="19" height="20">
           <use xlinkHref="#add"></use>
         </svg>
@@ -38,7 +49,14 @@ MovieCardButtons.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  promoMovie: state.promoMovie
+  promoMovie: state.promoMovie,
+  favoriteMovies: state.favoriteMovies
 });
 
-export default connect(mapStateToProps)(MovieCardButtons);
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit({filmId, status}) {
+    dispatch(addMovie({filmId, status}));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieCardButtons);

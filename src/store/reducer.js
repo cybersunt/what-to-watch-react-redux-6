@@ -33,6 +33,11 @@ const reducer = (state = initialState, action) => {
         favoriteMovies: action.payload,
         isMyDataLoaded: true
       };
+    case ActionType.ADD_FAVORITE_MOVIE:
+      return {
+        ...state,
+        favoriteMovies: action.payload
+      };
     case ActionType.LOAD_PROMO_MOVIE:
       return {
         ...state,

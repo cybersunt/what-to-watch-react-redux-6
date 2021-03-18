@@ -17,7 +17,8 @@ const Catalog = ({movies, isDataLoaded, onLoadData, favoriteMovies, isMyDataLoad
   const similarMovies = movies.filter(({genre}) => genre === currentMovieGenre);
   const moviesItems = currentMovieGenre ? similarMovies : filteredMovies;
   const definedMovies = favorites ? favoriteMovies : moviesItems;
-  const moviesList = definedMovies.length === 0 ? definedMovies : definedMovies.slice(0, Math.min(moviesItems.length, renderedMoviesCount));
+  const limitedMoviesList = definedMovies.length > renderedMoviesCount ? definedMovies.slice(0, Math.min(moviesItems.length, renderedMoviesCount)) : definedMovies;
+  const moviesList = definedMovies.length === 0 ? definedMovies : limitedMoviesList;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -26,10 +27,10 @@ const Catalog = ({movies, isDataLoaded, onLoadData, favoriteMovies, isMyDataLoad
   }, [isDataLoaded]);
 
   useEffect(() => {
-    if (!isMyDataLoaded) {
+    if (!isMyDataLoaded || favoriteMovies.length !== 0) {
       onLoadMyList();
     }
-  }, [isMyDataLoaded]);
+  }, [isMyDataLoaded, favoriteMovies]);
 
   return (isDataLoaded || isMyDataLoaded) ?
     (<section className={(classnames(`catalog`, className))}>

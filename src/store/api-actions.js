@@ -1,4 +1,5 @@
 import {
+  addFavoriteMovie,
   loadAuthInfo,
   loadCurrentMovie, loadFavoriteMovies,
   loadMovies,
@@ -32,6 +33,12 @@ export const fetchPromoMovie = () => (dispatch, _getState, api) => (
 export const fetchMyMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.MY_LIST)
     .then(({data}) => data.length === 0 ? data : data.map((item) => transformMovie(item)))
+    .then((data) => dispatch(loadFavoriteMovies(data)))
+);
+
+export const addMovie = ({filmId, status}) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.MY_LIST}/${filmId}/${status}`, {filmId, status})
+    .then(({data}) =>dispatch(addFavoriteMovie(data)))
     .then((data) => dispatch(loadFavoriteMovies(data)))
 );
 
