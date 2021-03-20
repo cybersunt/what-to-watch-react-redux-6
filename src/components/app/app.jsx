@@ -10,6 +10,7 @@ import {RoutePath} from "../../constants/routes";
 import browserHistory from "../../browser-history";
 import PrivateRoute from "../blocks/private-route/private-route";
 import MainPage from "../pages/main/main";
+import ValidateId from "../../hocs/validate-id";
 
 const App = () => {
   return (
@@ -18,10 +19,9 @@ const App = () => {
         <Route path={RoutePath.ROOT} exact component={MainPage}/>
         <Route path={RoutePath.LOGIN} exact component={SignIn}/>
         <PrivateRoute exact path={RoutePath.MY_LIST} render={()=> <MyList/>}/>
-        {/* FIXME: провалидировать несуществующией страницы из-за отсутствия id*/}
-        <Route path={RoutePath.PLAYER_ID} component={Player}/>
-        <Route path={RoutePath.FILM_ID} exact component={MoviePage}/>
-        <PrivateRoute path={RoutePath.FILM_REVIEW} render={()=> <AddReview/>}/>
+        <Route path={RoutePath.PLAYER_ID} render={()=> <ValidateId component={Player}/>}/>
+        <Route path={RoutePath.FILM_ID} exact render={()=> <ValidateId component={MoviePage}/>}/>
+        <PrivateRoute path={RoutePath.FILM_REVIEW} render={()=> <ValidateId component={AddReview}/>}/>
         <Route component={NotFound}/>
       </Switch>
     </Router>

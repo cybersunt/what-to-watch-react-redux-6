@@ -8,9 +8,7 @@ import {connect} from "react-redux";
 import {fetchCurrentMovie} from "../../../store/api-actions";
 import Loader from "../../blocks/loader/loader";
 
-const MoviePage = ({match, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
-
-  const {id} = match.params;
+const MoviePage = ({id, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
 
   useEffect(() => {
     if (!isCurrentMovieLoaded || !currentMovie) {
