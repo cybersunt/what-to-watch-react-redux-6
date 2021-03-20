@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import MoviesList from "../../blocks/movies-list/movies-list";
 import {fetchCurrentMovie} from "../../../store/api-actions";
 import {useParams} from "react-router-dom";
+import Loader from "../../blocks/loader/loader";
 
 const AddReview = ({currentMovie, isCurrentMovieLoaded, onLoadData}) => {
 
@@ -16,11 +17,11 @@ const AddReview = ({currentMovie, isCurrentMovieLoaded, onLoadData}) => {
     }
   }, [id, isCurrentMovieLoaded, currentMovie]);
 
-  return (
+  return isCurrentMovieLoaded ? (
     <MainLayout>
       <MovieCard type="review" currentMovie={currentMovie}/>
     </MainLayout>
-  );
+  ) : <div className="movie-card" style={{height: `100vh`, display: `flex`, alignItems: `center`}}><Loader/></div>;
 };
 
 AddReview.propTypes = {...MoviesList.propTypes};

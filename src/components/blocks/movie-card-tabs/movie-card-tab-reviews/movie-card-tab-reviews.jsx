@@ -10,7 +10,7 @@ const MovieCardTabReviews = ({isReviewsLoaded, onLoadData, reviews, id}) => {
   const reviewsItems = reviews.length !== 0 ? getTwoArraysFromOne(reviews) : reviews;
 
   useEffect(() => {
-    if (!isReviewsLoaded || reviews) {
+    if (!isReviewsLoaded) {
       onLoadData(id);
     }
   }, [isReviewsLoaded]);

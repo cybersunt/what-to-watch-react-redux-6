@@ -6,6 +6,7 @@ import Catalog from "../../sections/catalog/catalog";
 import PageFooter from "../../sections/page-footer/page-footer";
 import {connect} from "react-redux";
 import {fetchCurrentMovie} from "../../../store/api-actions";
+import Loader from "../../blocks/loader/loader";
 
 const MoviePage = ({match, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
 
@@ -26,7 +27,7 @@ const MoviePage = ({match, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
         <Catalog currentMovieGenre={currentMovieGenre} className={`catalog--like-this`} title={`More like this`}/>
         <PageFooter/>
       </InnerLayout>
-    </MainLayout>) : null;
+    </MainLayout>) : <div className="movie-card" style={{height: `100vh`, display: `flex`, alignItems: `center`}}><Loader/></div>;
 };
 
 MoviePage.propTypes = {...MovieCard.propTypes};
