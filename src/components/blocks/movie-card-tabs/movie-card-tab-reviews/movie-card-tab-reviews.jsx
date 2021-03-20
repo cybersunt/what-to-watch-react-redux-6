@@ -7,25 +7,21 @@ import PropTypes from "prop-types";
 
 const MovieCardTabReviews = ({isReviewsLoaded, onLoadData, reviews, id}) => {
 
-  const reviewsItems = getTwoArraysFromOne(reviews);
+  const reviewsItems = reviews.length !== 0 ? getTwoArraysFromOne(reviews) : reviews;
 
   useEffect(() => {
-    if (!isReviewsLoaded) {
+    if (!isReviewsLoaded || reviews) {
       onLoadData(id);
     }
-  }, [id, isReviewsLoaded]);
+  }, [isReviewsLoaded]);
 
-  return isReviewsLoaded ? (
-    <>
-      {reviewsItems.map((item, index) => {
-        return (
-          <div key={index} className="movie-card__reviews-col">
-            {item.map(({date, user, rating, comment})=> <Review key={date} user={user} rating={rating} comment={comment}/>)}
-          </div>
-        );
-      })}
-    </>
-  ) : null;
+  const reviewsList = reviewsItems.length !== 0 ? reviewsItems.map((item, index) => (
+    <div key={index} className="movie-card__reviews-col">
+      {item.map(({date, user, rating, comment})=> <Review key={date} user={user} rating={rating} comment={comment}/>)}
+    </div>)
+  ) : <div>Your review will be the first</div>;
+
+  return (<>{reviewsList}</>);
 };
 
 MovieCardTabReviews.propTypes = {

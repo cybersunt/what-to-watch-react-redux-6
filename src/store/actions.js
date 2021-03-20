@@ -6,7 +6,8 @@ export const ActionType = {
   LOAD_MOVIES: `movies/loadMovies`,
   LOAD_CURRENT_MOVIE: `movies/loadCurrentMovie`,
   LOAD_PROMO_MOVIE: `movies/loadPromoMovie`,
-  LOAD_REVIEWS: `reviews/loadReviews`,
+  LOAD_COMMENTS: `comments/loadComments`,
+  ADD_COMMENT: `comments/addComment`,
   SHOW_MORE: `movies/showMoreMovies`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_AUTH_INFO: `user/loadAuthInfo`,
@@ -48,9 +49,14 @@ export const loadCurrentMovie = (movie) => ({
   payload: movie
 });
 
-export const loadReviews = (reviews) => ({
-  type: ActionType.LOAD_REVIEWS,
+export const loadComments = (reviews) => ({
+  type: ActionType.LOAD_COMMENTS,
   payload: reviews
+});
+
+export const addComment = (comment) => ({
+  type: ActionType.ADD_COMMENT,
+  payload: comment
 });
 
 export const showMoreMovies = () => ({

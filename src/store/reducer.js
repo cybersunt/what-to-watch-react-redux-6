@@ -8,7 +8,7 @@ export const initialState = {
   isCurrentMovieLoaded: false,
   isReviewsLoaded: false,
   isMyDataLoaded: false,
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.AUTH,
   authInfo: {},
   movies: [],
   favoriteMovies: [],
@@ -49,11 +49,16 @@ const reducer = (state = initialState, action) => {
         currentMovie: action.payload,
         isCurrentMovieLoaded: true
       };
-    case ActionType.LOAD_REVIEWS:
+    case ActionType.LOAD_COMMENTS:
       return {
         ...state,
         reviews: action.payload,
         isReviewsLoaded: true
+      };
+    case ActionType.ADD_COMMENT:
+      return {
+        ...state,
+        reviews: action.payload
       };
     case ActionType.SHOW_MORE:
       return {

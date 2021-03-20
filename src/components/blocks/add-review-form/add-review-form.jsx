@@ -1,64 +1,102 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
+import React, {useState, Fragment} from "react";
+import {connect} from "react-redux";
+import {AuthorizationStatus} from "../../../constants/auth";
+import {useParams} from "react-router-dom";
+import {addReview} from "../../../store/api-actions";
 
-const RATING = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const RatingStarsItem = ({item}) => {
-  return (
-    <>
-      <input className="rating__input" id={`star-${item}`} type="radio" name="rating" value={item}/>
-      <label className="rating__label" htmlFor={`star-${item}`}>Rating {item}</label>
-    </>
-  );
-};
-
-RatingStarsItem.propTypes = {item: PropTypes.number};
-
-
-const RatingStars = () => {
+const RatingStars = ({rating, onChange}) => {
   return (
     <div className="rating">
       <div className="rating__stars">
-        {RATING.map((item) => (<RatingStarsItem key={item} item={item}/>))}
+        {
+          rating.map(({stars, checked}) => (
+            <Fragment key={stars}>
+              <input className="rating__input" id={`star-${stars}`} type="radio" name="rating" value={stars} checked={checked} onChange={onChange}/>
+              <label className="rating__label" htmlFor={`star-${stars}`}>Rating {stars}</label>
+            </Fragment>
+          ))
+        }
       </div>
     </div>
   );
 };
 
-RatingStars.propTypes = {array: PropTypes.arrayOf(PropTypes.number)};
-
-const AddReviewForm = () => {
-
-  const [addReview, setReview] = useState(``);
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-  };
+const AddReviewForm = ({authorizationStatus, onSubmit}) => {
+  const {id} = useParams();
+  const [isNewReview, setReview] = useState(``);
+  const [rating, setRating] = useState([
+    {id: 0, stars: 1, checked: false},
+    {id: 1, stars: 2, checked: false},
+    {id: 2, stars: 3, checked: false},
+    {id: 3, stars: 4, checked: false},
+    {id: 4, stars: 5, checked: false},
+    {id: 5, stars: 6, checked: false},
+    {id: 6, stars: 7, checked: false},
+    {id: 7, stars: 8, checked: false},
+    {id: 8, stars: 9, checked: false},
+    {id: 9, stars: 10, checked: false}
+  ]);
+  const userRating = rating.find((el) => el.checked === true);
 
   const handleFieldChange = (evt) => {
     const {value} = evt.target;
-    setReview({...addReview, value});
+    setReview({...isNewReview, value});
+  };
+
+  const handleCheckboxesChange = (evt) => {
+    const {value} = evt.target;
+    const currentValue = Number(value);
+    const setValue = rating.find((el) => el.stars === currentValue);
+    const oldItem = rating[setValue.id];
+    const newItem = {...oldItem, checked: true};
+    const newArray = [
+      ...rating.slice(0, setValue.id),
+      newItem,
+      ...rating.slice(setValue.id + 1, 10)
+    ];
+    setRating(newArray);
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSubmit(id, {
+      comment: isNewReview.value,
+      rating: userRating.stars
+    });
   };
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={handleSubmit}>
-        <RatingStars />
+      <form action="#" className="add-review__form">
+        <RatingStars rating={rating} onChange={handleCheckboxesChange}/>
 
         <div className="add-review__text">
           <textarea onChange={handleFieldChange}
             className="add-review__textarea"
             name="review-text"
             id="review-text"
-            placeholder="Review text"></textarea>
-          <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
-          </div>
-
+            placeholder="Review text"
+            minLength={50}
+            maxLength={400}/>
+          {/* FIXME: по техническому заданию неавторизованный пользователь вообще не попадает на эту страницу. Это условие точно нужно?*/}
+          {authorizationStatus === AuthorizationStatus.AUTH ?
+            (<div className="add-review__submit">
+              <button className="add-review__btn" type="submit" onClick={handleSubmit}>Post</button>
+            </div>) : null}
         </div>
       </form>
     </div>
   );
 };
 
-export default AddReviewForm;
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(id, {comment, rating}) {
+    dispatch(addReview(id, {comment, rating}));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddReviewForm);

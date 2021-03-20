@@ -3,10 +3,10 @@ import {
   loadAuthInfo,
   loadCurrentMovie, loadFavoriteMovies,
   loadMovies,
-  loadPromoMovie, loadReviews,
+  loadPromoMovie, loadComments,
   logOut,
   redirectToRoute,
-  requireAuthorization,
+  requireAuthorization, addComment,
 } from "./actions";
 import {AuthorizationStatus} from "../constants/auth";
 import {APIRoute, RoutePath} from "../constants/routes";
@@ -38,13 +38,20 @@ export const fetchMyMoviesList = () => (dispatch, _getState, api) => (
 
 export const addMovie = ({filmId, status}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.MY_LIST}/${filmId}/${status}`, {filmId, status})
-    .then(({data}) =>dispatch(addFavoriteMovie(data)))
+    .then(({data}) => dispatch(addFavoriteMovie(data)))
     .then((data) => dispatch(loadFavoriteMovies(data)))
 );
 
 export const fetchReviews = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.COMMENTS}/${id}`)
-    .then(({data}) => dispatch(loadReviews(data)))
+    .then(({data}) => dispatch(loadComments(data)))
+    .catch(() => {})
+);
+
+export const addReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENTS}/${id}`, {comment, rating})
+    .then(({data}) => dispatch(addComment(id, data)))
+    .then(() => dispatch(redirectToRoute(`${RoutePath.FILMS}${id}`)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
