@@ -27,10 +27,10 @@ const Catalog = ({movies, isDataLoaded, onLoadData, favoriteMovies, isMyDataLoad
   }, [isDataLoaded]);
 
   useEffect(() => {
-    if (!isMyDataLoaded || favoriteMovies.length !== 0) {
+    if (!isMyDataLoaded) {
       onLoadMyList();
     }
-  }, [isMyDataLoaded, favoriteMovies]);
+  }, [isMyDataLoaded]);
 
   return (isDataLoaded || isMyDataLoaded) ?
     (<section className={(classnames(`catalog`, className))}>
