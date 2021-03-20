@@ -3,27 +3,37 @@ import {connect} from "react-redux";
 import {AuthorizationStatus} from "../../../constants/auth";
 import {useParams} from "react-router-dom";
 import {addReview} from "../../../store/api-actions";
+import PropTypes from "prop-types";
+import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT} from "../../../constants/common";
 
 const RatingStars = ({rating, onChange}) => {
   return (
     <div className="rating">
       <div className="rating__stars">
-        {
-          rating.map(({stars, checked}) => (
-            <Fragment key={stars}>
-              <input className="rating__input" id={`star-${stars}`} type="radio" name="rating" value={stars} checked={checked} onChange={onChange}/>
-              <label className="rating__label" htmlFor={`star-${stars}`}>Rating {stars}</label>
-            </Fragment>
-          ))
-        }
+        {rating.map(({stars, checked}) => (
+          <Fragment key={stars}>
+            <input className="rating__input" id={`star-${stars}`} type="radio" name="rating" value={stars} checked={checked} onChange={onChange}/>
+            <label className="rating__label" htmlFor={`star-${stars}`}>Rating {stars}</label>
+          </Fragment>
+        ))}
       </div>
     </div>
   );
 };
 
+RatingStars.propTypes = {
+  rating: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    stars: PropTypes.number,
+    checked: PropTypes.bool
+  })),
+  onChange: PropTypes.func
+};
+
 const AddReviewForm = ({authorizationStatus, onSubmit}) => {
   const {id} = useParams();
   const [isNewReview, setReview] = useState(``);
+  const [messageLength, setMessageLength] = useState(0);
   const [rating, setRating] = useState([
     {id: 0, stars: 1, checked: false},
     {id: 1, stars: 2, checked: false},
@@ -36,11 +46,14 @@ const AddReviewForm = ({authorizationStatus, onSubmit}) => {
     {id: 8, stars: 9, checked: false},
     {id: 9, stars: 10, checked: false}
   ]);
+
   const userRating = rating.find((el) => el.checked === true);
+  const disabledSubmit = userRating === undefined || isNewReview === `` || messageLength < MIN_LENGTH_COMMENT || messageLength > MAX_LENGTH_COMMENT;
 
   const handleFieldChange = (evt) => {
     const {value} = evt.target;
     setReview({...isNewReview, value});
+    setMessageLength(value.length);
   };
 
   const handleCheckboxesChange = (evt) => {
@@ -71,22 +84,28 @@ const AddReviewForm = ({authorizationStatus, onSubmit}) => {
         <RatingStars rating={rating} onChange={handleCheckboxesChange}/>
 
         <div className="add-review__text">
-          <textarea onChange={handleFieldChange}
+          <textarea
+            minLength={MIN_LENGTH_COMMENT}
+            maxLength={MAX_LENGTH_COMMENT}
+            onChange={handleFieldChange}
             className="add-review__textarea"
             name="review-text"
             id="review-text"
-            placeholder="Review text"
-            minLength={50}
-            maxLength={400}/>
+            placeholder="Review text"/>
           {/* FIXME: по техническому заданию неавторизованный пользователь вообще не попадает на эту страницу. Это условие точно нужно?*/}
           {authorizationStatus === AuthorizationStatus.AUTH ?
             (<div className="add-review__submit">
-              <button className="add-review__btn" type="submit" onClick={handleSubmit}>Post</button>
+              <button className="add-review__btn" type="submit" onClick={handleSubmit} disabled={disabledSubmit}>Post</button>
             </div>) : null}
         </div>
       </form>
     </div>
   );
+};
+
+AddReviewForm.propTypes = {
+  authorizationStatus: PropTypes.string,
+  onSubmit: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
