@@ -9,7 +9,7 @@ import {addMovie} from "../../../../store/api-actions";
 
 const STATUS_ADD_MOVIE = 1;
 
-const MovieCardButtons = ({fullVersion, promoMovie, onSubmit, favoriteMovies}) => {
+const MovieCardButtons = ({fullVersion, promoMovie, onSubmit}) => {
   const history = useHistory();
   const {id} = useParams();
 
@@ -20,8 +20,6 @@ const MovieCardButtons = ({fullVersion, promoMovie, onSubmit, favoriteMovies}) =
       onSubmit({filmId: promoMovie.id, status: STATUS_ADD_MOVIE}) :
       onSubmit({filmId: id, status: STATUS_ADD_MOVIE});
   };
-
-  console.log(favoriteMovies);
 
   return (
     <div className="movie-card__buttons">
@@ -45,7 +43,8 @@ const MovieCardButtons = ({fullVersion, promoMovie, onSubmit, favoriteMovies}) =
 
 MovieCardButtons.propTypes = {
   fullVersion: PropTypes.bool,
-  promoMovie: PropTypes.object
+  promoMovie: PropTypes.object,
+  onSubmit: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
