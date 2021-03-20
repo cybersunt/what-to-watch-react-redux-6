@@ -50,7 +50,7 @@ export const fetchReviews = (id) => (dispatch, _getState, api) => (
 
 export const addReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}/${id}`, {comment, rating})
-    .then(({data}) => dispatch(addComment(id, data)))
+    .then(({data}) => dispatch(addComment(data)))
     .then(() => dispatch(redirectToRoute(`${RoutePath.FILMS}${id}`)))
 );
 
