@@ -13,7 +13,7 @@ const MoviePage = ({match, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
   const {id} = match.params;
 
   useEffect(() => {
-    if (!isCurrentMovieLoaded || currentMovie) {
+    if (!isCurrentMovieLoaded || !currentMovie) {
       onLoadData(id);
     }
   }, [id, isCurrentMovieLoaded, currentMovie]);
