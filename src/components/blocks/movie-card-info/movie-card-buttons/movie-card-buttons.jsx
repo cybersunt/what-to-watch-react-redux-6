@@ -6,10 +6,11 @@ import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {addMovie} from "../../../../store/api-actions";
+import {AuthorizationStatus} from "../../../../constants/auth";
 
 const STATUS_ADD_MOVIE = 1;
 
-const MovieCardButtons = ({fullVersion, promoMovie, onSubmit}) => {
+const MovieCardButtons = ({fullVersion, authorizationStatus, promoMovie, onSubmit}) => {
   const history = useHistory();
   const {id} = useParams();
 
@@ -36,7 +37,7 @@ const MovieCardButtons = ({fullVersion, promoMovie, onSubmit}) => {
         <span>My list</span>
       </button>
 
-      {fullVersion ? <Link pathName={`${RoutePath.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link> : null}
+      {fullVersion && authorizationStatus === AuthorizationStatus.AUTH ? <Link pathName={`${RoutePath.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link> : null}
     </div>
   );
 };
@@ -44,12 +45,14 @@ const MovieCardButtons = ({fullVersion, promoMovie, onSubmit}) => {
 MovieCardButtons.propTypes = {
   fullVersion: PropTypes.bool,
   promoMovie: PropTypes.object,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  authorizationStatus: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
   promoMovie: state.promoMovie,
-  favoriteMovies: state.favoriteMovies
+  favoriteMovies: state.favoriteMovies,
+  authorizationStatus: state.authorizationStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
