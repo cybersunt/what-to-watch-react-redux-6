@@ -1,6 +1,5 @@
 import React, {useState, Fragment, useEffect} from "react";
 import {connect} from "react-redux";
-import {AuthorizationStatus} from "../../../constants/auth";
 import {useParams} from "react-router-dom";
 import {addReview} from "../../../store/api-actions";
 import PropTypes from "prop-types";
@@ -30,9 +29,7 @@ RatingStars.propTypes = {
   onChange: PropTypes.func
 };
 
-const AddReviewForm = ({isReviewUploaded, onSubmit}) => {
-
-
+const AddReviewForm = ({isCatchError, isReviewUploaded, onSubmit}) => {
   const {id} = useParams();
   const [isNewReview, setReview] = useState(``);
   const [messageLength, setMessageLength] = useState(0);
@@ -94,6 +91,11 @@ const AddReviewForm = ({isReviewUploaded, onSubmit}) => {
       <form action="#" className="add-review__form">
         <RatingStars rating={rating} onChange={handleCheckboxesChange}/>
 
+        {isCatchError ? (<div style={{textAlign: `center`}}>
+          <p>Sorry, the data could not be sent.</p>
+          <p>Refresh the page and try again.</p>
+        </div>) : null}
+
         <div className="add-review__text">
           <textarea
             disabled={disabledForm}
@@ -116,11 +118,13 @@ const AddReviewForm = ({isReviewUploaded, onSubmit}) => {
 AddReviewForm.propTypes = {
   authorizationStatus: PropTypes.string,
   onSubmit: PropTypes.func,
+  isCatchError: PropTypes.bool,
   isReviewUploaded: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
-  isReviewUploaded: state.isReviewUploaded
+  isReviewUploaded: state.isReviewUploaded,
+  isCatchError: state.isCatchError
 });
 
 const mapDispatchToProps = (dispatch) => ({

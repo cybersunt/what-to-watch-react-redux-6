@@ -13,6 +13,7 @@ export const ActionType = {
   LOAD_AUTH_INFO: `user/loadAuthInfo`,
   LOG_OUT: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `movies/redirectToRoute`,
+  CATCH_ERROR: `errors/catchError`,
 };
 
 export const changeGenre = (evt) => ({
@@ -52,6 +53,10 @@ export const loadCurrentMovie = (movie) => ({
 export const loadComments = (reviews) => ({
   type: ActionType.LOAD_COMMENTS,
   payload: reviews
+});
+
+export const catchError = () => ({
+  type: ActionType.CATCH_ERROR
 });
 
 export const addComment = (comment) => ({

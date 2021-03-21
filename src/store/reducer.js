@@ -9,6 +9,7 @@ export const initialState = {
   isReviewsLoaded: false,
   isReviewUploaded: false,
   isMyDataLoaded: false,
+  isCatchError: false,
   authorizationStatus: AuthorizationStatus.AUTH,
   authInfo: {},
   movies: [],
@@ -61,6 +62,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
         isReviewUploaded: true,
+      };
+    case ActionType.CATCH_ERROR:
+      return {
+        ...state,
+        isCatchError: true
       };
     case ActionType.SHOW_MORE:
       return {

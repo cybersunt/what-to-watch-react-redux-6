@@ -1,12 +1,15 @@
 import {
   addFavoriteMovie,
   loadAuthInfo,
-  loadCurrentMovie, loadFavoriteMovies,
+  loadCurrentMovie,
+  loadFavoriteMovies,
   loadMovies,
-  loadPromoMovie, loadComments,
+  loadPromoMovie,
+  loadComments,
   logOut,
   redirectToRoute,
-  requireAuthorization, addComment,
+  requireAuthorization,
+  addComment, catchError,
 } from "./actions";
 import {AuthorizationStatus} from "../constants/auth";
 import {APIRoute, RoutePath} from "../constants/routes";
@@ -52,6 +55,7 @@ export const addReview = (id, {comment, rating}) => (dispatch, _getState, api) =
   api.post(`${APIRoute.COMMENTS}/${id}`, {comment, rating})
     .then(({data}) => dispatch(addComment(data)))
     .then(() => dispatch(redirectToRoute(`${RoutePath.FILMS}${id}`)))
+    .catch(()=> dispatch(catchError()))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -68,6 +72,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then((data) => dispatch(loadAuthInfo(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(RoutePath.ROOT)))
+    .catch(()=> dispatch(catchError()))
 );
 
 export const logout = ({login: email, password}) => (dispatch, _getState, api) => (
