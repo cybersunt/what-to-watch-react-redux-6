@@ -67,7 +67,10 @@ const AuthForm = ({isCatchError, onSubmit}) => {
   );
 };
 
-AuthForm.propTypes = {onSubmit: PropTypes.func};
+AuthForm.propTypes = {
+  onSubmit: PropTypes.func,
+  isCatchError: PropTypes.bool
+};
 
 const mapStateToProps = (state) => ({
   isCatchError: state.isCatchError
