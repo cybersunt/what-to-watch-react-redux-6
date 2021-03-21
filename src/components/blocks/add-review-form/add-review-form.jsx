@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import {connect} from "react-redux";
 import {AuthorizationStatus} from "../../../constants/auth";
 import {useParams} from "react-router-dom";
@@ -30,7 +30,9 @@ RatingStars.propTypes = {
   onChange: PropTypes.func
 };
 
-const AddReviewForm = ({authorizationStatus, onSubmit}) => {
+const AddReviewForm = ({isReviewUploaded, onSubmit}) => {
+
+
   const {id} = useParams();
   const [isNewReview, setReview] = useState(``);
   const [messageLength, setMessageLength] = useState(0);
@@ -46,6 +48,7 @@ const AddReviewForm = ({authorizationStatus, onSubmit}) => {
     {id: 8, stars: 9, checked: false},
     {id: 9, stars: 10, checked: false}
   ]);
+  const [disabledForm, setDisabledForm] = useState(false);
 
   const userRating = rating.find((el) => el.checked === true);
   const disabledSubmit = userRating === undefined || isNewReview === `` || messageLength < MIN_LENGTH_COMMENT || messageLength > MAX_LENGTH_COMMENT;
@@ -76,7 +79,15 @@ const AddReviewForm = ({authorizationStatus, onSubmit}) => {
       comment: isNewReview.value,
       rating: userRating.stars
     });
+    setDisabledForm(true);
   };
+
+  useEffect(()=> {
+    if (!isReviewUploaded && !disabledForm) {
+      setDisabledForm(false);
+    }
+
+  }, [isReviewUploaded, disabledForm]);
 
   return (
     <div className="add-review">
@@ -85,6 +96,7 @@ const AddReviewForm = ({authorizationStatus, onSubmit}) => {
 
         <div className="add-review__text">
           <textarea
+            disabled={disabledForm}
             minLength={MIN_LENGTH_COMMENT}
             maxLength={MAX_LENGTH_COMMENT}
             onChange={handleFieldChange}
@@ -92,11 +104,9 @@ const AddReviewForm = ({authorizationStatus, onSubmit}) => {
             name="review-text"
             id="review-text"
             placeholder="Review text"/>
-          {/* FIXME: по техническому заданию неавторизованный пользователь вообще не попадает на эту страницу. Это условие точно нужно?*/}
-          {authorizationStatus === AuthorizationStatus.AUTH ?
-            (<div className="add-review__submit">
-              <button className="add-review__btn" type="submit" onClick={handleSubmit} disabled={disabledSubmit}>Post</button>
-            </div>) : null}
+          <div className="add-review__submit">
+            <button className="add-review__btn" type="submit" onClick={handleSubmit} disabled={disabledSubmit}>Post</button>
+          </div>
         </div>
       </form>
     </div>
@@ -105,11 +115,12 @@ const AddReviewForm = ({authorizationStatus, onSubmit}) => {
 
 AddReviewForm.propTypes = {
   authorizationStatus: PropTypes.string,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  isReviewUploaded: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus
+  isReviewUploaded: state.isReviewUploaded
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,6 +7,7 @@ export const initialState = {
   isUserDataReceived: false,
   isCurrentMovieLoaded: false,
   isReviewsLoaded: false,
+  isReviewUploaded: false,
   isMyDataLoaded: false,
   authorizationStatus: AuthorizationStatus.AUTH,
   authInfo: {},
@@ -58,7 +59,8 @@ const reducer = (state = initialState, action) => {
     case ActionType.ADD_COMMENT:
       return {
         ...state,
-        reviews: action.payload
+        reviews: action.payload,
+        isReviewUploaded: true,
       };
     case ActionType.SHOW_MORE:
       return {
