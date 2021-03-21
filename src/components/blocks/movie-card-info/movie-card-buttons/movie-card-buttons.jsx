@@ -4,13 +4,23 @@ import {RoutePath} from "../../../../constants/routes";
 import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
-import promoMovie from "../../../../mocks/promo-movie";
+import {connect} from "react-redux";
+import {addMovie} from "../../../../store/api-actions";
+import {AuthorizationStatus} from "../../../../constants/auth";
 
-const MovieCardButtons = ({fullVersion}) => {
+const STATUS_ADD_MOVIE = 1;
+
+const MovieCardButtons = ({fullVersion, authorizationStatus, promoMovie, onSubmit}) => {
   const history = useHistory();
   const {id} = useParams();
 
   const onButtonPlayClick = ()=> id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
+
+  const handleSubmit = () => {
+    return id === undefined ?
+      onSubmit({filmId: promoMovie.id, status: STATUS_ADD_MOVIE}) :
+      onSubmit({filmId: id, status: STATUS_ADD_MOVIE});
+  };
 
   return (
     <div className="movie-card__buttons">
@@ -20,20 +30,35 @@ const MovieCardButtons = ({fullVersion}) => {
         </svg>
         <span>Play</span>
       </button>
-      <button className="btn btn--list movie-card__button" type="button">
+      <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
         <svg viewBox="0 0 19 20" width="19" height="20">
           <use xlinkHref="#add"></use>
         </svg>
         <span>My list</span>
       </button>
 
-      {fullVersion ? <Link pathName={`${RoutePath.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link> : null}
+      {fullVersion && authorizationStatus === AuthorizationStatus.AUTH ? <Link pathName={`${RoutePath.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link> : null}
     </div>
   );
 };
 
 MovieCardButtons.propTypes = {
-  fullVersion: PropTypes.bool
+  fullVersion: PropTypes.bool,
+  promoMovie: PropTypes.object,
+  onSubmit: PropTypes.func,
+  authorizationStatus: PropTypes.string
 };
 
-export default MovieCardButtons;
+const mapStateToProps = (state) => ({
+  promoMovie: state.promoMovie,
+  favoriteMovies: state.favoriteMovies,
+  authorizationStatus: state.authorizationStatus
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit({filmId, status}) {
+    dispatch(addMovie({filmId, status}));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieCardButtons);

@@ -10,6 +10,10 @@ export const RoutePath = {
 };
 
 export const APIRoute = {
-  FILMS: `/films`,
   LOGIN: `/login`,
+  FILMS: `/films`,
+  FILM_ID: `/films/:id`,
+  PROMO_FILM: `/films/promo`,
+  COMMENTS: `/comments`,
+  MY_LIST: `/favorite`
 };

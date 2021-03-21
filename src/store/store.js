@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 import {requireAuthorization} from "./actions";
 import {AuthorizationStatus} from "../constants/auth";
 import {createAPI} from "../services/api";
-import {checkAuth} from "./api-actions";
+import {checkAuth, fetchPromoMovie} from "./api-actions";
 import {redirect} from "./middlewares/redirect";
 
 const api = createAPI(
@@ -18,5 +18,6 @@ const store = createStore(reducer, composeWithDevTools(
 ));
 
 store.dispatch(checkAuth());
+store.dispatch(fetchPromoMovie());
 
 export default store;

@@ -10,7 +10,7 @@ const MyList = () => {
     <MainLayout>
       <InnerLayout className={`user-page`}>
         <PageHeader activeLink={true} className={`user-page__head`}/>
-        <Catalog />
+        <Catalog favorites={true}/>
         <PageFooter/>
       </InnerLayout>
     </MainLayout>

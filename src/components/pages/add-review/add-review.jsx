@@ -1,25 +1,40 @@
-import React from "react";
+import React, {useEffect} from "react";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import MovieCard from "../../sections/movie-card/movie-card";
-import useMovie from "../../../hooks/use-movie";
 import {connect} from "react-redux";
 import MoviesList from "../../blocks/movies-list/movies-list";
+import {fetchCurrentMovie} from "../../../store/api-actions";
+import {useParams} from "react-router-dom";
+import Loader from "../../blocks/loader/loader";
 
-const AddReview = ({movies}) => {
+const AddReview = ({currentMovie, isCurrentMovieLoaded, onLoadData}) => {
 
-  const currentMovie = useMovie(movies);
+  const {id} = useParams();
 
-  return (
+  useEffect(() => {
+    if (!isCurrentMovieLoaded || currentMovie) {
+      onLoadData(id);
+    }
+  }, [id, isCurrentMovieLoaded, currentMovie]);
+
+  return isCurrentMovieLoaded ? (
     <MainLayout>
       <MovieCard type="review" currentMovie={currentMovie}/>
     </MainLayout>
-  );
+  ) : <div className="movie-card" style={{height: `100vh`, display: `flex`, alignItems: `center`}}><Loader/></div>;
 };
 
 AddReview.propTypes = {...MoviesList.propTypes};
 
 const mapStateToProps = (state) => ({
-  movies: state.movies
+  currentMovie: state.currentMovie,
+  isCurrentMovieLoaded: state.isCurrentMovieLoaded
 });
 
-export default connect(mapStateToProps)(AddReview);
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(fetchCurrentMovie(id));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

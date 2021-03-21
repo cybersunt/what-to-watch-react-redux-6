@@ -1,33 +1,46 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import VideoPlayer from "../../sections/video-player/video-player";
-import {useHistory} from "react-router-dom";
-import useMovie from "../../../hooks/use-movie";
 import {connect} from "react-redux";
 import MoviesList from "../../blocks/movies-list/movies-list";
+import {fetchCurrentMovie} from "../../../store/api-actions";
+import Loader from "../../blocks/loader/loader";
+import {useHistory} from "react-router-dom";
 
-const Player = ({movies}) => {
+const Player = ({id, isCurrentMovieLoaded, currentMovie, onLoadData}) => {
+
   const history = useHistory();
 
-  const currentMovie = useMovie(movies);
   const {videoLink} = currentMovie;
   const [isPlaying, setIsPlaying] = useState(true);
 
-  return (
-    <MainLayout>
+  useEffect(() => {
+    if (!isCurrentMovieLoaded || !currentMovie) {
+      onLoadData(id);
+    }
+  }, [id, isCurrentMovieLoaded, currentMovie]);
+
+  return isCurrentMovieLoaded ?
+    (<MainLayout>
       <VideoPlayer
         src={videoLink}
         isPlaying={isPlaying}
         onPlayButtonClick={() => setIsPlaying(!isPlaying)}
         onButtonExitClick={()=> history.goBack()}/>
-    </MainLayout>
-  );
+    </MainLayout>) : <div className="movie-card" style={{height: `100vh`, display: `flex`, alignItems: `center`}}><Loader/></div>;
 };
 
 Player.propTypes = {...MoviesList.propTypes};
 
 const mapStateToProps = (state) => ({
-  movies: state.movies
+  currentMovie: state.currentMovie,
+  isCurrentMovieLoaded: state.isCurrentMovieLoaded
 });
 
-export default connect(mapStateToProps)(Player);
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(fetchCurrentMovie(id));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import {useForm} from "react-hook-form";
 import classnames from "classnames";
 
-const AuthForm = ({onSubmit}) => {
+const AuthForm = ({isCatchError, onSubmit}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
   const {register, handleSubmit, errors} = useForm();
@@ -14,7 +14,7 @@ const AuthForm = ({onSubmit}) => {
     loginRef.current = evt;
     register(evt, {
       required: true,
-      pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{3,})$/i
+      pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     });
   };
 
@@ -32,13 +32,15 @@ const AuthForm = ({onSubmit}) => {
 
   return (
     <form action="#" className="sign-in__form">
-      {errors.userEmail &&
+
+      {(errors.userEmail || isCatchError) &&
       (<div className="sign-in__message">
-        <p>Please enter a valid email address</p>
+        {errors.userEmail && (<p>Please enter a valid email address</p>)}
+        {isCatchError && (<p>We can’t recognize this email <br/> and password combination. Please try again.</p>)}
       </div>)}
 
       <div className="sign-in__fields">
-        <div className={classnames(`sign-in__fields`, {[`sign-in__field--error`]: errors.userEmail})}>
+        <div className={classnames(`sign-in__fields`, {[`sign-in__field--error`]: errors.userEmail || isCatchError})}>
           <input ref={userMailRef}
             className="sign-in__input"
             type="email"
@@ -47,7 +49,7 @@ const AuthForm = ({onSubmit}) => {
             id="user-email"/>
           <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
         </div>
-        <div className={classnames(`sign-in__fields`, {[`sign-in__field--error`]: errors.userPassword})}>
+        <div className={classnames(`sign-in__fields`, {[`sign-in__field--error`]: errors.userPassword || isCatchError})}>
           <input ref={passWordRef}
             className="sign-in__input"
             type="password"
@@ -65,7 +67,14 @@ const AuthForm = ({onSubmit}) => {
   );
 };
 
-AuthForm.propTypes = {onSubmit: PropTypes.func};
+AuthForm.propTypes = {
+  onSubmit: PropTypes.func,
+  isCatchError: PropTypes.bool
+};
+
+const mapStateToProps = (state) => ({
+  isCatchError: state.isCatchError
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
@@ -74,4 +83,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {AuthForm};
-export default connect(null, mapDispatchToProps)(AuthForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);

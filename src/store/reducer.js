@@ -5,10 +5,19 @@ import {MOVIES_COUNT_PER_STEP} from "../constants/common";
 export const initialState = {
   isDataLoaded: false,
   isUserDataReceived: false,
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isCurrentMovieLoaded: false,
+  isReviewsLoaded: false,
+  isReviewUploaded: false,
+  isMyDataLoaded: false,
+  isCatchError: false,
+  authorizationStatus: AuthorizationStatus.AUTH,
   authInfo: {},
   movies: [],
-  currentGenre: `All genres`,
+  favoriteMovies: [],
+  promoMovie: {},
+  currentMovie: {},
+  currentFilterGenre: `All genres`,
+  reviews: [],
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
 };
 
@@ -19,6 +28,45 @@ const reducer = (state = initialState, action) => {
         ...state,
         movies: action.payload,
         isDataLoaded: true
+      };
+    case ActionType.LOAD_FAVORITE_MOVIES:
+      return {
+        ...state,
+        favoriteMovies: action.payload,
+        isMyDataLoaded: true
+      };
+    case ActionType.ADD_FAVORITE_MOVIE:
+      return {
+        ...state,
+        favoriteMovies: action.payload
+      };
+    case ActionType.LOAD_PROMO_MOVIE:
+      return {
+        ...state,
+        promoMovie: action.payload
+      };
+    case ActionType.LOAD_CURRENT_MOVIE:
+      return {
+        ...state,
+        currentMovie: action.payload,
+        isCurrentMovieLoaded: true
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        reviews: action.payload,
+        isReviewsLoaded: true
+      };
+    case ActionType.ADD_COMMENT:
+      return {
+        ...state,
+        reviews: action.payload,
+        isReviewUploaded: true,
+      };
+    case ActionType.CATCH_ERROR:
+      return {
+        ...state,
+        isCatchError: true
       };
     case ActionType.SHOW_MORE:
       return {
@@ -44,12 +92,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_FILTER:
       return {
         ...state,
-        currentGenre: action.payload
+        currentFilterGenre: action.payload
       };
     case ActionType.RESET_FILTER:
       return {
         ...state,
-        currentGenre: `All genres`,
+        currentFilterGenre: `All genres`,
         renderedMoviesCount: MOVIES_COUNT_PER_STEP
       };
     default:
