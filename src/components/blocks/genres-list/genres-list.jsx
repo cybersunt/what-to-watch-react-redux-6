@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as actions from "../../../store/actions";
+import * as actions from "../../../store/actions/movies-filter";
 import {getGenresItems} from "../../../utils/utils";
 import MoviesList from "../movies-list/movies-list";
 

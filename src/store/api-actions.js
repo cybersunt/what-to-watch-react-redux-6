@@ -1,19 +1,12 @@
-import {
-  addFavoriteMovie,
-  loadAuthInfo,
-  loadCurrentMovie,
-  loadFavoriteMovies,
-  loadMovies,
-  loadPromoMovie,
-  loadComments,
-  logOut,
-  redirectToRoute,
-  requireAuthorization,
-  addComment, catchError,
-} from "./actions";
 import {AuthorizationStatus} from "../constants/auth";
 import {APIRoute, RoutePath} from "../constants/routes";
 import {transformMovie, transformUserData} from "../utils/utils";
+import {loadMovies} from "./actions/movies-data";
+import {loadComments, loadCurrentMovie, loadPromoMovie} from "./actions/movie-data";
+import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./actions/user-actions";
+import {redirectToRoute} from "./actions/redirect";
+import {catchError} from "./actions/catch-error";
+import {loadAuthInfo, logOut, requireAuthorization} from "./actions/user-data";
 
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FILMS)
