@@ -5,8 +5,8 @@ import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import Catalog from "../../sections/catalog/catalog";
 import PageFooter from "../../sections/page-footer/page-footer";
 import {connect} from "react-redux";
-import {fetchCurrentMovie} from "../../../store/api-actions";
 import Loader from "../../blocks/loader/loader";
+import {fetchCurrentMovie} from "../../../store/movie-data/movie-data-api-actions";
 
 const MoviePage = ({id, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
 

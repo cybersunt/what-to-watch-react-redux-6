@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import Review from "../../review/review";
 import {getTwoArraysFromOne} from "../../../../utils/utils";
-import {fetchReviews} from "../../../../store/api-actions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {fetchReviews} from "../../../../store/movie-data/movie-data-api-actions";
 
 const MovieCardTabReviews = ({isReviewsLoaded, onLoadData, reviews, id}) => {
 

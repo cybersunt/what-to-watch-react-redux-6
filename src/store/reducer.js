@@ -1,12 +1,12 @@
 import {AuthorizationStatus} from "../constants/auth";
 import {MOVIES_COUNT_PER_STEP} from "../constants/common";
-import {loadComments, loadCurrentMovie, loadPromoMovie} from "./actions/movie-data-action";
-import {loadMovies} from "./actions/movies-data-action";
-import {changeGenre, resetFilter, showMoreMovies} from "./actions/movies-filter-action";
-import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./actions/user-actions-action";
-import {loadAuthInfo, logOut, requireAuthorization} from "./actions/user-data-action";
+import {loadComments, loadCurrentMovie, loadPromoMovie} from "./movie-data/movie-data-action";
+import {loadMovies} from "./movies-data/movies-data-action";
+import {changeGenre, resetFilter, showMoreMovies} from "./movies-filter/movies-filter-action";
+import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./user-actions/user-actions-action";
+import {loadAuthInfo, logOut, requireAuthorization} from "./user-data/user-data-action";
 import {createReducer} from "@reduxjs/toolkit";
-import {catchError} from "./actions/error-action";
+import {catchError} from "./error/error-action";
 
 const initialState = {
   isDataLoaded: false,

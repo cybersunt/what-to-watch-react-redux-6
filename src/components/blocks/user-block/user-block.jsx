@@ -5,7 +5,7 @@ import Tooltip from "../tooltip/tooltip";
 import {RoutePath} from "../../../constants/routes";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import {logout} from "../../../store/api-actions";
+import {logout} from "../../../store/user-data/user-data-api-action";
 
 const SignIn = () => {
   const history = useHistory();

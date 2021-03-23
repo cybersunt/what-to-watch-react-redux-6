@@ -1,4 +1,4 @@
-import {errorAction} from "../actions/error-action";
+import {errorAction} from "./error-action";
 import {createReducer} from "@reduxjs/toolkit";
 
 const initialState = {

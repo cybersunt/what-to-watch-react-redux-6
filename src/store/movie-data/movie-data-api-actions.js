@@ -1,0 +1,21 @@
+import {APIRoute} from "../../constants/routes";
+import {transformMovie} from "../../utils/utils";
+import {loadComments, loadCurrentMovie, loadPromoMovie} from "./movie-data-action";
+
+export const fetchPromoMovie = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.PROMO_FILM)
+    .then(({data})=> transformMovie(data))
+    .then((data) => dispatch(loadPromoMovie(data)))
+);
+
+export const fetchCurrentMovie = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.FILMS}/${id}`)
+    .then(({data})=> transformMovie(data))
+    .then((data) => dispatch(loadCurrentMovie(data)))
+);
+
+export const fetchReviews = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.COMMENTS}/${id}`)
+    .then(({data}) => dispatch(loadComments(data)))
+    .catch(() => {})
+);

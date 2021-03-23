@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import {moviesData} from "./reducers/movies-data-reducer";
-import {moviesFilter} from "./reducers/movies-filter-reducer";
-import {userDataReducer} from "./reducers/user-data-reducer";
-import {userActions} from "./reducers/user-actions-reducer";
-import {errorReducer} from "./reducers/error-reducer";
-import {movieData} from "./reducers/movie-data-reducer";
+import {moviesData} from "./movies-data/movies-data-reducer";
+import {moviesFilter} from "./movies-filter/movies-filter-reducer";
+import {userDataReducer} from "./user-data/user-data-reducer";
+import {userActions} from "./user-actions/user-actions-reducer";
+import {errorReducer} from "./error/error-reducer";
+import {movieData} from "./movie-data/movie-data-reducer";
 
 export const NameSpace = {
   DATA: `DATA`,

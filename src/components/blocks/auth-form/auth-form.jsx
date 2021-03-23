@@ -1,9 +1,9 @@
 import React, {useRef} from "react";
 import {connect} from "react-redux";
-import {login} from "../../../store/api-actions";
 import PropTypes from "prop-types";
 import {useForm} from "react-hook-form";
 import classnames from "classnames";
+import {login} from "../../../store/user-data/user-data-api-action";
 
 const AuthForm = ({isCatchError, onSubmit}) => {
   const loginRef = useRef();

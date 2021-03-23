@@ -1,10 +1,11 @@
 import {reducer} from "./reducer";
 import {AuthorizationStatus} from "../constants/auth";
 import {createAPI} from "../services/api";
-import {checkAuth, fetchPromoMovie} from "./api-actions";
 import {redirect} from "./middlewares/redirect";
-import {requireAuthorization} from "./actions/user-data-action";
+import {requireAuthorization} from "./user-data/user-data-action";
 import {configureStore} from "@reduxjs/toolkit";
+import {fetchPromoMovie} from "./movie-data/movie-data-api-actions";
+import {checkAuth} from "./user-data/user-data-api-action";
 
 const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))

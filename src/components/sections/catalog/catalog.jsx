@@ -6,10 +6,11 @@ import GenresList from "../../blocks/genres-list/genres-list";
 import classnames from "classnames";
 import MovieCard from "../movie-card/movie-card";
 import {connect} from "react-redux";
-import {fetchMoviesList, fetchMyMoviesList} from "../../../store/api-actions";
 import Loader from "../../blocks/loader/loader";
-import {showMoreMovies} from "../../../store/actions/movies-filter-action";
+import {showMoreMovies} from "../../../store/movies-filter/movies-filter-action";
 import useFilter from "../../../hooks/use-filter";
+import {fetchMoviesList} from "../../../store/movies-data/movies-data-api-actions";
+import {fetchMyMoviesList} from "../../../store/user-actions/user-actions-api-action";
 
 const Catalog = ({movies, isDataLoaded, onLoadData, favoriteMovies, isMyDataLoaded, onLoadMyList, currentFilterGenre, renderedMoviesCount, onButtonShowMoreClick, currentMovieGenre, favorites = false, filter = false, title = `Catalog`, className}) => {
 

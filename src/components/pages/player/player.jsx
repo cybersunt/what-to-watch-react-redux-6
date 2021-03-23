@@ -3,9 +3,9 @@ import MainLayout from "../../layouts/main-layout/main-layout";
 import VideoPlayer from "../../sections/video-player/video-player";
 import {connect} from "react-redux";
 import MoviesList from "../../blocks/movies-list/movies-list";
-import {fetchCurrentMovie} from "../../../store/api-actions";
 import Loader from "../../blocks/loader/loader";
 import {useHistory} from "react-router-dom";
+import {fetchCurrentMovie} from "../../../store/movie-data/movie-data-api-actions";
 
 const Player = ({id, isCurrentMovieLoaded, currentMovie, onLoadData}) => {
 

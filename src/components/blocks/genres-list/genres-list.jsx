@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as actions from "../../../store/actions/movies-filter-action";
+import * as actions from "../../../store/movies-filter/movies-filter-action";
 import {getGenresItems} from "../../../utils/utils";
 import MoviesList from "../movies-list/movies-list";
 
-const GenresList = ({movies, currentGenre, resetFilter, changeGenre}) => {
+const GenresList = ({movies, currentFilterGenre, resetFilter, changeGenre}) => {
 
   const genresItems = getGenresItems(movies);
 
@@ -21,7 +21,7 @@ const GenresList = ({movies, currentGenre, resetFilter, changeGenre}) => {
     <ul className="catalog__genres-list" onClick={onChangeFilter}>
       {genresItems.map((item, index) => {
         return (
-          <li key={index} className={classnames(`catalog__genres-item`, {[`catalog__genres-item--active`]: currentGenre === item})}>
+          <li key={index} className={classnames(`catalog__genres-item`, {[`catalog__genres-item--active`]: currentFilterGenre === item})}>
             <a id={item} href="#" className="catalog__genres-link">{item}</a>
           </li>
         );
@@ -32,14 +32,14 @@ const GenresList = ({movies, currentGenre, resetFilter, changeGenre}) => {
 
 GenresList.propTypes = {
   ...MoviesList.propTypes,
-  currentGenre: PropTypes.string,
+  currentFilterGenre: PropTypes.string,
   genresItems: PropTypes.arrayOf(PropTypes.string),
   resetFilter: PropTypes.func,
   changeGenre: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  currentGenre: state.currentGenre,
+  currentFilterGenre: state.currentFilterGenre,
   movies: state.movies
 });
 

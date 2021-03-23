@@ -5,8 +5,8 @@ import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
-import {addMovie} from "../../../../store/api-actions";
 import {AuthorizationStatus} from "../../../../constants/auth";
+import {addMovieMyMovieList} from "../../../../store/user-actions/user-actions-api-action";
 
 const STATUS_ADD_MOVIE = 1;
 
@@ -57,7 +57,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit({filmId, status}) {
-    dispatch(addMovie({filmId, status}));
+    dispatch(addMovieMyMovieList({filmId, status}));
   }
 });
 

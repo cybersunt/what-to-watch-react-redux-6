@@ -1,4 +1,4 @@
-import {loadComments, loadCurrentMovie, loadPromoMovie} from "../actions/movie-data-action";
+import {loadComments, loadCurrentMovie, loadPromoMovie} from "./movie-data-action";
 import {createReducer} from "@reduxjs/toolkit";
 
 const initialState = {

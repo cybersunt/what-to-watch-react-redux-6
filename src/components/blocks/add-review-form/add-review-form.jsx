@@ -1,9 +1,9 @@
 import React, {useState, Fragment, useEffect} from "react";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
-import {addReview} from "../../../store/api-actions";
 import PropTypes from "prop-types";
 import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT} from "../../../constants/common";
+import {addReview} from "../../../store/user-actions/user-actions-api-action";
 
 const RatingStars = ({rating, onChange}) => {
   return (

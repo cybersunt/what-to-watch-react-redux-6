@@ -1,5 +1,5 @@
 import {MOVIES_COUNT_PER_STEP} from "../constants/common";
-import {changeGenre, resetFilter, showMoreMovies} from "../actions/movies-filter-action";
+import {changeGenre, resetFilter, showMoreMovies} from "./movies-filter-action";
 import {createReducer} from "@reduxjs/toolkit";
 
 const initialState = {

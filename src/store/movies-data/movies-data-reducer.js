@@ -1,4 +1,4 @@
-import {loadMovies} from "../actions/movies-data-action";
+import {loadMovies} from "./movies-data-action";
 import {createReducer} from "@reduxjs/toolkit";
 
 const initialState = {

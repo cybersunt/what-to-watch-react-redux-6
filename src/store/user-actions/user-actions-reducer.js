@@ -1,5 +1,5 @@
 import {createReducer} from "@reduxjs/toolkit";
-import {addComment, addFavoriteMovie, loadFavoriteMovies} from "../actions/user-actions-action";
+import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./user-actions-action";
 
 const initialState = {
   isReviewUploaded: false,

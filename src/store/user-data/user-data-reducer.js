@@ -1,5 +1,5 @@
 import {AuthorizationStatus} from "../constants/auth";
-import {loadAuthInfo, logOut, requireAuthorization} from "../actions/user-data-action";
+import {loadAuthInfo, logOut, requireAuthorization} from "./user-data-action";
 import {createReducer} from "@reduxjs/toolkit";
 
 const initialState = {
