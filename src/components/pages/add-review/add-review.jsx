@@ -1,23 +1,14 @@
-import React, {useEffect} from "react";
+import React from "react";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import MovieCard from "../../sections/movie-card/movie-card";
-import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import Loader from "../../blocks/loader/loader";
-import {fetchCurrentMovie} from "../../../store/movie-data/movie-data-api-actions";
+import useLoadedMovie from "../../../hooks/use-loaded-movie";
 
 const AddReview = () => {
   const {id} = useParams();
 
-  const isCurrentMovieLoaded = useSelector((state) => state.isCurrentMovieLoaded);
-  const currentMovie = useSelector((state) => state.currentMovie);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!isCurrentMovieLoaded || !currentMovie) {
-      dispatch(fetchCurrentMovie(id));
-    }
-  }, [id, isCurrentMovieLoaded, currentMovie]);
+  const [isCurrentMovieLoaded, currentMovie] = useLoadedMovie(id);
 
   return isCurrentMovieLoaded ? (
     <MainLayout>

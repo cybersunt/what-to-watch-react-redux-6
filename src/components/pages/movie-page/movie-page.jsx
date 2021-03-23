@@ -4,22 +4,13 @@ import MovieCard from "../../sections/movie-card/movie-card";
 import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import Catalog from "../../sections/catalog/catalog";
 import PageFooter from "../../sections/page-footer/page-footer";
-import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../blocks/loader/loader";
-import {fetchCurrentMovie} from "../../../store/movie-data/movie-data-api-actions";
+import useLoadedMovie from "../../../hooks/use-loaded-movie";
 
 const MoviePage = ({id}) => {
-  const dispatch = useDispatch();
-  const isCurrentMovieLoaded = useSelector((state) => state.isCurrentMovieLoaded);
-  const currentMovie = useSelector((state) => state.currentMovie);
 
+  const [isCurrentMovieLoaded, currentMovie] = useLoadedMovie(id);
   const currentMovieGenre = currentMovie.genre;
-
-  useEffect(() => {
-    if (!isCurrentMovieLoaded || !currentMovie) {
-      dispatch(fetchCurrentMovie(id));
-    }
-  }, [id, isCurrentMovieLoaded, currentMovie]);
 
   return isCurrentMovieLoaded ? (
     <MainLayout>
