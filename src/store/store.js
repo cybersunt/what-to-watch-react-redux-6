@@ -3,7 +3,7 @@ import {AuthorizationStatus} from "../constants/auth";
 import {createAPI} from "../services/api";
 import {checkAuth, fetchPromoMovie} from "./api-actions";
 import {redirect} from "./middlewares/redirect";
-import {requireAuthorization} from "./actions/user-data";
+import {requireAuthorization} from "./actions/user-data-action";
 import {configureStore} from "@reduxjs/toolkit";
 
 const api = createAPI(

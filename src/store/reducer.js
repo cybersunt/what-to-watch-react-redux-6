@@ -1,11 +1,12 @@
 import {AuthorizationStatus} from "../constants/auth";
 import {MOVIES_COUNT_PER_STEP} from "../constants/common";
-import {ActionMovieType} from "./actions/movie-data";
-import {ActionDataType} from "./actions/movies-data";
-import {ActionErrorType} from "./actions/catch-error";
-import {ActionFilterType} from "./actions/movies-filter";
-import {ActionUserActType} from "./actions/user-actions";
-import {ActionAuthType} from "./actions/user-data";
+import {loadComments, loadCurrentMovie, loadPromoMovie} from "./actions/movie-data-action";
+import {loadMovies} from "./actions/movies-data-action";
+import {changeGenre, resetFilter, showMoreMovies} from "./actions/movies-filter-action";
+import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./actions/user-actions-action";
+import {loadAuthInfo, logOut, requireAuthorization} from "./actions/user-data-action";
+import {createReducer} from "@reduxjs/toolkit";
+import {catchError} from "./actions/error-action";
 
 const initialState = {
   isDataLoaded: false,
@@ -26,93 +27,51 @@ const initialState = {
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionDataType.LOAD_MOVIES:
-      return {
-        ...state,
-        movies: action.payload,
-        isDataLoaded: true
-      };
-
-    case ActionMovieType.LOAD_PROMO_MOVIE:
-      return {
-        ...state,
-        promoMovie: action.payload
-      };
-    case ActionMovieType.LOAD_CURRENT_MOVIE:
-      return {
-        ...state,
-        currentMovie: action.payload,
-        isCurrentMovieLoaded: true
-      };
-    case ActionMovieType.LOAD_COMMENTS:
-      return {
-        ...state,
-        reviews: action.payload,
-        isReviewsLoaded: true
-      };
-
-    case ActionErrorType.CATCH_ERROR:
-      return {
-        ...state,
-        isCatchError: true
-      };
-
-    case ActionFilterType.SHOW_MORE:
-      return {
-        ...state,
-        renderedMoviesCount: state.renderedMoviesCount + MOVIES_COUNT_PER_STEP
-      };
-    case ActionFilterType.CHANGE_FILTER:
-      return {
-        ...state,
-        currentFilterGenre: action.payload
-      };
-    case ActionFilterType.RESET_FILTER:
-      return {
-        ...state,
-        currentFilterGenre: `All genres`,
-        renderedMoviesCount: MOVIES_COUNT_PER_STEP
-      };
-
-    case ActionUserActType.LOAD_FAVORITE_MOVIES:
-      return {
-        ...state,
-        favoriteMovies: action.payload,
-        isMyDataLoaded: true
-      };
-    case ActionUserActType.ADD_FAVORITE_MOVIE:
-      return {
-        ...state,
-        favoriteMovies: action.payload
-      };
-    case ActionUserActType.ADD_COMMENT:
-      return {
-        ...state,
-        reviews: action.payload,
-        isReviewUploaded: true,
-      };
-
-    case ActionAuthType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    case ActionAuthType.LOAD_AUTH_INFO:
-      return {
-        ...state,
-        authInfo: action.payload,
-        isUserDataReceived: true
-      };
-    case ActionAuthType.LOG_OUT:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-export {reducer};
+export const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(catchError, (state) => {
+    state.isCatchError = true;
+  });
+  builder.addCase(loadPromoMovie, (state, action) => {
+    state.promoMovie = action.payload;
+  });
+  builder.addCase(loadCurrentMovie, (state, action) => {
+    state.currentMovie = action.payload;
+    state.isCurrentMovieLoaded = true;
+  });
+  builder.addCase(loadComments, (state, action) => {
+    state.reviews = action.payload;
+    state.isReviewsLoaded = true;
+  });
+  builder.addCase(loadMovies, (state, action) => {
+    state.movies = action.payload;
+    state.isDataLoaded = true;
+  });
+  builder.addCase(showMoreMovies, (state) => {
+    state.renderedMoviesCount = state.renderedMoviesCount + MOVIES_COUNT_PER_STEP;
+  });
+  builder.addCase(changeGenre, (state, action) => {
+    state.currentFilterGenre = action.payload;
+  });
+  builder.addCase(resetFilter, (state) => {
+    state.currentFilterGenre = `All genres`;
+    state.renderedMoviesCount = MOVIES_COUNT_PER_STEP;
+  });
+  builder.addCase(loadFavoriteMovies, (state, action) => {
+    state.favoriteMovies = action.payload;
+    state.isMyDataLoaded = true;
+  });
+  builder.addCase(addFavoriteMovie, (state, action) => {
+    state.favoriteMovies = action.payload;
+  });
+  builder.addCase(addComment, (state, action) => {
+    state.reviews = action.payload;
+    state.isReviewUploaded = true;
+  });
+  builder.addCase(requireAuthorization, (state, action) => {
+    state.authorizationStatus = action.payload;
+  });
+  builder.addCase(loadAuthInfo, (state, action) => {
+    state.authInfo = action.payload;
+    state.isUserDataReceived = true;
+  });
+});

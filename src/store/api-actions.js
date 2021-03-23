@@ -1,12 +1,12 @@
 import {AuthorizationStatus} from "../constants/auth";
 import {APIRoute, RoutePath} from "../constants/routes";
 import {transformMovie, transformUserData} from "../utils/utils";
-import {loadMovies} from "./actions/movies-data";
-import {loadComments, loadCurrentMovie, loadPromoMovie} from "./actions/movie-data";
-import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./actions/user-actions";
-import {redirectToRoute} from "./actions/redirect";
-import {catchError} from "./actions/catch-error";
-import {loadAuthInfo, logOut, requireAuthorization} from "./actions/user-data";
+import {loadMovies} from "./actions/movies-data-action";
+import {loadComments, loadCurrentMovie, loadPromoMovie} from "./actions/movie-data-action";
+import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./actions/user-actions-action";
+import {redirectToRoute} from "./actions/redirect-action";
+import {catchError} from "./actions/error-action";
+import {loadAuthInfo, logOut, requireAuthorization} from "./actions/user-data-action";
 
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FILMS)
@@ -70,6 +70,5 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 
 export const logout = ({login: email, password}) => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN, {email, password})
-    .then(() => dispatch(logOut(AuthorizationStatus.NO_AUTH)))
+    .then((data) => dispatch(logOut(data)))
 );
-
