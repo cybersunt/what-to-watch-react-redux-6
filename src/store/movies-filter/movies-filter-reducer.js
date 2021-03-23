@@ -1,9 +1,9 @@
-import {MOVIES_COUNT_PER_STEP} from "../../constants/common";
 import {changeGenre, resetFilter, showMoreMovies} from "./movies-filter-action";
 import {createReducer} from "@reduxjs/toolkit";
+import {DEFAULT_MOVIE_GENRE, MOVIES_COUNT_PER_STEP} from "../../constants/constants";
 
 const initialState = {
-  currentFilterGenre: `All genres`,
+  currentFilterGenre: DEFAULT_MOVIE_GENRE,
   renderedMoviesCount: MOVIES_COUNT_PER_STEP
 };
 
@@ -15,7 +15,7 @@ export const moviesFilter = createReducer(initialState, (builder) => {
     state.currentFilterGenre = action.payload;
   });
   builder.addCase(resetFilter, (state) => {
-    state.currentFilterGenre = `All genres`;
+    state.currentFilterGenre = DEFAULT_MOVIE_GENRE;
     state.renderedMoviesCount = MOVIES_COUNT_PER_STEP;
   });
 });

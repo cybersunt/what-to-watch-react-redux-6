@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
-import {AuthorizationStatus} from "../../../constants/auth";
-import {RoutePath} from "../../../constants/routes";
 import {useSelector} from "react-redux";
+import {AuthorizationStatus, RoutePath} from "../../../constants/constants";
 
 const PrivateRoute = ({render, path, exact}) => {
 

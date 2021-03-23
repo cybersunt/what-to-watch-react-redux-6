@@ -4,14 +4,15 @@ import MovieCardFull from "./movie-card-full/movie-card-full";
 import MovieCardShort from "./movie-card-short/movie-card-short";
 import MovieCardReview from "./movie-card-review/movie-card-review";
 import movieCardPropTypes from "./move-card.prop";
+import {MovieCardTypes} from "../../../constants/constants";
 
 const getMovieCard = (type, currentMovie) => {
   switch (type) {
-    case `full`:
+    case MovieCardTypes.FULL:
       return <MovieCardFull {...currentMovie}/>;
-    case `short`:
+    case MovieCardTypes.SHORT:
       return <MovieCardShort {...currentMovie}/>;
-    case `review`:
+    case MovieCardTypes.REVIEW:
       return <MovieCardReview {...currentMovie}/>;
     default:
       return <MovieCardShort {...currentMovie}/>;

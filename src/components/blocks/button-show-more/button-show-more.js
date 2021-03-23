@@ -10,7 +10,7 @@ const ButtonShowMore = ({onClick}) => {
 };
 
 ButtonShowMore.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func.isRequired
 };
 
 export default ButtonShowMore;

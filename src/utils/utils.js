@@ -1,20 +1,20 @@
 import moment from "moment";
-import {COUNT_COL, ONE_HOUR} from "../constants/common";
+import {COUNT_COL, DEFAULT_MOVIE_GENRE, MovieNameRating, ONE_HOUR} from "../constants/constants";
 
 export const getMovieRatingText = (rating) => {
   switch (true) {
     case rating <= 3:
-      return `Bad`;
+      return MovieNameRating.BAD;
     case (rating > 3 && rating <= 5):
-      return `Normal`;
+      return MovieNameRating.NORMAL;
     case (rating > 5 && rating <= 8):
-      return `Good`;
+      return MovieNameRating.GOOD;
     case (rating > 8 && rating < 10):
-      return `Very good`;
+      return MovieNameRating.VERY_GOOD;
     case (rating === 10):
-      return `Awesome`;
+      return MovieNameRating.AWESOME;
     default:
-      return `Empty data`;
+      return MovieNameRating.EMPTY_DATA;
   }
 };
 
@@ -53,7 +53,7 @@ export const getGenresItems = (movies) => {
   const genresList = movies.map((element) => element.genre).flat();
   const genreSet = new Set(genresList);
   const genresArray = Array.from(genreSet);
-  genresArray.unshift(`All genres`);
+  genresArray.unshift(DEFAULT_MOVIE_GENRE);
 
   return genresArray;
 };

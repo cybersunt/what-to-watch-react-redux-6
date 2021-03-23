@@ -1,7 +1,7 @@
 import React, {forwardRef} from 'react';
 import PropTypes from 'prop-types';
-import {RoutePath} from "../../../../constants/routes";
 import Link from "../../link/link";
+import {RoutePath} from "../../../../constants/constants";
 
 // eslint-disable-next-line react/display-name
 const MovieCardPreview = forwardRef(({id, name, previewImage, onMouseEnter}, ref) => (

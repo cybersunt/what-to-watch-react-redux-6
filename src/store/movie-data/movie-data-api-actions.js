@@ -1,6 +1,6 @@
-import {APIRoute} from "../../constants/routes";
 import {transformMovie} from "../../utils/utils";
 import {loadComments, loadCurrentMovie, loadPromoMovie} from "./movie-data-action";
+import {APIRoute} from "../../constants/constants";
 
 export const fetchPromoMovie = () => (dispatch, _getState, api) => (
   api.get(APIRoute.PROMO_FILM)

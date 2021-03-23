@@ -1,8 +1,9 @@
 import React, {useRef, useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
 
 const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitClick, onPlayButtonClick, onFullScreenButtonClick, onMouseLeave}) => {
-  const iconControl = isPlaying ? `#pause` : `#play-s`;
+  const iconControl = isPlaying ? ICON_NAME_PAUSE : ICON_NAME_PLAY;
   const [isLoading, setIsLoading] = useState(true);
   const videoRef = useRef();
 
@@ -42,7 +43,7 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
         src={src}
         className="player__video"
         poster="img/player-poster.jpg"
-        muted={isMuted}></video>
+        muted={isMuted}/>
 
       {isPlaying && !isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 

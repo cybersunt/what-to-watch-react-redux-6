@@ -1,8 +1,8 @@
-import {APIRoute, RoutePath} from "../../constants/routes";
 import {transformMovie} from "../../utils/utils";
 import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./user-actions-action";
 import {redirectToRoute} from "../middlewares/redirect-action";
 import {catchError} from "../error/error-action";
+import {APIRoute, RoutePath} from "../../constants/constants";
 
 export const fetchMyMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.MY_LIST)

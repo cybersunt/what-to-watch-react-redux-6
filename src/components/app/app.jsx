@@ -6,11 +6,11 @@ import SignIn from "../pages/sign-in/sign-in";
 import MoviePage from "../pages/movie-page/movie-page";
 import AddReview from "../pages/add-review/add-review";
 import {Router, Route, Switch} from "react-router-dom";
-import {RoutePath} from "../../constants/routes";
 import browserHistory from "../../browser-history";
 import PrivateRoute from "../blocks/private-route/private-route";
 import MainPage from "../pages/main/main";
 import ValidateId from "../../hocs/validate-id";
+import {RoutePath} from "../../constants/constants";
 
 const App = () => {
   return (

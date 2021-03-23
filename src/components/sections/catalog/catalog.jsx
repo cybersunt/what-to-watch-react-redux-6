@@ -10,8 +10,9 @@ import {showMoreMovies} from "../../../store/movies-filter/movies-filter-action"
 import useFilter from "../../../hooks/use-filter";
 import {fetchMoviesList} from "../../../store/movies-data/movies-data-api-actions";
 import {fetchMyMoviesList} from "../../../store/user-actions/user-actions-api-action";
+import {DEFAULT_CATALOG_TITLE} from "../../../constants/constants";
 
-const Catalog = ({favorites = false, filter = false, title = `Catalog`, className}) => {
+const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TITLE, className}) => {
 
   const {movies, isDataLoaded} = useSelector((state) => state.DATA);
   const {favoriteMovies, isMyDataLoaded} = useSelector((state) => state.USER_ACTIONS);
@@ -45,7 +46,7 @@ const Catalog = ({favorites = false, filter = false, title = `Catalog`, classNam
 
   return (isDataLoaded || isMyDataLoaded) ?
     (<section className={(classnames(`catalog`, className))}>
-      <h2 className={classnames(`catalog-title`, {[`visually-hidden`]: title === `Catalog`})}>{title}</h2>
+      <h2 className={classnames(`catalog-title`, {[`visually-hidden`]: title === DEFAULT_CATALOG_TITLE})}>{title}</h2>
 
       {filter ? <GenresList /> : null}
 

@@ -1,6 +1,6 @@
-import {AuthorizationStatus} from "../../constants/auth";
 import {loadAuthInfo, requireAuthorization} from "./user-data-action";
 import {createReducer} from "@reduxjs/toolkit";
+import {AuthorizationStatus} from "../../constants/constants";
 
 const initialState = {
   isUserDataReceived: false,

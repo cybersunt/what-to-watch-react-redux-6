@@ -1,9 +1,8 @@
-import {APIRoute, RoutePath} from "../../constants/routes";
 import {transformUserData} from "../../utils/utils";
 import {loadAuthInfo, logOut, requireAuthorization} from "./user-data-action";
-import {AuthorizationStatus} from "../../constants/auth";
 import {redirectToRoute} from "../middlewares/redirect-action";
 import {catchError} from "../error/error-action";
+import {APIRoute, AuthorizationStatus, RoutePath} from "../../constants/constants";
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)

@@ -2,21 +2,8 @@ import React, {useState, Fragment, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
-import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT} from "../../../constants/common";
 import {addReview} from "../../../store/user-actions/user-actions-api-action";
-
-const ratingStars = [
-  {id: 0, stars: 1, checked: false},
-  {id: 1, stars: 2, checked: false},
-  {id: 2, stars: 3, checked: false},
-  {id: 3, stars: 4, checked: false},
-  {id: 4, stars: 5, checked: false},
-  {id: 5, stars: 6, checked: false},
-  {id: 6, stars: 7, checked: false},
-  {id: 7, stars: 8, checked: false},
-  {id: 8, stars: 9, checked: false},
-  {id: 9, stars: 10, checked: false}
-];
+import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, Stars} from "../../../constants/constants";
 
 const RatingStars = ({rating, onChange}) => {
   return (
@@ -47,7 +34,7 @@ const AddReviewForm = () => {
 
   const [isNewReview, setReview] = useState(``);
   const [messageLength, setMessageLength] = useState(0);
-  const [rating, setRating] = useState(ratingStars);
+  const [rating, setRating] = useState(Stars);
   const [disabledForm, setDisabledForm] = useState(false);
 
   const {isCatchError} = useSelector((state) => state.ERROR);

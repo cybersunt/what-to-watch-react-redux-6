@@ -7,7 +7,7 @@ import {fetchReviews} from "../../../../store/movie-data/movie-data-api-actions"
 
 const MovieCardTabReviews = ({id}) => {
 
-  const {reviews, isReviewsLoaded } = useSelector((state) => state.DATA_ITEM);
+  const {reviews, isReviewsLoaded} = useSelector((state) => state.DATA_ITEM);
   const dispatch = useDispatch();
 
   const reviewsItems = reviews.length !== 0 ? getTwoArraysFromOne(reviews) : reviews;

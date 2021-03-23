@@ -18,9 +18,9 @@ const MovieCardInfo = ({fullVersion, name, genre, released}) => {
 };
 
 MovieCardInfo.propTypes = {
-  name: PropTypes.string,
-  genre: PropTypes.string,
-  released: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  genre: PropTypes.string.isRequired,
+  released: PropTypes.number.isRequired,
   fullVersion: PropTypes.bool
 };
 

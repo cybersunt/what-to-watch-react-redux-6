@@ -3,8 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import classnames from "classnames";
 import {login} from "../../../store/user-data/user-data-api-action";
-
-const EMAIL_VALID = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+import {EMAIL_VALID} from "../../../constants/constants";
 
 const AuthForm = () => {
   const loginRef = useRef();

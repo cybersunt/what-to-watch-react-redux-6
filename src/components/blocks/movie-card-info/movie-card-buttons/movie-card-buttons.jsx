@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {RoutePath} from "../../../../constants/routes";
 import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {AuthorizationStatus} from "../../../../constants/auth";
 import {addMovieMyMovieList} from "../../../../store/user-actions/user-actions-api-action";
+import {AuthorizationStatus, RoutePath} from "../../../../constants/constants";
 
 const STATUS_ADD_MOVIE = 1;
 

@@ -1,10 +1,9 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {AuthorizationStatus} from "../../../constants/auth";
 import Tooltip from "../tooltip/tooltip";
-import {RoutePath} from "../../../constants/routes";
 import {useHistory} from "react-router-dom";
 import {logout} from "../../../store/user-data/user-data-api-action";
+import {AuthorizationStatus, RoutePath} from "../../../constants/constants";
 
 const SignIn = () => {
   const history = useHistory();
