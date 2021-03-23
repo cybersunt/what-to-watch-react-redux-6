@@ -50,8 +50,8 @@ const AddReviewForm = () => {
   const [rating, setRating] = useState(ratingStars);
   const [disabledForm, setDisabledForm] = useState(false);
 
-  const isCatchError = useSelector((state) => state.isCatchError);
-  const isReviewUploaded = useSelector((state) => state.isReviewUploaded);
+  const {isCatchError} = useSelector((state) => state.ERROR);
+  const {isReviewUploaded} = useSelector((state) => state.USER_ACTIONS);
   const dispatch = useDispatch();
 
   const userRating = rating.find((el) => el.checked === true);
@@ -65,7 +65,7 @@ const AddReviewForm = () => {
     const newArray = [
       ...rating.slice(0, setValue.id),
       newItem,
-      ...rating.slice(setValue.id + 1, 10)
+      ...rating.slice(setValue.id + 1, rating.length)
     ];
     return newArray;
   };

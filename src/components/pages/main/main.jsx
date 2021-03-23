@@ -7,7 +7,7 @@ import Catalog from "../../sections/catalog/catalog";
 import {useSelector} from "react-redux";
 
 const MainPage = () => {
-  const promoMovie = useSelector((state) => state.promoMovie);
+  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
 
   return (
     <MainLayout>

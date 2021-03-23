@@ -11,13 +11,8 @@ const AuthForm = () => {
   const passwordRef = useRef();
   const {register, handleSubmit, errors} = useForm();
 
-  const isCatchError = useSelector((state) => state.isCatchError);
+  const {isCatchError} = useSelector((state) => state.ERROR);
   const dispatch = useDispatch();
-
-  const authData = {
-    login: loginRef.current.value,
-    password: passwordRef.current.value,
-  };
 
   const userMailRef = (evt) => {
     loginRef.current = evt;
@@ -33,7 +28,10 @@ const AuthForm = () => {
   };
 
   const onSubmit = () => {
-    dispatch(login(authData));
+    dispatch(login({
+      login: loginRef.current.value,
+      password: passwordRef.current.value,
+    }));
   };
 
   return (

@@ -19,10 +19,7 @@ const SignIn = () => {
 };
 
 const UserBlock = () => {
-  const authorizationStatus = useSelector((state) => state.authorizationStatus);
-  const isUserDataReceived = useSelector((state) => state.isUserDataReceived);
-  const authInfo = useSelector((state) => state.authInfo);
-
+  const {authorizationStatus, isUserDataReceived, authInfo} = useSelector((state) => state.USER_DATA);
   const dispatch = useDispatch();
 
   const history = useHistory();

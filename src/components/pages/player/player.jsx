@@ -9,7 +9,7 @@ import useLoadedMovie from "../../../hooks/use-loaded-movie";
 const Player = ({id}) => {
   const history = useHistory();
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isCurrentMovieLoaded, currentMovie] = useLoadedMovie(id);
+  const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
   const {videoLink} = currentMovie;
 
   return isCurrentMovieLoaded ?

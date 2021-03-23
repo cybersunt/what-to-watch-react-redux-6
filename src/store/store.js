@@ -1,4 +1,3 @@
-import {reducer} from "./reducer";
 import {AuthorizationStatus} from "../constants/auth";
 import {createAPI} from "../services/api";
 import {redirect} from "./middlewares/redirect";
@@ -6,13 +5,14 @@ import {requireAuthorization} from "./user-data/user-data-action";
 import {configureStore} from "@reduxjs/toolkit";
 import {fetchPromoMovie} from "./movie-data/movie-data-api-actions";
 import {checkAuth} from "./user-data/user-data-api-action";
+import rootReducer from "./root-reducer";
 
 const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 
 const store = configureStore({
-  reducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {

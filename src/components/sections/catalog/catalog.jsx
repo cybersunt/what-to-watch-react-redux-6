@@ -13,13 +13,10 @@ import {fetchMyMoviesList} from "../../../store/user-actions/user-actions-api-ac
 
 const Catalog = ({favorites = false, filter = false, title = `Catalog`, className}) => {
 
-  const movies = useSelector((state) => state.movies);
-  const isDataLoaded = useSelector((state) => state.isDataLoaded);
-  const favoriteMovies = useSelector((state) => state.favoriteMovies);
-  const isMyDataLoaded = useSelector((state) => state.isMyDataLoaded);
-  const currentFilterGenre = useSelector((state) => state.currentFilterGenre);
-  const currentMovieGenre = useSelector((state) => state.currentMovieGenre);
-  const renderedMoviesCount = useSelector((state) => state.renderedMoviesCount);
+  const {movies, isDataLoaded} = useSelector((state) => state.DATA);
+  const {favoriteMovies, isMyDataLoaded} = useSelector((state) => state.USER_ACTIONS);
+  const {currentMovieGenre} = useSelector((state) => state.DATA_ITEM);
+  const {currentFilterGenre, renderedMoviesCount} = useSelector((state) => state.FILTERS);
 
   const dispatch = useDispatch();
 

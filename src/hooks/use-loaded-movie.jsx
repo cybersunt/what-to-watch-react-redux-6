@@ -4,8 +4,7 @@ import {fetchCurrentMovie} from "../store/movie-data/movie-data-api-actions";
 
 const useLoadedMovie = (id) => {
   const dispatch = useDispatch();
-  const isCurrentMovieLoaded = useSelector((state) => state.isCurrentMovieLoaded);
-  const currentMovie = useSelector((state) => state.currentMovie);
+  const {currentMovie, isCurrentMovieLoaded} = useSelector((state) => state.DATA_ITEM);
 
   useEffect(() => {
     if (!isCurrentMovieLoaded || !currentMovie) {

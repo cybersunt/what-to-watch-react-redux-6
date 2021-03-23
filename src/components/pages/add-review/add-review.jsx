@@ -8,7 +8,7 @@ import useLoadedMovie from "../../../hooks/use-loaded-movie";
 const AddReview = () => {
   const {id} = useParams();
 
-  const [isCurrentMovieLoaded, currentMovie] = useLoadedMovie(id);
+  const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
 
   return isCurrentMovieLoaded ? (
     <MainLayout>

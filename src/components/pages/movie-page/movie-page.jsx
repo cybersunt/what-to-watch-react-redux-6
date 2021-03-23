@@ -9,7 +9,7 @@ import useLoadedMovie from "../../../hooks/use-loaded-movie";
 
 const MoviePage = ({id}) => {
 
-  const [isCurrentMovieLoaded, currentMovie] = useLoadedMovie(id);
+  const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
   const currentMovieGenre = currentMovie.genre;
 
   return isCurrentMovieLoaded ? (

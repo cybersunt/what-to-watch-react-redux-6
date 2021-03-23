@@ -14,8 +14,8 @@ const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
 
-  const promoMovie = useSelector((state) => state.promoMovie);
-  const authorizationStatus = useSelector((state) => state.authorizationStatus);
+  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
+  const {authorizationStatus} = useSelector((state) => state.USER_DATA);
   const dispatch = useDispatch();
 
   const onButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
@@ -34,12 +34,15 @@ const MovieCardButtons = ({fullVersion}) => {
         </svg>
         <span>Play</span>
       </button>
-      <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
-        <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref="#add"></use>
-        </svg>
-        <span>My list</span>
-      </button>
+
+      {authorizationStatus === AuthorizationStatus.AUTH ? (
+        <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
+          <svg viewBox="0 0 19 20" width="19" height="20">
+            <use xlinkHref="#add"></use>
+          </svg>
+          <span>My list</span>
+        </button>
+      ) : null}
 
       {fullVersion && authorizationStatus === AuthorizationStatus.AUTH ? <Link pathName={`${RoutePath.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link> : null}
     </div>

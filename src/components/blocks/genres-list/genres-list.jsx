@@ -5,8 +5,8 @@ import {getGenresItems} from "../../../utils/utils";
 import {changeGenre, resetFilter} from "../../../store/movies-filter/movies-filter-action";
 
 const GenresList = () => {
-  const movies = useSelector((state) => state.movies);
-  const currentFilterGenre = useSelector((state) => state.currentFilterGenre);
+  const {movies} = useSelector((state) => state.DATA);
+  const {currentFilterGenre} = useSelector((state) => state.FILTERS);
   const dispatch = useDispatch();
 
   const genresItems = getGenresItems(movies);

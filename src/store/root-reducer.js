@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {moviesData} from "./movies-data/movies-data-reducer";
 import {moviesFilter} from "./movies-filter/movies-filter-reducer";
-import {userDataReducer} from "./user-data/user-data-reducer";
+import {userData} from "./user-data/user-data-reducer";
 import {userActions} from "./user-actions/user-actions-reducer";
 import {errorReducer} from "./error/error-reducer";
 import {movieData} from "./movie-data/movie-data-reducer";
@@ -19,7 +19,7 @@ export default combineReducers({
   [NameSpace.DATA]: moviesData,
   [NameSpace.DATA_ITEM]: movieData,
   [NameSpace.FILTERS]: moviesFilter,
-  [NameSpace.USER_DATA]: userDataReducer,
+  [NameSpace.USER_DATA]: userData,
   [NameSpace.USER_ACTIONS]: userActions,
   [NameSpace.ERROR]: errorReducer
 });
