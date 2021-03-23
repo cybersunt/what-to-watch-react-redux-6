@@ -1,10 +1,9 @@
 import React from "react";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AuthorizationStatus} from "../../../constants/auth";
 import Tooltip from "../tooltip/tooltip";
 import {RoutePath} from "../../../constants/routes";
 import {useHistory} from "react-router-dom";
-import PropTypes from "prop-types";
 import {logout} from "../../../store/user-data/user-data-api-action";
 
 const SignIn = () => {
@@ -19,7 +18,13 @@ const SignIn = () => {
   );
 };
 
-const UserBlock = ({isUserDataReceived, authorizationStatus, authInfo, onLogOut}) => {
+const UserBlock = () => {
+  const authorizationStatus = useSelector((state) => state.authorizationStatus);
+  const isUserDataReceived = useSelector((state) => state.isUserDataReceived);
+  const authInfo = useSelector((state) => state.authInfo);
+
+  const dispatch = useDispatch();
+
   const history = useHistory();
   const {location} = history;
   const {pathname} = location;
@@ -29,8 +34,12 @@ const UserBlock = ({isUserDataReceived, authorizationStatus, authInfo, onLogOut}
   const userName = isUserDataReceived ? authInfo.name : null;
   const userPicture = isUserDataReceived ? authInfo.avatarUrl : `img/avatar.jpg`;
 
+  const handleLogOut = () => {
+    dispatch(logout({login: null, password: null}));
+  };
+
   return authorizationStatus === AuthorizationStatus.AUTH ?
-    (<Tooltip onClick={onLogOut} title="Log out" style={{marginLeft: `auto`}}>
+    (<Tooltip onClick={handleLogOut} title="Log out" style={{marginLeft: `auto`}}>
       <div className="user-block" style={style} onClick={()=> history.push(RoutePath.MY_LIST)}>
         <div className="user-block__avatar">
           <img src={userPicture} alt="User avatar" width="63" height="63"/>
@@ -40,23 +49,4 @@ const UserBlock = ({isUserDataReceived, authorizationStatus, authInfo, onLogOut}
     </Tooltip>) : <SignIn/>;
 };
 
-UserBlock.propTypes = {
-  authorizationStatus: PropTypes.string,
-  authInfo: PropTypes.object,
-  onLogOut: PropTypes.func,
-  isUserDataReceived: PropTypes.bool
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  authInfo: state.authInfo,
-  isUserDataReceived: state.isUserDataReceived
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLogOut() {
-    dispatch(logout({login: null, password: null}));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserBlock);
+export default UserBlock;

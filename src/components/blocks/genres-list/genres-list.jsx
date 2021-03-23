@@ -1,24 +1,24 @@
 import React from "react";
-import PropTypes from "prop-types";
 import classnames from "classnames";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import * as actions from "../../../store/movies-filter/movies-filter-action";
+import {useDispatch, useSelector} from "react-redux";
 import {getGenresItems} from "../../../utils/utils";
-import MoviesList from "../movies-list/movies-list";
+import {changeGenre, resetFilter} from "../../../store/movies-filter/movies-filter-action";
 
-const GenresList = ({movies, currentFilterGenre, resetFilter, changeGenre}) => {
+const GenresList = () => {
+  const movies = useSelector((state) => state.movies);
+  const currentFilterGenre = useSelector((state) => state.currentFilterGenre);
+  const dispatch = useDispatch();
 
   const genresItems = getGenresItems(movies);
 
-  const onChangeFilter = (evt) => {
+  const handleChangeFilter = (evt) => {
     evt.preventDefault();
-    resetFilter();
-    changeGenre(evt);
+    dispatch(resetFilter());
+    dispatch(changeGenre(evt));
   };
 
   return (
-    <ul className="catalog__genres-list" onClick={onChangeFilter}>
+    <ul className="catalog__genres-list" onClick={handleChangeFilter}>
       {genresItems.map((item, index) => {
         return (
           <li key={index} className={classnames(`catalog__genres-item`, {[`catalog__genres-item--active`]: currentFilterGenre === item})}>
@@ -30,24 +30,4 @@ const GenresList = ({movies, currentFilterGenre, resetFilter, changeGenre}) => {
   );
 };
 
-GenresList.propTypes = {
-  ...MoviesList.propTypes,
-  currentFilterGenre: PropTypes.string,
-  genresItems: PropTypes.arrayOf(PropTypes.string),
-  resetFilter: PropTypes.func,
-  changeGenre: PropTypes.func
-};
-
-const mapStateToProps = (state) => ({
-  currentFilterGenre: state.currentFilterGenre,
-  movies: state.movies
-});
-
-const mapDispatchToProps = (dispatch) => {
-
-  const {changeGenre, resetFilter} = bindActionCreators(actions, dispatch);
-
-  return {changeGenre, resetFilter};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GenresList);
+export default GenresList;

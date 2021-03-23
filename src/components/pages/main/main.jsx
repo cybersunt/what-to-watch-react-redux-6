@@ -4,9 +4,10 @@ import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import PageFooter from "../../sections/page-footer/page-footer";
 import Catalog from "../../sections/catalog/catalog";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 
-const MainPage = ({promoMovie}) => {
+const MainPage = () => {
+  const promoMovie = useSelector((state) => state.promoMovie);
 
   return (
     <MainLayout>
@@ -24,8 +25,4 @@ MainPage.propTypes = {
   ...MovieCard.propTypes
 };
 
-const mapStateToProps = (state) => ({
-  promoMovie: state.promoMovie
-});
-
-export default connect(mapStateToProps)(MainPage);
+export default MainPage;

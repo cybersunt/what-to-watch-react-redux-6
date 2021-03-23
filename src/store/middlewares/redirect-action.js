@@ -9,4 +9,3 @@ export const redirectToRoute = createAction(ActionRedirectType.REDIRECT_TO_ROUTE
     payload: url
   };
 });
-

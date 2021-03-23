@@ -4,22 +4,26 @@ import {RoutePath} from "../../../../constants/routes";
 import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AuthorizationStatus} from "../../../../constants/auth";
 import {addMovieMyMovieList} from "../../../../store/user-actions/user-actions-api-action";
 
 const STATUS_ADD_MOVIE = 1;
 
-const MovieCardButtons = ({fullVersion, authorizationStatus, promoMovie, onSubmit}) => {
+const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
 
-  const onButtonPlayClick = ()=> id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
+  const promoMovie = useSelector((state) => state.promoMovie);
+  const authorizationStatus = useSelector((state) => state.authorizationStatus);
+  const dispatch = useDispatch();
+
+  const onButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
 
   const handleSubmit = () => {
     return id === undefined ?
-      onSubmit({filmId: promoMovie.id, status: STATUS_ADD_MOVIE}) :
-      onSubmit({filmId: id, status: STATUS_ADD_MOVIE});
+      dispatch(addMovieMyMovieList({filmId: promoMovie.id, status: STATUS_ADD_MOVIE})) :
+      dispatch(addMovieMyMovieList({filmId: id, status: STATUS_ADD_MOVIE}));
   };
 
   return (
@@ -44,21 +48,6 @@ const MovieCardButtons = ({fullVersion, authorizationStatus, promoMovie, onSubmi
 
 MovieCardButtons.propTypes = {
   fullVersion: PropTypes.bool,
-  promoMovie: PropTypes.object,
-  onSubmit: PropTypes.func,
-  authorizationStatus: PropTypes.string
 };
 
-const mapStateToProps = (state) => ({
-  promoMovie: state.promoMovie,
-  favoriteMovies: state.favoriteMovies,
-  authorizationStatus: state.authorizationStatus
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit({filmId, status}) {
-    dispatch(addMovieMyMovieList({filmId, status}));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieCardButtons);
+export default MovieCardButtons;
