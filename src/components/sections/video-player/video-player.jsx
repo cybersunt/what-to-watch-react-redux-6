@@ -19,19 +19,12 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
   }, [src]);
 
   useEffect(() => {
-    if (videoRef.current && isPlaying && !isMuted) {
+    if (videoRef.current && isPlaying) {
       videoRef.current.play();
       return;
     }
-    if (videoRef.current && isPlaying && isMuted) {
-      setTimeout(()=> {
-        videoRef.current.play();
-        return;
-      }, 1000);
-    }
-
     videoRef.current.pause();
-  }, [videoRef, isPlaying, isMuted]);
+  }, [videoRef, isPlaying]);
 
   const style = (isPlaying && isMuted) ? {position: `relative`, width: `280px`, height: `175px`, marginRight: `10px`} : null;
 

@@ -6,21 +6,22 @@ import PropTypes from "prop-types";
 import {getUpperCaseStringWithoutSpaces} from "../utils/utils";
 import {RoutePath} from "../constants/constants";
 
-const ActiveVideoPlayer = ({videoLink, id, name, previewImage}) => {
+const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
 
   const key = getUpperCaseStringWithoutSpaces(name);
-
   const history = useHistory();
   const [isHovering, setHovering] = useState(false);
+  const [activeKey, setActiveKey] = useState(null);
   const previewRef = useRef();
 
   const onMouseLeave = () => setHovering(false);
 
   const onMouseEnter = (evt)=> {
     evt.preventDefault();
-    if (Number(previewRef.current.id) === id) {
-      setHovering(true);
-    }
+    setActiveKey(id);
+    setTimeout(()=> {
+      setHovering(activeKey === id);
+    }, 1000);
   };
 
   return (
@@ -45,11 +46,11 @@ const ActiveVideoPlayer = ({videoLink, id, name, previewImage}) => {
   );
 };
 
-ActiveVideoPlayer.propTypes = {
+MovieCardPreviewWithVideo.propTypes = {
   id: PropTypes.number,
   videoLink: PropTypes.string,
   name: PropTypes.string,
   previewImage: PropTypes.string,
 };
 
-export default ActiveVideoPlayer;
+export default MovieCardPreviewWithVideo;

@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ActiveVideoPlayer from "../../../hocs/active-video-player";
+import MovieCardPreviewWithVideo from "../../../hocs/movie-card-preview-with-video";
 
 const MoviesList = ({movieItems}) => {
-
   return (
     <div className="catalog__movies-list">
       {movieItems.map(({id, name, videoLink, previewImage}) => (
-        <ActiveVideoPlayer
+        <MovieCardPreviewWithVideo
           id={id}
           key={id}
           name={name}
