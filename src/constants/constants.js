@@ -4,7 +4,9 @@ import MovieCardTabDetails from "../components/blocks/movie-card-tabs/movie-card
 
 export const ONE_HOUR = 60;
 export const COUNT_COL = 2;
+
 export const MOVIES_COUNT_PER_STEP = 8;
+export const MAX_DISPLAY_COUNT_GENRES = 10;
 
 export const MIN_LENGTH_COMMENT = 50;
 export const MAX_LENGTH_COMMENT = 400;
