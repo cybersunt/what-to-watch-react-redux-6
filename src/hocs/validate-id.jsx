@@ -11,7 +11,7 @@ const ValidateId = ({component: Component}) => {
 };
 
 ValidateId.propTypes = {
-  component: PropTypes.object,
+  component: PropTypes.func.isRequired,
 };
 
 export default ValidateId;

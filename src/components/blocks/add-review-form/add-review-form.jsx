@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {addReview} from "../../../store/user-actions/user-actions-api-action";
-import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, Stars} from "../../../constants/constants";
+import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, starsArray} from "../../../constants/constants";
 
 const RatingStars = ({rating, onChange}) => {
   return (
@@ -34,7 +34,7 @@ const AddReviewForm = () => {
 
   const [isNewReview, setReview] = useState(``);
   const [messageLength, setMessageLength] = useState(0);
-  const [rating, setRating] = useState(Stars);
+  const [rating, setRating] = useState(starsArray);
   const [disabledForm, setDisabledForm] = useState(false);
 
   const {isCatchError} = useSelector((state) => state.ERROR);

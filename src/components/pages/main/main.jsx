@@ -20,9 +20,4 @@ const MainPage = () => {
   );
 };
 
-MainPage.propTypes = {
-  ...Catalog.propTypes,
-  ...MovieCard.propTypes
-};
-
 export default MainPage;

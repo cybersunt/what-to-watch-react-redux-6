@@ -18,7 +18,7 @@ export const ICON_NAME_PLAY = `#play-s`;
 
 export const EMAIL_VALID = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-export const Stars = [
+export const starsArray = [
   {id: 0, stars: 1, checked: false},
   {id: 1, stars: 2, checked: false},
   {id: 2, stars: 3, checked: false},

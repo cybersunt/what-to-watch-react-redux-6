@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MovieCardButtons from "./movie-card-buttons/movie-card-buttons";
 
 const MovieCardInfo = ({fullVersion, name, genre, released}) => {
+
   return (
     <div className="movie-card__desc">
 
@@ -18,9 +19,9 @@ const MovieCardInfo = ({fullVersion, name, genre, released}) => {
 };
 
 MovieCardInfo.propTypes = {
-  name: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  released: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  genre: PropTypes.string,
+  released: PropTypes.number,
   fullVersion: PropTypes.bool
 };
 
