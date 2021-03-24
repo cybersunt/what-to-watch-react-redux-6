@@ -8,6 +8,7 @@ const MovieCardTextCol = ({children}) => <div className="movie-card__text-col">{
 MovieCardTextCol.propTypes = {children: PropTypes.node.isRequired};
 
 const MovieCardDetailsItem = ({label, value}) => {
+
   return (
     <p className="movie-card__details-item">
       <strong className="movie-card__details-name">{label}</strong>
@@ -27,13 +28,14 @@ const MovieCardTabDetails = ({runTime, genre, released, director, starring}) => 
 
   const [hours, minutes] = getRuntimeInHours(runTime);
 
+  const cast = starring.map((item, index, array) => (<React.Fragment key={index}>{item}{index < array.length - 1 ? <br/> : null}</React.Fragment>));
+
   return (
     <>
       <MovieCardTextCol>
         <MovieCardDetailsItem label="Director" value={director}/>
 
-        {/* FIXME: вместо запятой должен быть тег <br/>*/}
-        <MovieCardDetailsItem label="Starring" value={getStringFromArray(starring, `,`)}/>
+        <MovieCardDetailsItem label="Starring" value={cast}/>
       </MovieCardTextCol>
 
       <MovieCardTextCol>

@@ -5,8 +5,6 @@ import {getGenresItems} from "../../../utils/utils";
 import {changeGenre, resetFilter} from "../../../store/movies-filter/movies-filter-action";
 import {MAX_DISPLAY_COUNT_GENRES} from "../../../constants/constants";
 
-
-
 const GenresList = () => {
   const {movies} = useSelector((state) => state.DATA);
   const {currentFilterGenre} = useSelector((state) => state.FILTERS);
