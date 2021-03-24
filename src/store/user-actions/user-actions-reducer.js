@@ -1,5 +1,5 @@
 import {createReducer} from "@reduxjs/toolkit";
-import {addComment, addFavoriteMovie, loadFavoriteMovies} from "./user-actions-action";
+import {addComment, loadFavoriteMovies} from "./user-actions-action";
 
 const initialState = {
   isReviewUploaded: false,
@@ -11,9 +11,6 @@ export const userActions = createReducer(initialState, (builder) => {
   builder.addCase(loadFavoriteMovies, (state, action) => {
     state.favoriteMovies = action.payload;
     state.isMyDataLoaded = true;
-  });
-  builder.addCase(addFavoriteMovie, (state, action) => {
-    state.favoriteMovies = action.payload;
   });
   builder.addCase(addComment, (state, action) => {
     state.reviews = action.payload;

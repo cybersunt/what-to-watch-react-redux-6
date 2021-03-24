@@ -39,7 +39,7 @@ const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TIT
   }, [isDataLoaded]);
 
   useEffect(() => {
-    if (!isMyDataLoaded) {
+    if (!isMyDataLoaded || favoriteMovies) {
       dispatch(fetchMyMoviesList());
     }
   }, [isMyDataLoaded]);

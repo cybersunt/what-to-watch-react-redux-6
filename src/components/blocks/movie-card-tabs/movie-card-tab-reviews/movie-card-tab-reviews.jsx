@@ -13,7 +13,7 @@ const MovieCardTabReviews = ({id}) => {
   const reviewsItems = reviews.length !== 0 ? getTwoArraysFromOne(reviews) : reviews;
 
   useEffect(() => {
-    if (!isReviewsLoaded) {
+    if (!isReviewsLoaded || reviews) {
       dispatch(fetchReviews(id));
     }
   }, [isReviewsLoaded]);
