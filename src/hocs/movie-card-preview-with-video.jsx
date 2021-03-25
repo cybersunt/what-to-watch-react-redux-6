@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import MovieCardPreview from "../components/blocks/movies-list/movie-card-preview/movie-card-preview";
 import VideoPlayer from "../components/sections/video-player/video-player";
 import {useHistory} from "react-router-dom";
@@ -12,7 +12,6 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
   const history = useHistory();
   const [activeKey, setActiveKey] = useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
-  const previewRef = useRef();
 
   const onMouseLeave = () => {
     setTimeoutId(clearTimeout(timeoutId));
@@ -39,8 +38,7 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
         <MovieCardPreview
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          ref={previewRef}
-          id={id}
+          MovieCardDetailsItem id={id}
           key={key}
           name={name}
           previewImage={previewImage}/>}

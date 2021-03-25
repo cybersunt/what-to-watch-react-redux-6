@@ -7,10 +7,10 @@ const useLoadedMovie = (id) => {
   const {currentMovie, isCurrentMovieLoaded} = useSelector((state) => state.DATA_ITEM);
 
   useEffect(() => {
-    if (!isCurrentMovieLoaded || !currentMovie) {
+    if (!isCurrentMovieLoaded || id) {
       dispatch(fetchCurrentMovie(id));
     }
-  }, [id, isCurrentMovieLoaded, currentMovie]);
+  }, [id, isCurrentMovieLoaded]);
 
   return [currentMovie, isCurrentMovieLoaded];
 };
