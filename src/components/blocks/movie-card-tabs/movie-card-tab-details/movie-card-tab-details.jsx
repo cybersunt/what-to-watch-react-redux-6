@@ -20,7 +20,7 @@ const MovieCardDetailsItem = ({label, value}) => {
 MovieCardDetailsItem.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([
-    PropTypes.string, PropTypes.number
+    PropTypes.string, PropTypes.number, PropTypes.arrayOf(PropTypes.node)
   ]).isRequired
 };
 
@@ -28,7 +28,12 @@ const MovieCardTabDetails = ({runTime, genre, released, director, starring}) => 
 
   const [hours, minutes] = getRuntimeInHours(runTime);
 
-  const cast = starring.map((item, index, array) => (<React.Fragment key={index}>{item}{index < array.length - 1 ? <br/> : null}</React.Fragment>));
+  const cast = starring.map((item, index, array) => (
+    <React.Fragment key={item}>
+      {item}
+      {index < array.length - 1 ? <br/> : null}
+    </React.Fragment>
+  ));
 
   return (
     <>
