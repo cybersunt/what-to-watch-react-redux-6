@@ -4,8 +4,9 @@ import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import PageFooter from "../../sections/page-footer/page-footer";
 import PageHeader from "../../sections/page-header/page-header";
 import {Link} from "react-router-dom";
-import {RoutePath} from "../../../constants/routes";
+import {RoutePath} from "../../../constants/constants";
 
+// FIXME: вынести стили в отдельный файл
 const pageHeaderHeight = `98px`;
 const pageFooterHeight = `94px`;
 const pageVerticalPadding = `85px`;

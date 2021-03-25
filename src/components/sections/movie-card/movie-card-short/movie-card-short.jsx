@@ -4,7 +4,10 @@ import MovieCardInfo from "../../../blocks/movie-card-info/movie-card-info";
 import MovieCardPoster from "../../../blocks/movie-card-poster/movie-card-poster";
 import movieCardPropTypes from "../move-card.prop";
 
-const MovieCardShort = ({name, posterImage, backgroundImage, genre, released}) => {
+const MovieCardShort = (currentMovie) => {
+
+  const {name, posterImage, backgroundImage, genre, released} = currentMovie;
+
   return (
     <section className="movie-card">
       <div className="movie-card__bg">

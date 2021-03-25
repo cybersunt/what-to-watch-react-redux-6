@@ -1,14 +1,40 @@
 import React, {useRef, useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
+import {getPercent, getRuntimeInMinutes} from "../../../utils/utils";
 
-const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitClick, onPlayButtonClick, onFullScreenButtonClick, onMouseLeave}) => {
-  const iconControl = isPlaying ? `#pause` : `#play-s`;
+const VideoPlayer = ({
+  id,
+  isMuted = false,
+  src,
+  onButtonExitClick,
+  onFullScreenButtonClick,
+  onMouseLeave
+}) => {
+
   const [isLoading, setIsLoading] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [movieDuration, setMovieDuration] = useState(0);
+  const [movieDurationStr, setMovieDurationStr] = useState(``);
+  const [currentPercent, setPercent] = useState(0);
+
   const videoRef = useRef();
+
+  const iconControl = isPlaying ? ICON_NAME_PAUSE : ICON_NAME_PLAY;
+
+  const style = (isPlaying && isMuted) ? {position: `relative`, width: `280px`, height: `175px`, marginRight: `10px`} : null;
+
+  useEffect(()=> {
+    const {duration} = videoRef.current;
+    if (videoRef.current) {
+      setMovieDuration(duration);
+      setMovieDurationStr(getRuntimeInMinutes(duration));
+    }
+  });
+
 
   useEffect(() => {
     videoRef.current.oncanplaythrough = () => setIsLoading(false);
-
     return () => {
       videoRef.current.oncanplaythrough = null;
       videoRef.current.onplay = null;
@@ -18,21 +44,22 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
   }, [src]);
 
   useEffect(() => {
-    if (videoRef.current && isPlaying && !isMuted) {
+    if (videoRef.current && isPlaying) {
       videoRef.current.play();
       return;
     }
-    if (videoRef.current && isPlaying && isMuted) {
-      setTimeout(()=> {
-        videoRef.current.play();
-        return;
-      }, 1000);
-    }
-
     videoRef.current.pause();
-  }, [videoRef, isPlaying, isMuted]);
+  }, [videoRef, isPlaying]);
 
-  const style = (isPlaying && isMuted) ? {position: `relative`, width: `280px`, height: `175px`, marginRight: `10px`} : null;
+
+  const handleTimeUpdate = () => {
+    const {currentTime} = videoRef.current;
+    if (videoRef.current) {
+      setPercent(getPercent(currentTime, movieDuration));
+    }
+  };
+
+  const handlePlayButtonClick = ()=> setIsPlaying(!isPlaying);
 
   return (
     <div className="player" style={style} onMouseLeave={onMouseLeave}>
@@ -42,17 +69,18 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
         src={src}
         className="player__video"
         poster="img/player-poster.jpg"
-        muted={isMuted}></video>
+        onTimeUpdate={handleTimeUpdate}
+        muted={true}/>
 
       {isPlaying && !isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
+            <progress className="player__progress" value={currentPercent} max="100"/>
+            <div className="player__toggler" style={{left: `${currentPercent}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{movieDurationStr}</div>
         </div>
 
         <div className="player__controls-row">
@@ -60,10 +88,10 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
             type="button"
             className="player__play"
             disabled={isLoading}
-            onClick={onPlayButtonClick}>
+            onClick={handlePlayButtonClick}>
 
             <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref={iconControl}></use>
+              <use xlinkHref={iconControl}/>
             </svg>
             <span>Play</span>
           </button>
@@ -71,7 +99,7 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
 
           <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
+              <use xlinkHref="#full-screen"/>
             </svg>
             <span>Full screen</span>
           </button>
@@ -83,7 +111,7 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
 
 VideoPlayer.propTypes = {
   id: PropTypes.number,
-  src: PropTypes.string,
+  src: PropTypes.string.isRequired,
   isMuted: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onButtonExitClick: PropTypes.func,

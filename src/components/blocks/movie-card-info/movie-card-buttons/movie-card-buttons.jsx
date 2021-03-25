@@ -1,25 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {RoutePath} from "../../../../constants/routes";
 import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
-import {connect} from "react-redux";
-import {addMovie} from "../../../../store/api-actions";
-import {AuthorizationStatus} from "../../../../constants/auth";
+import {useDispatch, useSelector} from "react-redux";
+import {addMovieMyMovieList} from "../../../../store/user-actions/user-actions-api-action";
+import {AuthorizationStatus, RoutePath} from "../../../../constants/constants";
 
 const STATUS_ADD_MOVIE = 1;
 
-const MovieCardButtons = ({fullVersion, authorizationStatus, promoMovie, onSubmit}) => {
+const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
 
-  const onButtonPlayClick = ()=> id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
+  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
+  const {authorizationStatus} = useSelector((state) => state.USER_DATA);
+  const dispatch = useDispatch();
+
+  const onButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
 
   const handleSubmit = () => {
     return id === undefined ?
-      onSubmit({filmId: promoMovie.id, status: STATUS_ADD_MOVIE}) :
-      onSubmit({filmId: id, status: STATUS_ADD_MOVIE});
+      dispatch(addMovieMyMovieList({filmId: promoMovie.id, status: STATUS_ADD_MOVIE})) :
+      dispatch(addMovieMyMovieList({filmId: id, status: STATUS_ADD_MOVIE}));
   };
 
   return (
@@ -30,12 +33,15 @@ const MovieCardButtons = ({fullVersion, authorizationStatus, promoMovie, onSubmi
         </svg>
         <span>Play</span>
       </button>
-      <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
-        <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref="#add"></use>
-        </svg>
-        <span>My list</span>
-      </button>
+
+      {authorizationStatus === AuthorizationStatus.AUTH ? (
+        <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
+          <svg viewBox="0 0 19 20" width="19" height="20">
+            <use xlinkHref="#add"></use>
+          </svg>
+          <span>My list</span>
+        </button>
+      ) : null}
 
       {fullVersion && authorizationStatus === AuthorizationStatus.AUTH ? <Link pathName={`${RoutePath.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link> : null}
     </div>
@@ -44,21 +50,6 @@ const MovieCardButtons = ({fullVersion, authorizationStatus, promoMovie, onSubmi
 
 MovieCardButtons.propTypes = {
   fullVersion: PropTypes.bool,
-  promoMovie: PropTypes.object,
-  onSubmit: PropTypes.func,
-  authorizationStatus: PropTypes.string
 };
 
-const mapStateToProps = (state) => ({
-  promoMovie: state.promoMovie,
-  favoriteMovies: state.favoriteMovies,
-  authorizationStatus: state.authorizationStatus
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit({filmId, status}) {
-    dispatch(addMovie({filmId, status}));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieCardButtons);
+export default MovieCardButtons;

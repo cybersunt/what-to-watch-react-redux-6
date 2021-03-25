@@ -3,9 +3,9 @@ import Logo from "../../blocks/logo/logo";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import UserBlock from "../../blocks/user-block/user-block";
-import {RoutePath} from "../../../constants/routes";
 import Link from "../../blocks/link/link";
 import {useParams} from "react-router";
+import {RoutePath} from "../../../constants/constants";
 
 const PageHeader = ({className, children, title, isLogin = true, activeLink}) => {
 

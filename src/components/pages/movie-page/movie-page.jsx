@@ -1,21 +1,15 @@
-import React, {useEffect} from "react";
+import React from "react";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import MovieCard from "../../sections/movie-card/movie-card";
 import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import Catalog from "../../sections/catalog/catalog";
 import PageFooter from "../../sections/page-footer/page-footer";
-import {connect} from "react-redux";
-import {fetchCurrentMovie} from "../../../store/api-actions";
 import Loader from "../../blocks/loader/loader";
+import useLoadedMovie from "../../../hooks/use-loaded-movie";
 
-const MoviePage = ({id, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
+const MoviePage = ({id}) => {
 
-  useEffect(() => {
-    if (!isCurrentMovieLoaded || !currentMovie) {
-      onLoadData(id);
-    }
-  }, [id, isCurrentMovieLoaded, currentMovie]);
-
+  const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
   const currentMovieGenre = currentMovie.genre;
 
   return isCurrentMovieLoaded ? (
@@ -30,15 +24,4 @@ const MoviePage = ({id, currentMovie, isCurrentMovieLoaded, onLoadData}) => {
 
 MoviePage.propTypes = {...MovieCard.propTypes};
 
-const mapStateToProps = (state) => ({
-  currentMovie: state.currentMovie,
-  isCurrentMovieLoaded: state.isCurrentMovieLoaded
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData(id) {
-    dispatch(fetchCurrentMovie(id));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+export default MoviePage;

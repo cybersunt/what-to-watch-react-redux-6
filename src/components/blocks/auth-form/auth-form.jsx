@@ -1,20 +1,23 @@
 import React, {useRef} from "react";
-import {connect} from "react-redux";
-import {login} from "../../../store/api-actions";
-import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import classnames from "classnames";
+import {login} from "../../../store/user-data/user-data-api-action";
+import {EMAIL_VALID} from "../../../constants/constants";
 
-const AuthForm = ({isCatchError, onSubmit}) => {
+const AuthForm = () => {
   const loginRef = useRef();
   const passwordRef = useRef();
   const {register, handleSubmit, errors} = useForm();
+
+  const {isCatchError} = useSelector((state) => state.ERROR);
+  const dispatch = useDispatch();
 
   const userMailRef = (evt) => {
     loginRef.current = evt;
     register(evt, {
       required: true,
-      pattern: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+      pattern: EMAIL_VALID
     });
   };
 
@@ -23,11 +26,11 @@ const AuthForm = ({isCatchError, onSubmit}) => {
     register(evt, {required: true});
   };
 
-  const onFormSubmit = () => {
-    onSubmit({
+  const onSubmit = () => {
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
   };
 
   return (
@@ -61,26 +64,10 @@ const AuthForm = ({isCatchError, onSubmit}) => {
       </div>
 
       <div className="sign-in__submit">
-        <button className="sign-in__btn" type="submit" onClick={handleSubmit(onFormSubmit)}>Sign in</button>
+        <button className="sign-in__btn" type="submit" onClick={handleSubmit(onSubmit)}>Sign in</button>
       </div>
     </form>
   );
 };
 
-AuthForm.propTypes = {
-  onSubmit: PropTypes.func,
-  isCatchError: PropTypes.bool
-};
-
-const mapStateToProps = (state) => ({
-  isCatchError: state.isCatchError
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  }
-});
-
-export {AuthForm};
-export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
+export default AuthForm;

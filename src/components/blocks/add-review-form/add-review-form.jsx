@@ -1,9 +1,9 @@
 import React, {useState, Fragment, useEffect} from "react";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {addReview} from "../../../store/api-actions";
 import PropTypes from "prop-types";
-import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT} from "../../../constants/common";
+import {addReview} from "../../../store/user-actions/user-actions-api-action";
+import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, starsArray} from "../../../constants/constants";
 
 const RatingStars = ({rating, onChange}) => {
   return (
@@ -29,26 +29,33 @@ RatingStars.propTypes = {
   onChange: PropTypes.func
 };
 
-const AddReviewForm = ({isCatchError, isReviewUploaded, onSubmit}) => {
+const AddReviewForm = () => {
   const {id} = useParams();
+
   const [isNewReview, setReview] = useState(``);
   const [messageLength, setMessageLength] = useState(0);
-  const [rating, setRating] = useState([
-    {id: 0, stars: 1, checked: false},
-    {id: 1, stars: 2, checked: false},
-    {id: 2, stars: 3, checked: false},
-    {id: 3, stars: 4, checked: false},
-    {id: 4, stars: 5, checked: false},
-    {id: 5, stars: 6, checked: false},
-    {id: 6, stars: 7, checked: false},
-    {id: 7, stars: 8, checked: false},
-    {id: 8, stars: 9, checked: false},
-    {id: 9, stars: 10, checked: false}
-  ]);
+  const [rating, setRating] = useState(starsArray);
   const [disabledForm, setDisabledForm] = useState(false);
+
+  const {isCatchError} = useSelector((state) => state.ERROR);
+  const {isReviewUploaded} = useSelector((state) => state.USER_ACTIONS);
+  const dispatch = useDispatch();
 
   const userRating = rating.find((el) => el.checked === true);
   const disabledSubmit = userRating === undefined || isNewReview === `` || messageLength < MIN_LENGTH_COMMENT || messageLength > MAX_LENGTH_COMMENT;
+
+  const selectedStars = (value) => {
+    const currentValue = Number(value);
+    const setValue = rating.find((el) => el.stars === currentValue);
+    const oldItem = rating[setValue.id];
+    const newItem = {...oldItem, checked: true};
+    const newArray = [
+      ...rating.slice(0, setValue.id),
+      newItem,
+      ...rating.slice(setValue.id + 1, rating.length)
+    ];
+    return newArray;
+  };
 
   const handleFieldChange = (evt) => {
     const {value} = evt.target;
@@ -58,24 +65,16 @@ const AddReviewForm = ({isCatchError, isReviewUploaded, onSubmit}) => {
 
   const handleCheckboxesChange = (evt) => {
     const {value} = evt.target;
-    const currentValue = Number(value);
-    const setValue = rating.find((el) => el.stars === currentValue);
-    const oldItem = rating[setValue.id];
-    const newItem = {...oldItem, checked: true};
-    const newArray = [
-      ...rating.slice(0, setValue.id),
-      newItem,
-      ...rating.slice(setValue.id + 1, 10)
-    ];
-    setRating(newArray);
+    const newData = selectedStars(value);
+    setRating(newData);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit(id, {
+    dispatch(addReview(id, {
       comment: isNewReview.value,
       rating: userRating.stars
-    });
+    }));
     setDisabledForm(true);
   };
 
@@ -115,22 +114,4 @@ const AddReviewForm = ({isCatchError, isReviewUploaded, onSubmit}) => {
   );
 };
 
-AddReviewForm.propTypes = {
-  authorizationStatus: PropTypes.string,
-  onSubmit: PropTypes.func,
-  isCatchError: PropTypes.bool,
-  isReviewUploaded: PropTypes.bool
-};
-
-const mapStateToProps = (state) => ({
-  isReviewUploaded: state.isReviewUploaded,
-  isCatchError: state.isCatchError
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, {comment, rating}) {
-    dispatch(addReview(id, {comment, rating}));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddReviewForm);
+export default AddReviewForm;

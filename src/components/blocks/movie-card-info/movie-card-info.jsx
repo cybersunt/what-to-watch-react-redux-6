@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MovieCardButtons from "./movie-card-buttons/movie-card-buttons";
 
 const MovieCardInfo = ({fullVersion, name, genre, released}) => {
+
   return (
     <div className="movie-card__desc">
 
