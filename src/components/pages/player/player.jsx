@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import VideoPlayer from "../../sections/video-player/video-player";
 import MoviesList from "../../blocks/movies-list/movies-list";

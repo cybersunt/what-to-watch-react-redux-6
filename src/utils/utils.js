@@ -32,7 +32,7 @@ export const getRuntimeInMinutes = (runtime) => {
   return `${minutes}:${seconds}`;
 };
 
-export const getPersent = (part, whole) => part * HUNDRED / whole;
+export const getPercent = (part, whole) => part * HUNDRED / whole;
 
 export const getStringFromArray = (array, sign) => {
   return array.join(`${sign} `);

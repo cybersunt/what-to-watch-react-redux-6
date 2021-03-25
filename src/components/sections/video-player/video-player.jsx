@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
-import {getPersent, getRuntimeInMinutes} from "../../../utils/utils";
+import {getPercent, getRuntimeInMinutes} from "../../../utils/utils";
 
 const VideoPlayer = ({
   id,
@@ -16,7 +16,7 @@ const VideoPlayer = ({
   const [isPlaying, setIsPlaying] = useState(true);
   const [movieDuration, setMovieDuration] = useState(0);
   const [movieDurationStr, setMovieDurationStr] = useState(``);
-  const [currentPercentage, setPercentage] = useState(0);
+  const [currentPercent, setPercent] = useState(0);
 
   const videoRef = useRef();
 
@@ -55,7 +55,7 @@ const VideoPlayer = ({
   const handleTimeUpdate = () => {
     const {currentTime} = videoRef.current;
     if (videoRef.current) {
-      setPercentage(getPersent(currentTime, movieDuration));
+      setPercent(getPercent(currentTime, movieDuration));
     }
   };
 
@@ -77,8 +77,8 @@ const VideoPlayer = ({
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={currentPercentage} max="100"></progress>
-            <div className="player__toggler" style={{left: `${currentPercentage}%`}}>Toggler</div>
+            <progress className="player__progress" value={currentPercent} max="100"/>
+            <div className="player__toggler" style={{left: `${currentPercent}%`}}>Toggler</div>
           </div>
           <div className="player__time-value">{movieDurationStr}</div>
         </div>
@@ -91,7 +91,7 @@ const VideoPlayer = ({
             onClick={handlePlayButtonClick}>
 
             <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref={iconControl}></use>
+              <use xlinkHref={iconControl}/>
             </svg>
             <span>Play</span>
           </button>
@@ -99,7 +99,7 @@ const VideoPlayer = ({
 
           <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
+              <use xlinkHref="#full-screen"/>
             </svg>
             <span>Full screen</span>
           </button>
