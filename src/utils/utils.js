@@ -1,5 +1,5 @@
 import moment from "moment";
-import {COUNT_COL, DEFAULT_MOVIE_GENRE, MovieNameRating, ONE_HOUR} from "../constants/constants";
+import {COUNT_COL, DEFAULT_MOVIE_GENRE, HUNDRED, MovieNameRating, ONE_HOUR, ONE_MINUTE} from "../constants/constants";
 
 export const getMovieRatingText = (rating) => {
   switch (true) {
@@ -24,6 +24,15 @@ export const getRuntimeInHours = (runtime) => {
 
   return [hours, minutes];
 };
+
+export const getRuntimeInMinutes = (runtime) => {
+  const minutes = Math.floor(runtime / ONE_MINUTE);
+  const seconds = Math.floor(runtime % ONE_MINUTE);
+
+  return `${minutes}:${seconds}`;
+};
+
+export const getPersent = (part, whole) => part * HUNDRED / whole;
 
 export const getStringFromArray = (array, sign) => {
   return array.join(`${sign} `);

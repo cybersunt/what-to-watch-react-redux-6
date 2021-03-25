@@ -8,7 +8,6 @@ import useLoadedMovie from "../../../hooks/use-loaded-movie";
 
 const Player = ({id}) => {
   const history = useHistory();
-  const [isPlaying, setIsPlaying] = useState(true);
   const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
   const {videoLink} = currentMovie;
 
@@ -16,8 +15,6 @@ const Player = ({id}) => {
     (<MainLayout>
       <VideoPlayer
         src={videoLink}
-        isPlaying={isPlaying}
-        onPlayButtonClick={() => setIsPlaying(!isPlaying)}
         onButtonExitClick={()=> history.goBack()}/>
     </MainLayout>) : <div className="movie-card" style={{height: `100vh`, display: `flex`, alignItems: `center`}}><Loader/></div>;
 };

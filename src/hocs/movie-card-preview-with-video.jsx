@@ -28,20 +28,19 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
     <>
       {activeKey === id ?
         <VideoPlayer
-          onMouseLeave={onMouseLeave}
           id={id}
           key={key}
           src={videoLink}
           isMuted={true}
-          isPlaying={true}
+          onMouseLeave={onMouseLeave}
           onFullScreenButtonClick={()=> history.push(`${RoutePath.PLAYER}${id}`)}/> :
         <MovieCardPreview
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-          MovieCardDetailsItem id={id}
+          id={id}
           key={key}
           name={name}
-          previewImage={previewImage}/>}
+          previewImage={previewImage}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}/>}
     </>
   );
 };

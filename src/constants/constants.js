@@ -2,7 +2,9 @@ import MovieCardTabReviews from "../components/blocks/movie-card-tabs/movie-card
 import MovieCardTabOverview from "../components/blocks/movie-card-tabs/movie-card-tab-overview/movie-card-tab-overview";
 import MovieCardTabDetails from "../components/blocks/movie-card-tabs/movie-card-tab-details/movie-card-tab-details";
 
+export const HUNDRED = 100;
 export const ONE_HOUR = 60;
+export const ONE_MINUTE = 60;
 export const COUNT_COL = 2;
 
 export const MOVIES_COUNT_PER_STEP = 8;
