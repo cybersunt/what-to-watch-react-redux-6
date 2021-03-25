@@ -4,9 +4,9 @@ import Link from "../../link/link";
 import {RoutePath} from "../../../../constants/constants";
 
 // eslint-disable-next-line react/display-name
-const MovieCardPreview = forwardRef(({id, name, previewImage, onMouseEnter}, ref) => (
+const MovieCardPreview = forwardRef(({id, name, previewImage, onMouseEnter, onMouseLeave}, ref) => (
   <article ref={ref} id={id} className="small-movie-card catalog__movies-card">
-    <div className="small-movie-card__image" onMouseEnter={onMouseEnter}>
+    <div className="small-movie-card__image" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <img src={previewImage} alt={name} width="280" height="175"/>
     </div>
     <h3 className="small-movie-card__title">
@@ -16,10 +16,11 @@ const MovieCardPreview = forwardRef(({id, name, previewImage, onMouseEnter}, ref
 ));
 
 MovieCardPreview.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   previewImage: PropTypes.string.isRequired,
-  onMouseEnter: PropTypes.func
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired
 };
 
 export default MovieCardPreview;

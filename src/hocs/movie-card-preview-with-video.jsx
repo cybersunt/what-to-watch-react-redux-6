@@ -4,29 +4,30 @@ import VideoPlayer from "../components/sections/video-player/video-player";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {getUpperCaseStringWithoutSpaces} from "../utils/utils";
-import {RoutePath} from "../constants/constants";
+import {RoutePath, TIMEOUT_MSEC} from "../constants/constants";
 
 const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
 
   const key = getUpperCaseStringWithoutSpaces(name);
   const history = useHistory();
-  const [isHovering, setHovering] = useState(false);
   const [activeKey, setActiveKey] = useState(null);
+  const [timeoutId, setTimeoutId] = useState(null);
   const previewRef = useRef();
 
-  const onMouseLeave = () => setHovering(false);
+  const onMouseLeave = () => {
+    setTimeoutId(clearTimeout(timeoutId));
+    setActiveKey(null);
+  };
 
   const onMouseEnter = (evt)=> {
     evt.preventDefault();
-    setActiveKey(id);
-    setTimeout(()=> {
-      setHovering(activeKey === id);
-    }, 1000);
+    setTimeoutId(clearTimeout(timeoutId));
+    setTimeoutId(setTimeout(()=> setActiveKey(id), TIMEOUT_MSEC));
   };
 
   return (
     <>
-      {isHovering ?
+      {activeKey === id ?
         <VideoPlayer
           onMouseLeave={onMouseLeave}
           id={id}
@@ -37,6 +38,7 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
           onFullScreenButtonClick={()=> history.push(`${RoutePath.PLAYER}${id}`)}/> :
         <MovieCardPreview
           onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           ref={previewRef}
           id={id}
           key={key}

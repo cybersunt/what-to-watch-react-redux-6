@@ -76,14 +76,14 @@ const VideoPlayer = ({id, isMuted = false, isPlaying = true, src, onButtonExitCl
 };
 
 VideoPlayer.propTypes = {
-  id: PropTypes.number,
-  src: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
   isMuted: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onButtonExitClick: PropTypes.func,
   onPlayButtonClick: PropTypes.func,
   onFullScreenButtonClick: PropTypes.func,
-  onMouseLeave: PropTypes.func
+  onMouseLeave: PropTypes.func.isRequired
 };
 
 export default VideoPlayer;

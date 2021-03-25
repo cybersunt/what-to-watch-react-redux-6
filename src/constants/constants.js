@@ -12,6 +12,8 @@ export const MIN_LENGTH_COMMENT = 50;
 export const MAX_LENGTH_COMMENT = 400;
 export const MAX_ID_FILM = 25;
 
+export const TIMEOUT_MSEC = 1000;
+
 export const DEFAULT_MOVIE_GENRE = `All genres`;
 export const DEFAULT_CATALOG_TITLE = `Catalog`;
 
