@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import MovieCardNav from "./movie-card-nav/movie-card-nav";
 import MovieCardTabContent from "../../../hocs/movie-card-tab-content";
-import {TabsItems} from "../../../constants/constants";
+import {TabsItems, TabsKeys} from "../../../constants/constants";
 
-const MovieCardTabs = ({activeKey, defaultActiveKey = 1, ...currentMovie}) => {
+const MovieCardTabs = ({activeKey, defaultActiveKey = TabsKeys.FIRST, ...currentMovie}) => {
 
   const [isActiveKey, setActiveKey] = useState(activeKey ? activeKey : defaultActiveKey);
 

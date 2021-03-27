@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import {TabsKeys} from "../../../../constants/constants";
 
 const MovieCardNavItem = ({activeKey, id, title, onClick}) => {
   return (
@@ -17,7 +18,7 @@ MovieCardNavItem.propTypes = {
   onClick: PropTypes.func
 };
 
-export const MovieCardNav = ({items, activeKey, defaultActiveKey = 1, onClick})=> {
+export const MovieCardNav = ({items, activeKey, defaultActiveKey = TabsKeys.FIRST, onClick})=> {
 
   const isActiveKey = activeKey ? activeKey : defaultActiveKey;
 

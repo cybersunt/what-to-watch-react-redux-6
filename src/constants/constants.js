@@ -16,6 +16,8 @@ export const MAX_ID_FILM = 25;
 
 export const TIMEOUT_MSEC = 1000;
 
+export const STATUS_ADD_MOVIE = 1;
+
 export const DEFAULT_MOVIE_GENRE = `All genres`;
 export const DEFAULT_CATALOG_TITLE = `Catalog`;
 
@@ -82,3 +84,9 @@ export const TabsItems = [
   {id: 2, name: `Details`, component: MovieCardTabDetails},
   {id: 3, name: `Reviews`, component: MovieCardTabReviews}
 ];
+
+export const TabsKeys = {
+  FIRST: 1,
+  SECOND: 2,
+  THIRD: 3
+};
