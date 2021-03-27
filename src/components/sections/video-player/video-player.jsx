@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
 import {getPercent, getVideoDuration} from "../../../utils/utils";
 import "./video-player.css";
-import classnames from "classnames";
 
 const VideoProgress = ({currentPercent, movieDuration})=> {
   return (
@@ -37,6 +36,8 @@ const VideoPlayer = ({
   const videoRef = useRef();
 
   const iconControl = isPlaying ? ICON_NAME_PAUSE : ICON_NAME_PLAY;
+
+  const videoPlayerClassName = isPlaying && isMuted ? `video-player` : null;
 
   useEffect(()=> {
     const {duration} = videoRef.current;
@@ -76,7 +77,7 @@ const VideoPlayer = ({
   const handlePlayButtonClick = ()=> setIsPlaying(!isPlaying);
 
   return (
-    <div className={classnames({[`video-player`]: isPlaying && isMuted})} onMouseLeave={onMouseLeave}>
+    <div className={videoPlayerClassName} onMouseLeave={onMouseLeave}>
       <video
         id={id}
         ref={videoRef}
