@@ -4,4 +4,4 @@ export const ActionErrorType = {
   CATCH_ERROR: `errors/catchError`,
 };
 
-export const catchError = () => createAction(ActionErrorType.CATCH_ERROR);
+export const catchError = createAction(ActionErrorType.CATCH_ERROR);
