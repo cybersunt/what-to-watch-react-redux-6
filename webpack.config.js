@@ -1,5 +1,7 @@
 const path = require('path');
-const MomentLocalesPlugin = require(`moment-locales-webpack-plugin`);
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -21,7 +23,22 @@ module.exports = {
         use: {
           loader: 'babel-loader',
         },
-      }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+        ],
+      },
+    ],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin(),
     ],
   },
   resolve: {
@@ -29,6 +46,9 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-    new MomentLocalesPlugin()
+    new MomentLocalesPlugin(),
+    new MiniCssExtractPlugin({
+      filename: './css/style.css'
+    })
   ]
 };
