@@ -1,6 +1,6 @@
 import {createAPI} from "../services/api";
 import {redirect} from "./middlewares/redirect";
-import {ActionAuthType, requireAuthorization} from "./user-data/user-data-action";
+import {requireAuthorization} from "./user-data/user-data-action";
 import {configureStore} from "@reduxjs/toolkit";
 import {fetchPromoMovie} from "./movie-data/movie-data-api-actions";
 import {checkAuth} from "./user-data/user-data-api-action";
