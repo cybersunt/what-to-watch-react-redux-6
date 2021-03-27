@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
 import {getPercent, getVideoDuration} from "../../../utils/utils";
 import "./video-player.css";
+import classnames from "classnames";
 
 const VideoProgress = ({currentPercent, movieDuration})=> {
   return (
@@ -36,8 +37,6 @@ const VideoPlayer = ({
   const videoRef = useRef();
 
   const iconControl = isPlaying ? ICON_NAME_PAUSE : ICON_NAME_PLAY;
-
-  const videoPlayerClassName = isPlaying && isMuted ? `video-player` : null;
 
   useEffect(()=> {
     const {duration} = videoRef.current;
@@ -77,7 +76,7 @@ const VideoPlayer = ({
   const handlePlayButtonClick = ()=> setIsPlaying(!isPlaying);
 
   return (
-    <div className={videoPlayerClassName} onMouseLeave={onMouseLeave}>
+    <div className={classnames(`player`, {[`video-player`]: isPlaying && isMuted})}>
       <video
         id={id}
         ref={videoRef}
@@ -85,7 +84,8 @@ const VideoPlayer = ({
         className="player__video"
         poster="img/player-poster.jpg"
         onTimeUpdate={handleTimeUpdate}
-        muted={true}/>
+        muted={true}
+        onMouseLeave={onMouseLeave}/>
 
       {isPlaying && !isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
@@ -114,6 +114,7 @@ const VideoPlayer = ({
           </button>
         </div>
       </div>
+
     </div>
   );
 };

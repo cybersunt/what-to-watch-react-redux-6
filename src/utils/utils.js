@@ -5,7 +5,7 @@ import {
   HUNDRED,
   MovieNameRating,
   ONE_HOUR, ONE_HOUR_MINUTES, ONE_HOUR_SECONDS,
-  ONE_MINUTE,
+  ONE_MINUTE, ONE_MINUTE_SECONDS,
   ONE_SECOND,
 } from "../constants/constants";
 
