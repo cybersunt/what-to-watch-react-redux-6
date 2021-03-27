@@ -5,13 +5,7 @@ import PageFooter from "../../sections/page-footer/page-footer";
 import PageHeader from "../../sections/page-header/page-header";
 import {Link} from "react-router-dom";
 import {RoutePath} from "../../../constants/constants";
-
-// FIXME: вынести стили в отдельный файл
-const pageHeaderHeight = `98px`;
-const pageFooterHeight = `94px`;
-const pageVerticalPadding = `85px`;
-
-const pageContentHeight = `calc(100vh - (${pageHeaderHeight} + ${pageFooterHeight} + ${pageVerticalPadding}))`;
+import "./not-found.css";
 
 const NotFound = () => {
 
@@ -19,10 +13,10 @@ const NotFound = () => {
     <MainLayout>
       <InnerLayout className={`page-content`}>
         <PageHeader isLogin={false}/>
-        <div style={{display: `flex`, flexDirection: `column`, justifyContent: `center`, alignItems: `center`, height: pageContentHeight}}>
+        <div className="not-found-page">
           <h1>404. Page not found</h1>
           <h2>
-            <Link to={RoutePath.ROOT} style={{color: `#c9b37e`, textDecoration: `none`}}>Вернуться на главную</Link>
+            <Link to={RoutePath.ROOT} className="not-found-page-link">Вернуться на главную</Link>
           </h2>
         </div>
         <PageFooter/>

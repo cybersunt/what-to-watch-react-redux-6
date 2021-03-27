@@ -1,0 +1,10 @@
+.video-player {
+  position: relative;
+  width: 260px;
+  height: 175px;
+  margin-right: 10px;
+}
+
+.video-player:nth-child(4n) {
+  margin-right: 0;
+}

@@ -11,12 +11,14 @@ const Player = ({id}) => {
   const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
   const {videoLink} = currentMovie;
 
-  return isCurrentMovieLoaded ?
-    (<MainLayout>
-      <VideoPlayer
+  return (
+    <MainLayout>
+      {isCurrentMovieLoaded ? <VideoPlayer
         src={videoLink}
-        onButtonExitClick={()=> history.goBack()}/>
-    </MainLayout>) : <div className="movie-card" style={{height: `100vh`, display: `flex`, alignItems: `center`}}><Loader/></div>;
+        isCurrentMovieLoaded={isCurrentMovieLoaded}
+        onButtonExitClick={()=> history.goBack()}/> : <Loader fullscreen/>}
+    </MainLayout>
+  );
 };
 
 Player.propTypes = {...MoviesList.propTypes};

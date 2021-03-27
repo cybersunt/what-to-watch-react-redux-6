@@ -2,6 +2,22 @@ import React, {useRef, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
 import {getPercent, getRuntimeInMinutes} from "../../../utils/utils";
+import "./video-player.css";
+import classnames from "classnames";
+
+const VideoProgress = ({currentPercent, movieDuration})=> {
+  return (
+    <div className="player__controls-row">
+      <div className="player__time">
+        <progress className="player__progress" value={currentPercent} max="100"/>
+        <div className="player__toggler" style={{left: `${currentPercent}%`}}>Toggler</div>
+      </div>
+      <div className="player__time-value">{movieDuration}</div>
+    </div>
+  );
+};
+
+VideoProgress.propTypes = {currentPercent: PropTypes.number, movieDuration: PropTypes.string};
 
 const VideoPlayer = ({
   id,
@@ -22,15 +38,13 @@ const VideoPlayer = ({
 
   const iconControl = isPlaying ? ICON_NAME_PAUSE : ICON_NAME_PLAY;
 
-  const style = (isPlaying && isMuted) ? {position: `relative`, width: `280px`, height: `175px`, marginRight: `10px`} : null;
-
   useEffect(()=> {
     const {duration} = videoRef.current;
-    if (videoRef.current) {
+    if (videoRef.current && !isLoading) {
       setMovieDuration(duration);
       setMovieDurationStr(getRuntimeInMinutes(duration));
     }
-  });
+  }, [videoRef, isLoading]);
 
 
   useEffect(() => {
@@ -62,7 +76,7 @@ const VideoPlayer = ({
   const handlePlayButtonClick = ()=> setIsPlaying(!isPlaying);
 
   return (
-    <div className="player" style={style} onMouseLeave={onMouseLeave}>
+    <div className={classnames({[`video-player`]: isPlaying && isMuted})} onMouseLeave={onMouseLeave}>
       <video
         id={id}
         ref={videoRef}
@@ -75,13 +89,7 @@ const VideoPlayer = ({
       {isPlaying && !isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
       <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value={currentPercent} max="100"/>
-            <div className="player__toggler" style={{left: `${currentPercent}%`}}>Toggler</div>
-          </div>
-          <div className="player__time-value">{movieDurationStr}</div>
-        </div>
+        <VideoProgress currentPercent={currentPercent} movieDuration={movieDurationStr}/>
 
         <div className="player__controls-row">
           <button
