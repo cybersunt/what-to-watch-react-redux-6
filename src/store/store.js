@@ -17,10 +17,6 @@ const store = configureStore({
     getDefaultMiddleware({
       thunk: {
         extraArgument: api
-      },
-      serializableCheck: {
-        // Ignore these action types
-        ignoredActions: [ActionAuthType.LOG_OUT, ActionAuthType.LOAD_AUTH_INFO],
       }
     }).concat(redirect)
 });
