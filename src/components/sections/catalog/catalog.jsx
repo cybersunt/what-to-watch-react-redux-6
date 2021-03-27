@@ -54,7 +54,7 @@ const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TIT
 
       {definedMovies.length > renderedMoviesCount ? <ButtonShowMore onClick={handleButtonShowMoreClick}/> : null}
 
-    </section>) : <Loader/>;
+    </section>) : <Loader container={false}/>;
 };
 
 Catalog.propTypes = {
