@@ -1,6 +1,6 @@
 import {createAPI} from "../services/api";
 import {redirect} from "./middlewares/redirect";
-import {requireAuthorization} from "./user-data/user-data-action";
+import {ActionAuthType, requireAuthorization} from "./user-data/user-data-action";
 import {configureStore} from "@reduxjs/toolkit";
 import {fetchPromoMovie} from "./movie-data/movie-data-api-actions";
 import {checkAuth} from "./user-data/user-data-api-action";
@@ -18,6 +18,10 @@ const store = configureStore({
       thunk: {
         extraArgument: api
       },
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: [ActionAuthType.LOG_OUT, ActionAuthType.LOAD_AUTH_INFO],
+      }
     }).concat(redirect)
 });
 
