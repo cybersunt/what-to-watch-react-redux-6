@@ -1,0 +1,22 @@
+.login-link {
+  margin-left:auto;
+  color: #DFCF77;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 15px;
+  -webkit-transition: font-weight;
+  transition: font-weight; }
+.login-link::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  height: 1px;
+  bottom: 0;
+  background: #D9CD8D;
+  display: none;
+}
+.login-link:hover::after {
+  display: block;
+}
