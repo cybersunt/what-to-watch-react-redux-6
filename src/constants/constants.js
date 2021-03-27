@@ -5,6 +5,11 @@ import MovieCardTabDetails from "../components/blocks/movie-card-tabs/movie-card
 export const HUNDRED = 100;
 export const ONE_HOUR = 60;
 export const ONE_MINUTE = 60;
+export const ONE_SECOND = 1000; // milliseconds
+export const ONE_HOUR_SECONDS = 3600;
+export const ONE_HOUR_MINUTES = 60;
+export const ONE_MINUTE_SECONDS = 60;
+
 export const COUNT_COL = 2;
 
 export const MOVIES_COUNT_PER_STEP = 8;

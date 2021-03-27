@@ -1,5 +1,13 @@
 import moment from "moment";
-import {COUNT_COL, DEFAULT_MOVIE_GENRE, HUNDRED, MovieNameRating, ONE_HOUR, ONE_MINUTE} from "../constants/constants";
+import {
+  COUNT_COL,
+  DEFAULT_MOVIE_GENRE,
+  HUNDRED,
+  MovieNameRating,
+  ONE_HOUR, ONE_HOUR_MINUTES, ONE_HOUR_SECONDS,
+  ONE_MINUTE,
+  ONE_SECOND,
+} from "../constants/constants";
 
 export const getMovieRatingText = (rating) => {
   switch (true) {
@@ -25,11 +33,22 @@ export const getRuntimeInHours = (runtime) => {
   return [hours, minutes];
 };
 
-export const getRuntimeInMinutes = (runtime) => {
-  const minutes = Math.floor(runtime / ONE_MINUTE);
-  const seconds = Math.floor(runtime % ONE_MINUTE);
+export const getVideoDuration = (runtime) => {
+  const runTimeSeconds = runtime / ONE_SECOND;
 
-  return `${minutes}:${seconds}`;
+  if (runTimeSeconds >= ONE_HOUR_SECONDS) {
+    const hours = Math.floor(runTimeSeconds / ONE_HOUR_SECONDS);
+    const minutes = Math.floor((runTimeSeconds - ONE_HOUR_SECONDS) / ONE_HOUR_MINUTES);
+    const seconds = runTimeSeconds - (ONE_HOUR_SECONDS + minutes * ONE_MINUTE_SECONDS);
+
+    return `${hours}:${minutes}:${seconds}`;
+
+  } else {
+    const minutes = Math.floor(runtime / ONE_MINUTE);
+    const seconds = Math.floor(runtime % ONE_MINUTE);
+
+    return `${minutes}:${seconds}`;
+  }
 };
 
 export const getPercent = (part, whole) => part * HUNDRED / whole;

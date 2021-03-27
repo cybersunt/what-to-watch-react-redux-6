@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
-import {getPercent, getRuntimeInMinutes} from "../../../utils/utils";
+import {getPercent, getVideoDuration} from "../../../utils/utils";
 import "./video-player.css";
 import classnames from "classnames";
 
@@ -42,7 +42,7 @@ const VideoPlayer = ({
     const {duration} = videoRef.current;
     if (videoRef.current && !isLoading) {
       setMovieDuration(duration);
-      setMovieDurationStr(getRuntimeInMinutes(duration));
+      setMovieDurationStr(getVideoDuration(duration));
     }
   }, [videoRef, isLoading]);
 
