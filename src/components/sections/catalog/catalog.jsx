@@ -10,20 +10,20 @@ import {showMoreMovies} from "../../../store/movies-filter/movies-filter-action"
 import useFilter from "../../../hooks/use-filter";
 import {fetchMoviesList} from "../../../store/movies-data/movies-data-api-actions";
 import {fetchMyMoviesList} from "../../../store/user-actions/user-actions-api-action";
-import {DEFAULT_CATALOG_TITLE} from "../../../constants/constants";
+import {DEFAULT_CATALOG_TITLE, MAX_SIMILAR_MOVIES} from "../../../constants/constants";
 
-const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TITLE, className}) => {
+const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TITLE, className, currentMovieGenre}) => {
 
   const {movies, isDataLoaded} = useSelector((state) => state.DATA);
   const {favoriteMovies, isMyDataLoaded} = useSelector((state) => state.USER_ACTIONS);
-  const {currentMovieGenre} = useSelector((state) => state.DATA_ITEM);
   const {currentFilterGenre, renderedMoviesCount} = useSelector((state) => state.FILTERS);
 
   const dispatch = useDispatch();
 
   const filteredMovies = useFilter(isDataLoaded, movies, currentFilterGenre);
   const similarMovies = movies.filter(({genre}) => genre === currentMovieGenre);
-  const moviesItems = currentMovieGenre ? similarMovies : filteredMovies;
+  const limitedSimilarMovies = similarMovies.length > MAX_SIMILAR_MOVIES ? similarMovies.slice(0, Math.min(similarMovies.length, MAX_SIMILAR_MOVIES)) : similarMovies;
+  const moviesItems = currentMovieGenre ? limitedSimilarMovies : filteredMovies;
   const definedMovies = favorites ? favoriteMovies : moviesItems;
   const limitedMoviesList = definedMovies.length > renderedMoviesCount ? definedMovies.slice(0, Math.min(moviesItems.length, renderedMoviesCount)) : definedMovies;
   const moviesList = definedMovies.length === 0 ? definedMovies : limitedMoviesList;
@@ -61,7 +61,8 @@ Catalog.propTypes = {
   favorites: PropTypes.bool,
   filter: PropTypes.bool,
   title: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  currentMovieGenre: PropTypes.string
 };
 
 export default Catalog;

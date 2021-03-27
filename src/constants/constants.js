@@ -14,6 +14,7 @@ export const COUNT_COL = 2;
 
 export const MOVIES_COUNT_PER_STEP = 8;
 export const MAX_DISPLAY_COUNT_GENRES = 10;
+export const MAX_SIMILAR_MOVIES = 4;
 
 export const MIN_LENGTH_COMMENT = 50;
 export const MAX_LENGTH_COMMENT = 400;
