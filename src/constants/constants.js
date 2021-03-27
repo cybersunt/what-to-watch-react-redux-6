@@ -29,7 +29,7 @@ export const DEFAULT_CATALOG_TITLE = `Catalog`;
 export const ICON_NAME_PAUSE = `#pause`;
 export const ICON_NAME_PLAY = `#play-s`;
 
-export const EMAIL_VALID = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+export const EMAIL_VALID = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const starsArray = [
   {id: 0, stars: 1, checked: false},
@@ -62,6 +62,7 @@ export const RoutePath = {
 
 export const APIRoute = {
   LOGIN: `/login`,
+  LOG_OUT: `/logout`,
   FILMS: `/films`,
   FILM_ID: `/films/:id`,
   PROMO_FILM: `/films/promo`,
