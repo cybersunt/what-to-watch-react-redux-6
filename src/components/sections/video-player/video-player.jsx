@@ -59,12 +59,15 @@ const VideoPlayer = ({
 
   useEffect(() => {
     if (videoRef.current && isPlaying) {
-      videoRef.current.play();
+      const playPromise = videoRef.current.play();
+
+      if (playPromise) {
+        playPromise.catch(()=> {});
+      }
       return;
     }
     videoRef.current.pause();
   }, [videoRef, isPlaying]);
-
 
   const handleTimeUpdate = () => {
     const {currentTime} = videoRef.current;

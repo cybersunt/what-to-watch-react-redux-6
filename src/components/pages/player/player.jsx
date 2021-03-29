@@ -10,7 +10,7 @@ const Player = ({id}) => {
   const history = useHistory();
   const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
   const {videoLink} = currentMovie;
-  
+
   return (
     <MainLayout>
       {isCurrentMovieLoaded ? <VideoPlayer
