@@ -4,16 +4,18 @@ import Tooltip from "../tooltip/tooltip";
 import {useHistory} from "react-router-dom";
 import {logout} from "../../../store/user-data/user-data-api-action";
 import {AuthorizationStatus, RoutePath} from "../../../constants/constants";
+import './user-block.css';
 
 const SignIn = () => {
   const history = useHistory();
-  const onSignIn = (evt)=> {
+
+  const handleSignIn = (evt)=> {
     evt.preventDefault();
     history.push(RoutePath.LOGIN);
   };
 
   return (
-    <a href="#" className="login-link" onClick={onSignIn}>Sign in</a>
+    <a href="#" className="login-link" onClick={handleSignIn}>Sign in</a>
   );
 };
 
@@ -35,7 +37,7 @@ const UserBlock = () => {
   };
 
   return authorizationStatus === AuthorizationStatus.AUTH ?
-    (<Tooltip onClick={handleLogOut} title="Log out" style={{marginLeft: `auto`}}>
+    (<Tooltip onClick={handleLogOut} title="Log out" className="tooltip-alignment">
       <div className="user-block" style={style} onClick={()=> history.push(RoutePath.MY_LIST)}>
         <div className="user-block__avatar">
           <img src={userPicture} alt="User avatar" width="63" height="63"/>

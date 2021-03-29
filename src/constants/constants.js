@@ -5,10 +5,16 @@ import MovieCardTabDetails from "../components/blocks/movie-card-tabs/movie-card
 export const HUNDRED = 100;
 export const ONE_HOUR = 60;
 export const ONE_MINUTE = 60;
+export const ONE_SECOND = 1000; // milliseconds
+export const ONE_HOUR_SECONDS = 3600;
+export const ONE_HOUR_MINUTES = 60;
+export const ONE_MINUTE_SECONDS = 60;
+
 export const COUNT_COL = 2;
 
 export const MOVIES_COUNT_PER_STEP = 8;
 export const MAX_DISPLAY_COUNT_GENRES = 10;
+export const MAX_SIMILAR_MOVIES = 4;
 
 export const MIN_LENGTH_COMMENT = 50;
 export const MAX_LENGTH_COMMENT = 400;
@@ -16,13 +22,15 @@ export const MAX_ID_FILM = 25;
 
 export const TIMEOUT_MSEC = 1000;
 
+export const STATUS_ADD_MOVIE = 1;
+
 export const DEFAULT_MOVIE_GENRE = `All genres`;
 export const DEFAULT_CATALOG_TITLE = `Catalog`;
 
 export const ICON_NAME_PAUSE = `#pause`;
 export const ICON_NAME_PLAY = `#play-s`;
 
-export const EMAIL_VALID = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+export const EMAIL_VALID = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const starsArray = [
   {id: 0, stars: 1, checked: false},
@@ -55,6 +63,7 @@ export const RoutePath = {
 
 export const APIRoute = {
   LOGIN: `/login`,
+  LOG_OUT: `/logout`,
   FILMS: `/films`,
   FILM_ID: `/films/:id`,
   PROMO_FILM: `/films/promo`,
@@ -82,3 +91,9 @@ export const TabsItems = [
   {id: 2, name: `Details`, component: MovieCardTabDetails},
   {id: 3, name: `Reviews`, component: MovieCardTabReviews}
 ];
+
+export const TabsKeys = {
+  FIRST: 1,
+  SECOND: 2,
+  THIRD: 3
+};

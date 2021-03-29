@@ -1,0 +1,19 @@
+:root {
+  --page-header-height: 98px;
+  --page-footer-height: 94px;
+  --page-vertical-padding: 98px;
+  --page-content-height: calc(100vh - (var(--page-header-height) + var(--page-footer-height) + var(--page-vertical-padding)));
+}
+
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: var(--page-content-height);
+}
+
+.not-found-page-link {
+  color: #c9b37e;
+  text-decoration: none;
+}

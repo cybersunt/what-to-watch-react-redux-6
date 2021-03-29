@@ -13,7 +13,6 @@ export const fetchMyMoviesList = () => (dispatch, _getState, api) => (
 export const addMovieMyMovieList = ({filmId, status}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.MY_LIST}/${filmId}/${status}`, {filmId, status})
     .then(({data}) => dispatch(addFavoriteMovie(data)))
-    // .then((data) => dispatch(loadFavoriteMovies(data)))
 );
 
 export const addReview = (id, {comment, rating}) => (dispatch, _getState, api) => (

@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import './tooltip.css';
+import classnames from "classnames";
 
-const Tooltip = ({children, title, style, onClick}) => {
+const Tooltip = ({children, title, className, onClick}) => {
   return (
-    <div className="tooltip" style={style}>
+    <div className={classnames(`tooltip`, className)}>
       {children}
-      <div className="tooltip-content tooltip-left" onClick={onClick} style={{cursor: `pointer`}}>{title}</div>
+      <div className="tooltip-content tooltip-left" onClick={onClick}>{title}</div>
     </div>
   );
 };
@@ -13,7 +15,7 @@ const Tooltip = ({children, title, style, onClick}) => {
 Tooltip.propTypes = {
   children: PropTypes.node,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  style: PropTypes.objectOf(PropTypes.string),
+  className: PropTypes.string,
   onClick: PropTypes.func
 };
 

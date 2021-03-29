@@ -17,7 +17,7 @@ const store = configureStore({
     getDefaultMiddleware({
       thunk: {
         extraArgument: api
-      },
+      }
     }).concat(redirect)
 });
 

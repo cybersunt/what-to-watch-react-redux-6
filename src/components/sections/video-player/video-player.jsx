@@ -1,7 +1,23 @@
 import React, {useRef, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {ICON_NAME_PAUSE, ICON_NAME_PLAY} from "../../../constants/constants";
-import {getPercent, getRuntimeInMinutes} from "../../../utils/utils";
+import {getPercent, getVideoDuration} from "../../../utils/utils";
+import "./video-player.css";
+import classnames from "classnames";
+
+const VideoProgress = ({currentPercent, movieDuration})=> {
+  return (
+    <div className="player__controls-row">
+      <div className="player__time">
+        <progress className="player__progress" value={currentPercent} max="100"/>
+        <div className="player__toggler" style={{left: `${currentPercent}%`}}>Toggler</div>
+      </div>
+      <div className="player__time-value">{movieDuration}</div>
+    </div>
+  );
+};
+
+VideoProgress.propTypes = {currentPercent: PropTypes.number, movieDuration: PropTypes.string};
 
 const VideoPlayer = ({
   id,
@@ -22,35 +38,37 @@ const VideoPlayer = ({
 
   const iconControl = isPlaying ? ICON_NAME_PAUSE : ICON_NAME_PLAY;
 
-  const style = (isPlaying && isMuted) ? {position: `relative`, width: `280px`, height: `175px`, marginRight: `10px`} : null;
-
   useEffect(()=> {
     const {duration} = videoRef.current;
-    if (videoRef.current) {
+    if (videoRef.current && !isLoading) {
       setMovieDuration(duration);
-      setMovieDurationStr(getRuntimeInMinutes(duration));
+      setMovieDurationStr(getVideoDuration(duration));
     }
-  });
+  }, [videoRef, isLoading]);
 
 
   useEffect(() => {
     videoRef.current.oncanplaythrough = () => setIsLoading(false);
+
     return () => {
       videoRef.current.oncanplaythrough = null;
       videoRef.current.onplay = null;
       videoRef.current.onpause = null;
       videoRef.current = null;
     };
-  }, [src]);
+  }, [src, videoRef]);
 
   useEffect(() => {
     if (videoRef.current && isPlaying) {
-      videoRef.current.play();
+      const playPromise = videoRef.current.play();
+
+      if (playPromise) {
+        playPromise.catch(()=> {});
+      }
       return;
     }
     videoRef.current.pause();
   }, [videoRef, isPlaying]);
-
 
   const handleTimeUpdate = () => {
     const {currentTime} = videoRef.current;
@@ -62,7 +80,7 @@ const VideoPlayer = ({
   const handlePlayButtonClick = ()=> setIsPlaying(!isPlaying);
 
   return (
-    <div className="player" style={style} onMouseLeave={onMouseLeave}>
+    <div className={classnames(`player`, {[`video-player`]: isPlaying && isMuted})} onMouseLeave={onMouseLeave}>
       <video
         id={id}
         ref={videoRef}
@@ -70,18 +88,12 @@ const VideoPlayer = ({
         className="player__video"
         poster="img/player-poster.jpg"
         onTimeUpdate={handleTimeUpdate}
-        muted={true}/>
+        muted={isMuted}/>
 
-      {isPlaying && !isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
+      {!isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
       <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value={currentPercent} max="100"/>
-            <div className="player__toggler" style={{left: `${currentPercent}%`}}>Toggler</div>
-          </div>
-          <div className="player__time-value">{movieDurationStr}</div>
-        </div>
+        <VideoProgress currentPercent={currentPercent} movieDuration={movieDurationStr}/>
 
         <div className="player__controls-row">
           <button
@@ -105,6 +117,7 @@ const VideoPlayer = ({
           </button>
         </div>
       </div>
+
     </div>
   );
 };
@@ -113,7 +126,7 @@ VideoPlayer.propTypes = {
   id: PropTypes.number,
   src: PropTypes.string.isRequired,
   isMuted: PropTypes.bool,
-  isPlaying: PropTypes.bool,
+  isPlayingVideo: PropTypes.bool,
   onButtonExitClick: PropTypes.func,
   onPlayButtonClick: PropTypes.func,
   onFullScreenButtonClick: PropTypes.func,

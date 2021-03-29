@@ -1,20 +1,20 @@
 import React, {useState} from "react";
 import MovieCardNav from "./movie-card-nav/movie-card-nav";
 import MovieCardTabContent from "../../../hocs/movie-card-tab-content";
-import {TabsItems} from "../../../constants/constants";
+import {TabsItems, TabsKeys} from "../../../constants/constants";
 
-const MovieCardTabs = ({activeKey, defaultActiveKey = 1, ...currentMovie}) => {
+const MovieCardTabs = ({activeKey, defaultActiveKey = TabsKeys.FIRST, ...currentMovie}) => {
 
   const [isActiveKey, setActiveKey] = useState(activeKey ? activeKey : defaultActiveKey);
 
-  const onClick = (evt) => {
+  const handleClick = (evt) => {
     evt.preventDefault();
     setActiveKey(Number(evt.target.id));
   };
 
   return (
     <div className="movie-card__desc">
-      <MovieCardNav items={TabsItems} activeKey={isActiveKey} onClick={onClick}/>
+      <MovieCardNav items={TabsItems} activeKey={isActiveKey} onClick={handleClick}/>
 
       {TabsItems.map(({id, name, component})=> (
         <MovieCardTabContent key={name} tabKey={id} activeKey={isActiveKey} Component={component} {...currentMovie}/>

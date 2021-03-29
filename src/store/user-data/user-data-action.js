@@ -3,7 +3,7 @@ import {createAction} from "@reduxjs/toolkit";
 export const ActionAuthType = {
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   LOAD_AUTH_INFO: `user/loadAuthInfo`,
-  LOG_OUT: `user/requiredAuthorization`,
+  LOG_OUT: `user/logOut`,
 };
 
 export const requireAuthorization = createAction(ActionAuthType.REQUIRED_AUTHORIZATION, (status) => {
