@@ -12,19 +12,17 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
   const history = useHistory();
   const [activeKey, setActiveKey] = useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
-  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
 
-  const onMouseLeave = () => {
+  const onMouseLeave = (evt) => {
+    evt.preventDefault();
     setTimeoutId(clearTimeout(timeoutId));
     setActiveKey(null);
-    setIsPlayingVideo(false);
   };
 
   const onMouseEnter = (evt)=> {
     evt.preventDefault();
     setTimeoutId(clearTimeout(timeoutId));
     setTimeoutId(setTimeout(()=> setActiveKey(id), TIMEOUT_MSEC));
-    setIsPlayingVideo(true);
   };
 
   return (
@@ -34,7 +32,6 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
           id={id}
           key={key}
           src={videoLink}
-          isPlayingVideo={isPlayingVideo}
           isMuted={true}
           onMouseLeave={onMouseLeave}
           onFullScreenButtonClick={()=> history.push(`${RoutePath.PLAYER}${id}`)}/> :

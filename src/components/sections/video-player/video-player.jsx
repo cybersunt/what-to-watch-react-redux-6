@@ -22,7 +22,6 @@ VideoProgress.propTypes = {currentPercent: PropTypes.number, movieDuration: Prop
 const VideoPlayer = ({
   id,
   isMuted = false,
-  isPlayingVideo = true,
   src,
   onButtonExitClick,
   onFullScreenButtonClick,
@@ -30,7 +29,7 @@ const VideoPlayer = ({
 }) => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(isPlayingVideo);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [movieDuration, setMovieDuration] = useState(0);
   const [movieDurationStr, setMovieDurationStr] = useState(``);
   const [currentPercent, setPercent] = useState(0);
@@ -77,7 +76,7 @@ const VideoPlayer = ({
   const handlePlayButtonClick = ()=> setIsPlaying(!isPlaying);
 
   return (
-    <div className={classnames(`player`, {[`video-player`]: isPlaying && isMuted})}>
+    <div className={classnames(`player`, {[`video-player`]: isPlaying && isMuted})} onMouseLeave={onMouseLeave}>
       <video
         id={id}
         ref={videoRef}
@@ -85,8 +84,7 @@ const VideoPlayer = ({
         className="player__video"
         poster="img/player-poster.jpg"
         onTimeUpdate={handleTimeUpdate}
-        muted={true}
-        onMouseLeave={onMouseLeave}/>
+        muted={true}/>
 
       {!isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
