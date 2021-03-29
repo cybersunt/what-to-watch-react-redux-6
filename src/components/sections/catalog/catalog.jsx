@@ -43,7 +43,7 @@ const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TIT
     if (authorizationStatus === AuthorizationStatus.AUTH && (!isMyDataLoaded || favoriteMovies)) {
       dispatch(fetchMyMoviesList());
     }
-  }, [isMyDataLoaded, authorizationStatus]);
+  }, [isMyDataLoaded, favoriteMovies]);
 
   return (isDataLoaded || isMyDataLoaded) ?
     (<section className={(classnames(`catalog`, className))}>
