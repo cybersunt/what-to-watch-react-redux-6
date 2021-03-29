@@ -40,10 +40,10 @@ const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TIT
   }, [isDataLoaded]);
 
   useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.AUTH && (!isMyDataLoaded || favoriteMovies)) {
+    if ((authorizationStatus === AuthorizationStatus.AUTH && favorites) && (!isMyDataLoaded || favoriteMovies)) {
       dispatch(fetchMyMoviesList());
     }
-  }, [isMyDataLoaded, favoriteMovies]);
+  }, [isMyDataLoaded, favorites]);
 
   return (isDataLoaded || isMyDataLoaded) ?
     (<section className={(classnames(`catalog`, className))}>
