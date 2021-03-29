@@ -22,6 +22,7 @@ VideoProgress.propTypes = {currentPercent: PropTypes.number, movieDuration: Prop
 const VideoPlayer = ({
   id,
   isMuted = false,
+  isPlayingVideo = true,
   src,
   onButtonExitClick,
   onFullScreenButtonClick,
@@ -29,7 +30,7 @@ const VideoPlayer = ({
 }) => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(isPlayingVideo);
   const [movieDuration, setMovieDuration] = useState(0);
   const [movieDurationStr, setMovieDurationStr] = useState(``);
   const [currentPercent, setPercent] = useState(0);
@@ -123,7 +124,7 @@ VideoPlayer.propTypes = {
   id: PropTypes.number,
   src: PropTypes.string.isRequired,
   isMuted: PropTypes.bool,
-  isPlaying: PropTypes.bool,
+  isPlayingVideo: PropTypes.bool,
   onButtonExitClick: PropTypes.func,
   onPlayButtonClick: PropTypes.func,
   onFullScreenButtonClick: PropTypes.func,
