@@ -13,13 +13,13 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
   const [activeKey, setActiveKey] = useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
 
-  const onMouseLeave = (evt) => {
+  const handleMouseLeave = (evt) => {
     evt.preventDefault();
     setTimeoutId(clearTimeout(timeoutId));
     setActiveKey(null);
   };
 
-  const onMouseEnter = (evt)=> {
+  const handleMouseEnter = (evt)=> {
     evt.preventDefault();
     setTimeoutId(clearTimeout(timeoutId));
     setTimeoutId(setTimeout(()=> setActiveKey(id), TIMEOUT_MSEC));
@@ -33,15 +33,15 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
           key={key}
           src={videoLink}
           isMuted={true}
-          onMouseLeave={onMouseLeave}
+          onMouseLeave={handleMouseLeave}
           onFullScreenButtonClick={()=> history.push(`${RoutePath.PLAYER}${id}`)}/> :
         <MovieCardPreview
           id={id}
           key={key}
           name={name}
           previewImage={previewImage}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}/>}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}/>}
     </>
   );
 };

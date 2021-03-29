@@ -7,14 +7,14 @@ const MovieCardTabs = ({activeKey, defaultActiveKey = TabsKeys.FIRST, ...current
 
   const [isActiveKey, setActiveKey] = useState(activeKey ? activeKey : defaultActiveKey);
 
-  const onClick = (evt) => {
+  const handleClick = (evt) => {
     evt.preventDefault();
     setActiveKey(Number(evt.target.id));
   };
 
   return (
     <div className="movie-card__desc">
-      <MovieCardNav items={TabsItems} activeKey={isActiveKey} onClick={onClick}/>
+      <MovieCardNav items={TabsItems} activeKey={isActiveKey} onClick={handleClick}/>
 
       {TabsItems.map(({id, name, component})=> (
         <MovieCardTabContent key={name} tabKey={id} activeKey={isActiveKey} Component={component} {...currentMovie}/>

@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 const Link = ({className, pathName, children})=> {
   const history = useHistory();
 
-  const onClick = (evt) => {
+  const handleClick = (evt) => {
     evt.preventDefault();
     history.push(pathName);
   };
 
   return (
-    <a href="#" className={className} onClick={onClick}>{children}</a>
+    <a href="#" className={className} onClick={handleClick}>{children}</a>
   );
 };
 
