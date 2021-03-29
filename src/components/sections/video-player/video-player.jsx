@@ -87,7 +87,7 @@ const VideoPlayer = ({
         muted={true}
         onMouseLeave={onMouseLeave}/>
 
-      {isPlaying && !isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
+      {!isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
       <div className="player__controls">
         <VideoProgress currentPercent={currentPercent} movieDuration={movieDurationStr}/>
