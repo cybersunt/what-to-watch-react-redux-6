@@ -84,7 +84,7 @@ const VideoPlayer = ({
         className="player__video"
         poster="img/player-poster.jpg"
         onTimeUpdate={handleTimeUpdate}
-        muted={true}/>
+        muted={isMuted}/>
 
       {!isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
