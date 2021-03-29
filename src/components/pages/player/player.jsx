@@ -5,11 +5,13 @@ import MoviesList from "../../blocks/movies-list/movies-list";
 import Loader from "../../blocks/loader/loader";
 import {useHistory} from "react-router-dom";
 import useLoadedMovie from "../../../hooks/use-loaded-movie";
+import {useSelector} from "react-redux";
 
 const Player = ({id}) => {
   const history = useHistory();
   const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
-  const {videoLink} = currentMovie;
+  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
+  const videoLink = id === 1 ? promoMovie.videoLink : currentMovie.videoLink;
 
   return (
     <MainLayout>

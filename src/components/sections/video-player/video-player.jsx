@@ -49,13 +49,14 @@ const VideoPlayer = ({
 
   useEffect(() => {
     videoRef.current.oncanplaythrough = () => setIsLoading(false);
+
     return () => {
       videoRef.current.oncanplaythrough = null;
       videoRef.current.onplay = null;
       videoRef.current.onpause = null;
       videoRef.current = null;
     };
-  }, [src]);
+  }, [src, videoRef]);
 
   useEffect(() => {
     if (videoRef.current && isPlaying) {
@@ -78,11 +79,6 @@ const VideoPlayer = ({
 
   const handlePlayButtonClick = ()=> setIsPlaying(!isPlaying);
 
-  const handleButtonExitClick = ()=> {
-    onButtonExitClick();
-    setIsPlaying(!isPlaying);
-  };
-
   return (
     <div className={classnames(`player`, {[`video-player`]: isPlaying && isMuted})} onMouseLeave={onMouseLeave}>
       <video
@@ -94,7 +90,7 @@ const VideoPlayer = ({
         onTimeUpdate={handleTimeUpdate}
         muted={isMuted}/>
 
-      {!isMuted && (<button type="button" className="player__exit" onClick={handleButtonExitClick}>Exit</button>)}
+      {!isMuted && (<button type="button" className="player__exit" onClick={onButtonExitClick}>Exit</button>)}
 
       <div className="player__controls">
         <VideoProgress currentPercent={currentPercent} movieDuration={movieDurationStr}/>
