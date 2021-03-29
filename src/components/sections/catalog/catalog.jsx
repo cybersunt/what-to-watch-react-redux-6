@@ -10,10 +10,11 @@ import {showMoreMovies} from "../../../store/movies-filter/movies-filter-action"
 import useFilter from "../../../hooks/use-filter";
 import {fetchMoviesList} from "../../../store/movies-data/movies-data-api-actions";
 import {fetchMyMoviesList} from "../../../store/user-actions/user-actions-api-action";
-import {DEFAULT_CATALOG_TITLE, MAX_SIMILAR_MOVIES} from "../../../constants/constants";
+import {AuthorizationStatus, DEFAULT_CATALOG_TITLE, MAX_SIMILAR_MOVIES} from "../../../constants/constants";
 
 const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TITLE, className, currentMovieGenre}) => {
 
+  const {authorizationStatus} = useSelector((state) => state.USER_DATA);
   const {movies, isDataLoaded} = useSelector((state) => state.DATA);
   const {favoriteMovies, isMyDataLoaded} = useSelector((state) => state.USER_ACTIONS);
   const {currentFilterGenre, renderedMoviesCount} = useSelector((state) => state.FILTERS);
@@ -39,10 +40,10 @@ const Catalog = ({favorites = false, filter = false, title = DEFAULT_CATALOG_TIT
   }, [isDataLoaded]);
 
   useEffect(() => {
-    if (!isMyDataLoaded || favoriteMovies) {
+    if (authorizationStatus === AuthorizationStatus.AUTH && (!isMyDataLoaded || favoriteMovies)) {
       dispatch(fetchMyMoviesList());
     }
-  }, [isMyDataLoaded]);
+  }, [isMyDataLoaded, authorizationStatus]);
 
   return (isDataLoaded || isMyDataLoaded) ?
     (<section className={(classnames(`catalog`, className))}>

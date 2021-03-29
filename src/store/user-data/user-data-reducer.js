@@ -4,7 +4,7 @@ import {AuthorizationStatus} from "../../constants/constants";
 
 const initialState = {
   isUserDataReceived: false,
-  authorizationStatus: AuthorizationStatus.AUTH,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
   authInfo: {},
 };
 
