@@ -15,9 +15,10 @@ const GenresList = () => {
 
   const handleChangeFilter = (evt) => {
     evt.preventDefault();
+    const filterName = evt.target.id;
     if (evt.target.tagName === `A`) {
       dispatch(resetFilter());
-      dispatch(changeGenre(evt));
+      dispatch(changeGenre(filterName));
     }
   };
 

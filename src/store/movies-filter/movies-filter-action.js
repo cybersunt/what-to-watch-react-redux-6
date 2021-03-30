@@ -6,9 +6,9 @@ export const ActionFilterType = {
   SHOW_MORE: `moviesActions/showMoreMovies`
 };
 
-export const changeGenre = createAction(ActionFilterType.CHANGE_FILTER, (evt) => {
+export const changeGenre = createAction(ActionFilterType.CHANGE_FILTER, (filterName) => {
   return {
-    payload: evt.target.id
+    payload: filterName
   };
 });
 
