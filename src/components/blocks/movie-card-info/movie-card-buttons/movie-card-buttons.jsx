@@ -11,9 +11,13 @@ const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
 
-  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
+  const {promoMovie, currentMovie} = useSelector((state) => state.DATA_ITEM);
   const {authorizationStatus} = useSelector((state) => state.USER_DATA);
   const dispatch = useDispatch();
+
+  const {isFavorite} = currentMovie;
+
+  const iconButtonMuList = isFavorite ? `in-list` : `add`;
 
   const handleButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
 
@@ -36,7 +40,7 @@ const MovieCardButtons = ({fullVersion}) => {
 
       <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
         <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref="#add"></use>
+          <use xlinkHref={`#${iconButtonMuList}`}></use>
         </svg>
         <span>My list</span>
       </button>
