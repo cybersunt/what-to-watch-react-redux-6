@@ -22,6 +22,7 @@ export const MAX_ID_FILM = 25;
 
 export const TIMEOUT_MSEC = 1000;
 
+export const STATUS_DELETE_MOVIE = 0;
 export const STATUS_ADD_MOVIE = 1;
 
 export const DEFAULT_MOVIE_GENRE = `All genres`;
@@ -29,6 +30,8 @@ export const DEFAULT_CATALOG_TITLE = `Catalog`;
 
 export const ICON_NAME_PAUSE = `#pause`;
 export const ICON_NAME_PLAY = `#play-s`;
+export const ICON_NAME_ADD = `#add`;
+export const ICON_NAME_DELETE = `#in-list`;
 
 export const EMAIL_VALID = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 

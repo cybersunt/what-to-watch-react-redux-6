@@ -2,6 +2,7 @@ import {createAction} from "@reduxjs/toolkit";
 
 export const ActionMovieType = {
   LOAD_CURRENT_MOVIE: `movie/loadCurrentMovie`,
+  LOAD_UPDATE_CURRENT_MOVIE: `movie/loadUpdateCurrentMovie`,
   LOAD_PROMO_MOVIE: `movie/loadPromoMovie`,
   LOAD_COMMENTS: `movie/loadComments`,
 };
@@ -13,6 +14,12 @@ export const loadPromoMovie = createAction(ActionMovieType.LOAD_PROMO_MOVIE, (mo
 });
 
 export const loadCurrentMovie = createAction(ActionMovieType.LOAD_CURRENT_MOVIE, (movie) => {
+  return {
+    payload: movie
+  };
+});
+
+export const loadUpdateCurrentMovie = createAction(ActionMovieType.LOAD_UPDATE_CURRENT_MOVIE, (movie) => {
   return {
     payload: movie
   };

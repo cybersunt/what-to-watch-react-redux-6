@@ -1,31 +1,51 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {useParams} from "react-router";
 import Link from "../../link/link";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {addMovieMyMovieList} from "../../../../store/user-actions/user-actions-api-action";
-import {AuthorizationStatus, RoutePath, STATUS_ADD_MOVIE} from "../../../../constants/constants";
+import {
+  addMovieToMyMovieList,
+  deleteMovieFromMyMovieList,
+} from "../../../../store/user-actions/user-actions-api-action";
+import {
+  AuthorizationStatus,
+  ICON_NAME_ADD,
+  ICON_NAME_DELETE,
+  RoutePath,
+  STATUS_ADD_MOVIE, STATUS_DELETE_MOVIE,
+} from "../../../../constants/constants";
+import {fetchUpdateCurrentMovie} from "../../../../store/movie-data/movie-data-api-actions";
 
 const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
-
-  const {promoMovie, currentMovie} = useSelector((state) => state.DATA_ITEM);
+  const {promoMovie, currentMovie, currentUpdateMovie, isCurrentUpdateMovieLoaded} = useSelector((state) => state.DATA_ITEM);
   const {authorizationStatus} = useSelector((state) => state.USER_DATA);
   const dispatch = useDispatch();
+  const {isFavorite} = currentUpdateMovie;
 
-  const {isFavorite} = currentMovie;
+  const movieId = id === undefined ? promoMovie.id : currentMovie.id;
 
-  const iconButtonMuList = isFavorite ? `in-list` : `add`;
+  const iconButtonMyList = isFavorite ? ICON_NAME_DELETE : ICON_NAME_ADD;
+
+  useEffect(() => {
+    if (!isCurrentUpdateMovieLoaded || currentUpdateMovie) {
+      dispatch(fetchUpdateCurrentMovie(movieId));
+    }
+  }, [isCurrentUpdateMovieLoaded, currentUpdateMovie]);
 
   const handleButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
 
-  const onSubmit = () => {
-    return id === undefined ?
-      dispatch(addMovieMyMovieList({filmId: promoMovie.id, status: STATUS_ADD_MOVIE})) :
-      dispatch(addMovieMyMovieList({filmId: id, status: STATUS_ADD_MOVIE}));
+  const addFavoriteMovie = () => {
+    dispatch(addMovieToMyMovieList({filmId: movieId, status: STATUS_ADD_MOVIE}));
   };
+
+  const deleteFavoriteMovie = () => {
+    dispatch(deleteMovieFromMyMovieList({filmId: movieId, status: STATUS_DELETE_MOVIE}));
+  };
+
+  const onSubmit = isFavorite ? deleteFavoriteMovie : addFavoriteMovie;
 
   const handleSubmit = authorizationStatus === AuthorizationStatus.AUTH ? onSubmit : ()=> history.push(RoutePath.LOGIN);
 
@@ -40,7 +60,7 @@ const MovieCardButtons = ({fullVersion}) => {
 
       <button className="btn btn--list movie-card__button" type="button" onClick={handleSubmit}>
         <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref={`#${iconButtonMuList}`}></use>
+          <use xlinkHref={iconButtonMyList}></use>
         </svg>
         <span>My list</span>
       </button>
