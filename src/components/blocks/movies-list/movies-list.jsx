@@ -5,13 +5,14 @@ import MovieCardPreviewWithVideo from "../../../hocs/movie-card-preview-with-vid
 const MoviesList = ({movieItems}) => {
   return (
     <div className="catalog__movies-list">
-      {movieItems.map(({id, name, videoLink, previewImage}) => (
+      {movieItems.map(({id, name, videoLink, previewImage, posterImage}) => (
         <MovieCardPreviewWithVideo
           id={id}
           key={id}
           name={name}
           videoLink={videoLink}
-          previewImage={previewImage}/>
+          previewImage={previewImage}
+          posterImage={posterImage}/>
       ))}
     </div>
   );

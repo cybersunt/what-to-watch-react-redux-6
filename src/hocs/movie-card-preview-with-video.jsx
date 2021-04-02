@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
 import MovieCardPreview from "../components/blocks/movies-list/movie-card-preview/movie-card-preview";
 import VideoPlayer from "../components/sections/video-player/video-player";
-import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {getUpperCaseStringWithoutSpaces} from "../utils/utils";
-import {RoutePath, TIMEOUT_MSEC} from "../constants/constants";
+import {TIMEOUT_MSEC} from "../constants/constants";
 
 const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
 
   const key = getUpperCaseStringWithoutSpaces(name);
-  const history = useHistory();
   const [activeKey, setActiveKey] = useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
 
@@ -32,9 +30,9 @@ const MovieCardPreviewWithVideo = ({videoLink, id, name, previewImage}) => {
           id={id}
           key={key}
           src={videoLink}
+          previewImage={previewImage}
           isMuted={true}
-          onMouseLeave={handleMouseLeave}
-          onFullScreenButtonClick={()=> history.push(`${RoutePath.PLAYER}${id}`)}/> :
+          onMouseLeave={handleMouseLeave}/> :
         <MovieCardPreview
           id={id}
           key={key}

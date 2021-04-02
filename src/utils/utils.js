@@ -33,7 +33,9 @@ export const getRuntimeInHours = (runtime) => {
   return [hours, minutes];
 };
 
-export const getVideoDuration = (runtime) => {
+export const getSecondsForTimer = (seconds) => seconds < 10 ? `0${seconds}` : seconds;
+
+export const getVideoTimer = (runtime) => {
   const runTimeSeconds = runtime / ONE_SECOND;
 
   if (runTimeSeconds >= ONE_HOUR_SECONDS) {
@@ -41,13 +43,13 @@ export const getVideoDuration = (runtime) => {
     const minutes = Math.floor((runTimeSeconds - ONE_HOUR_SECONDS) / ONE_HOUR_MINUTES);
     const seconds = runTimeSeconds - (ONE_HOUR_SECONDS + minutes * ONE_MINUTE_SECONDS);
 
-    return `${hours}:${minutes}:${seconds}`;
+    return `${hours}:${minutes}:${getSecondsForTimer(seconds)}`;
 
   } else {
     const minutes = Math.floor(runtime / ONE_MINUTE);
     const seconds = Math.floor(runtime % ONE_MINUTE);
 
-    return `${minutes}:${seconds}`;
+    return `${minutes}:${getSecondsForTimer(seconds)}`;
   }
 };
 
