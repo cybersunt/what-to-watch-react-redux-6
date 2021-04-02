@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {addReview} from "../../../store/user-actions/user-actions-api-action";
 import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, starsArray} from "../../../constants/constants";
+import {current} from "@reduxjs/toolkit";
 
 const RatingStars = ({rating, onChange}) => {
   return (
@@ -44,18 +45,20 @@ const AddReviewForm = () => {
   const userRating = rating.find((el) => el.checked === true);
   const disabledSubmit = userRating === undefined || isNewReview === `` || messageLength < MIN_LENGTH_COMMENT || messageLength > MAX_LENGTH_COMMENT;
 
-  const selectedStars = (value) => {
-    const currentValue = Number(value);
-    const setValue = rating.find((el) => el.stars === currentValue);
-    const oldItem = rating[setValue.id];
-    const newItem = {...oldItem, checked: true};
+  const updateStarsArray = (indexItem, value) => {
+    const oldItem = rating[indexItem];
+    const newItem = {...oldItem, checked: value};
     const newArray = [
-      ...rating.slice(0, setValue.id),
+      ...rating.slice(0, indexItem),
       newItem,
-      ...rating.slice(setValue.id + 1, rating.length)
+      ...rating.slice(indexItem + 1, rating.length)
     ];
     return newArray;
   };
+
+  const resetStars = (indexItem) => updateStarsArray(indexItem, false);
+
+  const setStars = (value) => updateStarsArray(Number(value) - 1, true);
 
   const handleFieldChange = (evt) => {
     const {value} = evt.target;
@@ -65,8 +68,9 @@ const AddReviewForm = () => {
 
   const handleCheckboxesChange = (evt) => {
     const {value} = evt.target;
-    const newData = selectedStars(value);
-    setRating(newData);
+    const currentRating = rating.find((el) => el.checked === true);
+    setRating(resetStars(currentRating.id));
+    setRating(setStars(value));
   };
 
   const handleSubmit = (evt) => {
