@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {useParams} from "react-router";
 import Link from "../../link/link";
@@ -15,34 +15,42 @@ import {
   RoutePath,
   STATUS_ADD_MOVIE, STATUS_DELETE_MOVIE,
 } from "../../../../constants/constants";
-import {fetchUpdateCurrentMovie} from "../../../../store/movie-data/movie-data-api-actions";
 
 const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
-  const {promoMovie, currentMovie, currentUpdateMovie, isCurrentUpdateMovieLoaded} = useSelector((state) => state.DATA_ITEM);
+  const {promoMovie, currentMovie} = useSelector((state) => state.DATA_ITEM);
   const {authorizationStatus} = useSelector((state) => state.USER_DATA);
   const dispatch = useDispatch();
-  const {isFavorite} = currentUpdateMovie;
-
   const movieId = id === undefined ? promoMovie.id : currentMovie.id;
+  const activeMovie = id === undefined ? promoMovie : currentMovie;
+  const [actualMovie, setActualMovie] = useState(activeMovie);
+  const {isFavorite} = actualMovie;
 
   const iconButtonMyList = isFavorite ? ICON_NAME_DELETE : ICON_NAME_ADD;
 
-  useEffect(() => {
-    if (!isCurrentUpdateMovieLoaded || currentUpdateMovie) {
-      dispatch(fetchUpdateCurrentMovie(movieId));
+  useEffect(()=> {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      setActualMovie(Object.assign({}, activeMovie, {
+        isFavorite: false
+      }));
     }
-  }, [isCurrentUpdateMovieLoaded, currentUpdateMovie]);
+  }, [authorizationStatus]);
 
   const handleButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
 
   const addFavoriteMovie = () => {
     dispatch(addMovieToMyMovieList({filmId: movieId, status: STATUS_ADD_MOVIE}));
+    setActualMovie(Object.assign({}, activeMovie, {
+      isFavorite: true
+    }));
   };
 
   const deleteFavoriteMovie = () => {
     dispatch(deleteMovieFromMyMovieList({filmId: movieId, status: STATUS_DELETE_MOVIE}));
+    setActualMovie(Object.assign({}, activeMovie, {
+      isFavorite: false
+    }));
   };
 
   const onSubmit = isFavorite ? deleteFavoriteMovie : addFavoriteMovie;

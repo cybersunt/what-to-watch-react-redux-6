@@ -4,7 +4,7 @@ import {addComment, loadFavoriteMovies} from "./user-actions-action";
 const initialState = {
   isReviewUploaded: false,
   isMyDataLoaded: false,
-  favoriteMovies: [],
+  favoriteMovies: []
 };
 
 export const userActions = createReducer(initialState, (builder) => {
