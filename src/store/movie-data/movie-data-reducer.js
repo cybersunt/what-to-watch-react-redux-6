@@ -7,7 +7,6 @@ const initialState = {
   isReviewsLoaded: false,
   promoMovie: {},
   currentMovie: {},
-  currentUpdateMovie: {},
   reviews: [],
 };
 
