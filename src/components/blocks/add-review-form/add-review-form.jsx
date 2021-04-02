@@ -4,7 +4,6 @@ import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {addReview} from "../../../store/user-actions/user-actions-api-action";
 import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, starsArray} from "../../../constants/constants";
-import {current} from "@reduxjs/toolkit";
 
 const RatingStars = ({rating, onChange}) => {
   return (
