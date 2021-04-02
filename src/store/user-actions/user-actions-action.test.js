@@ -135,7 +135,7 @@ describe(`Action creators for user actions work correctly`, ()=> {
       comment: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`
     };
     const expectedAction = {
-      type: ActionUserActType.ADD_FAVORITE_MOVIE,
+      type: ActionUserActType.ADD_COMMENT,
       payload: {
         rating: 8,
         comment: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`
