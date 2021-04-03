@@ -25,6 +25,9 @@ export const TIMEOUT_MSEC = 1000;
 export const STATUS_DELETE_MOVIE = 0;
 export const STATUS_ADD_MOVIE = 1;
 
+export const INITIAL_RATING = 1;
+export const RATING_SIZE = 10;
+
 export const DEFAULT_MOVIE_GENRE = `All genres`;
 export const DEFAULT_CATALOG_TITLE = `Catalog`;
 
@@ -34,19 +37,6 @@ export const ICON_NAME_ADD = `#add`;
 export const ICON_NAME_DELETE = `#in-list`;
 
 export const EMAIL_VALID = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-export const starsArray = [
-  {id: 0, stars: 1, checked: true},
-  {id: 1, stars: 2, checked: false},
-  {id: 2, stars: 3, checked: false},
-  {id: 3, stars: 4, checked: false},
-  {id: 4, stars: 5, checked: false},
-  {id: 5, stars: 6, checked: false},
-  {id: 6, stars: 7, checked: false},
-  {id: 7, stars: 8, checked: false},
-  {id: 8, stars: 9, checked: false},
-  {id: 9, stars: 10, checked: false}
-];
 
 export const AuthorizationStatus = {
   AUTH: `AUTH`,

@@ -3,16 +3,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {addReview} from "../../../store/user-actions/user-actions-api-action";
-import {MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, starsArray} from "../../../constants/constants";
+import {INITIAL_RATING, MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, RATING_SIZE} from "../../../constants/constants";
 
-const RatingStars = ({rating, onChange}) => {
+const RatingStars = ({rating, onChange, ratingSize}) => {
+  const stars = new Array(ratingSize).fill(1).map((item, index) => index + 1);
+
   return (
     <div className="rating">
       <div className="rating__stars">
-        {rating.map(({stars, checked}) => (
-          <Fragment key={stars}>
-            <input className="rating__input" id={`star-${stars}`} type="radio" name="rating" value={stars} checked={checked} onChange={onChange}/>
-            <label className="rating__label" htmlFor={`star-${stars}`}>Rating {stars}</label>
+        {stars.map((item) => (
+          <Fragment key={item}>
+            <input className="rating__input" id={`star-${item}`} type="radio" name="rating" value={item} checked={rating === item} onChange={()=> onChange(item)}/>
+            <label className="rating__label" htmlFor={`star-${item}`}>Rating {item}</label>
           </Fragment>
         ))}
       </div>
@@ -21,11 +23,8 @@ const RatingStars = ({rating, onChange}) => {
 };
 
 RatingStars.propTypes = {
-  rating: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    stars: PropTypes.number,
-    checked: PropTypes.bool
-  })),
+  rating: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequried,
+  ratingSize: PropTypes.number.isRequired,
   onChange: PropTypes.func
 };
 
@@ -34,30 +33,14 @@ const AddReviewForm = () => {
 
   const [isNewReview, setReview] = useState(``);
   const [messageLength, setMessageLength] = useState(0);
-  const [rating, setRating] = useState(starsArray);
+  const [rating, setRating] = useState(INITIAL_RATING);
   const [disabledForm, setDisabledForm] = useState(false);
 
   const {isCatchError} = useSelector((state) => state.ERROR);
   const {isReviewUploaded} = useSelector((state) => state.USER_ACTIONS);
   const dispatch = useDispatch();
 
-  const userRating = rating.find((el) => el.checked === true);
-  const disabledSubmit = userRating === undefined || isNewReview === `` || messageLength < MIN_LENGTH_COMMENT || messageLength > MAX_LENGTH_COMMENT;
-
-  const updateStarsArray = (indexItem, value) => {
-    const oldItem = rating[indexItem];
-    const newItem = {...oldItem, checked: value};
-    const newArray = [
-      ...rating.slice(0, indexItem),
-      newItem,
-      ...rating.slice(indexItem + 1, rating.length)
-    ];
-    return newArray;
-  };
-
-  const resetStars = (indexItem) => updateStarsArray(indexItem, false);
-
-  const setStars = (value) => updateStarsArray(Number(value) - 1, true);
+  const disabledSubmit = rating === undefined || isNewReview === `` || messageLength < MIN_LENGTH_COMMENT || messageLength > MAX_LENGTH_COMMENT;
 
   const handleFieldChange = (evt) => {
     const {value} = evt.target;
@@ -65,18 +48,15 @@ const AddReviewForm = () => {
     setMessageLength(value.length);
   };
 
-  const handleCheckboxesChange = (evt) => {
-    const {value} = evt.target;
-    const currentRating = rating.find((el) => el.checked === true);
-    setRating(resetStars(currentRating.id));
-    setRating(setStars(value));
+  const handleCheckboxesChange = (value) => {
+    setRating(value);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     dispatch(addReview(id, {
       comment: isNewReview.value,
-      rating: userRating.stars
+      rating,
     }));
     setDisabledForm(true);
   };
@@ -91,7 +71,7 @@ const AddReviewForm = () => {
   return (
     <div className="add-review">
       <form action="#" className="add-review__form">
-        <RatingStars rating={rating} onChange={handleCheckboxesChange}/>
+        <RatingStars rating={rating} ratingSize={RATING_SIZE} onChange={handleCheckboxesChange}/>
 
         {isCatchError ? (<div style={{textAlign: `center`}}>
           <p>Sorry, the data could not be sent.</p>
