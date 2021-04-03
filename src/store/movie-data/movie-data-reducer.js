@@ -1,4 +1,4 @@
-import {loadComments, loadCurrentMovie, loadPromoMovie, resetCurrentMovie} from "./movie-data-action";
+import {loadComments, loadCurrentMovie, loadPromoMovie, resetCurrentMovie, resetPromoMovie} from "./movie-data-action";
 import {createReducer} from "@reduxjs/toolkit";
 
 const initialState = {
@@ -14,6 +14,10 @@ export const movieData = createReducer(initialState, (builder) => {
   builder.addCase(loadPromoMovie, (state, action) => {
     state.promoMovie = action.payload;
     state.isPromoMovieLoaded = true;
+  });
+  builder.addCase(resetPromoMovie, (state) => {
+    state.promoMovie = {};
+    state.isPromoMovieLoaded = false;
   });
   builder.addCase(loadCurrentMovie, (state, action) => {
     state.currentMovie = action.payload;

@@ -1,14 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MovieCard from "../../sections/movie-card/movie-card";
 import InnerLayout from "../../layouts/inner-layout/inner-layout";
 import MainLayout from "../../layouts/main-layout/main-layout";
 import PageFooter from "../../sections/page-footer/page-footer";
 import Catalog from "../../sections/catalog/catalog";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../blocks/loader/loader";
+import {fetchPromoMovie} from "../../../store/movie-data/movie-data-api-actions";
 
 const MainPage = () => {
   const {promoMovie, isPromoMovieLoaded} = useSelector((state) => state.DATA_ITEM);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isPromoMovieLoaded || !promoMovie) {
+      dispatch(fetchPromoMovie());
+    }
+  }, [promoMovie, isPromoMovieLoaded]);
 
   return (
     <MainLayout>

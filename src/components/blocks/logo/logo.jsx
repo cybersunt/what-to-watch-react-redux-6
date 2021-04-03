@@ -3,10 +3,22 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import {Link} from "react-router-dom";
 import {RoutePath} from "../../../constants/constants";
+import {useDispatch, useSelector} from "react-redux";
+import {resetPromoMovie} from "../../../store/movie-data/movie-data-action";
 
 const LinkWrapper = ({children, activeLink = false, className = null}) => {
+
+  const dispatch = useDispatch();
+  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
+
+  const handleClick = () => {
+    if (!promoMovie.isFavorite) {
+      dispatch(resetPromoMovie());
+    }
+  };
+
   return activeLink ?
-    (<Link to={RoutePath.ROOT} className={classnames(`logo__link`, className)}>{children}</Link>)
+    (<Link to={RoutePath.ROOT} className={classnames(`logo__link`, className)} onClick={handleClick}>{children}</Link>)
     : (<a className={classnames(`logo__link`, className)}>{children}</a>);
 };
 

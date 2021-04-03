@@ -22,6 +22,6 @@ const store = configureStore({
 });
 
 store.dispatch(checkAuth());
-store.dispatch(fetchPromoMovie());
+// store.dispatch(fetchPromoMovie());
 
 export default store;
