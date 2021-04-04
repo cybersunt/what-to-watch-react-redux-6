@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import {Link} from "react-router-dom";
 import {RoutePath} from "../../../constants/constants";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {resetPromoMovie} from "../../../store/movie-data/movie-data-action";
 
 const LinkWrapper = ({children, activeLink = false, className = null}) => {
 
   const dispatch = useDispatch();
-  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
 
   const handleClick = () => {
     dispatch(resetPromoMovie());
