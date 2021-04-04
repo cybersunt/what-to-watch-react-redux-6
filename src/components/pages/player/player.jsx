@@ -4,7 +4,7 @@ import VideoPlayer from "../../sections/video-player/video-player";
 import MoviesList from "../../blocks/movies-list/movies-list";
 import Loader from "../../blocks/loader/loader";
 import {useHistory} from "react-router-dom";
-import {HISTORY_ACTION_PUSH, PROMO_MOVIE_ID, RoutePath} from "../../../constants/constants";
+import {PROMO_MOVIE_ID, RoutePath} from "../../../constants/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {resetCurrentMovie, resetPromoMovie} from "../../../store/movie-data/movie-data-action";
 import {fetchCurrentMovie, fetchPromoMovie} from "../../../store/movie-data/movie-data-api-actions";
@@ -19,7 +19,7 @@ const Player = ({id}) => {
   const {videoLink} = actualMovie;
 
   const historyPath = ()=> {
-    return history.action === HISTORY_ACTION_PUSH ?
+    return history.action === `PUSH` ?
       history.goBack() :
       history.push(`${RoutePath.FILMS}${videoId}`);
   };

@@ -30,8 +30,6 @@ export const STATUS_ADD_MOVIE = 1;
 export const INITIAL_RATING = 1;
 export const RATING_SIZE = 10;
 
-export const HISTORY_ACTION_PUSH = `PUSH`;
-
 export const DEFAULT_MOVIE_GENRE = `All genres`;
 export const DEFAULT_CATALOG_TITLE = `Catalog`;
 
