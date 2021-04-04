@@ -11,7 +11,7 @@ const Player = ({id}) => {
   const history = useHistory();
   const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
   const {promoMovie} = useSelector((state) => state.DATA_ITEM);
-  const videoLink = id === 1 ? promoMovie.videoLink : currentMovie.videoLink;
+  const videoLink = id === undefined ? promoMovie.videoLink : currentMovie.videoLink;
 
   return (
     <MainLayout>

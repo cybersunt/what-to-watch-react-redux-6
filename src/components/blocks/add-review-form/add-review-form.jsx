@@ -7,7 +7,6 @@ import {INITIAL_RATING, MAX_LENGTH_COMMENT, MIN_LENGTH_COMMENT, RATING_SIZE} fro
 
 const RatingStars = ({rating, onChange, ratingSize}) => {
   const stars = new Array(ratingSize).fill(1).map((item, index) => index + 1);
-
   return (
     <div className="rating">
       <div className="rating__stars">
