@@ -19,7 +19,6 @@ import {
 const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
-  const {isCatchError} = useSelector((state) => state.ERROR);
   const {promoMovie, currentMovie} = useSelector((state) => state.DATA_ITEM);
   const {authorizationStatus} = useSelector((state) => state.USER_DATA);
   const dispatch = useDispatch();
@@ -30,32 +29,30 @@ const MovieCardButtons = ({fullVersion}) => {
 
   const iconButtonMyList = isFavorite ? ICON_NAME_DELETE : ICON_NAME_ADD;
 
+  const setFavoriteMovie = (value) => {
+    setActualMovie(Object.assign({}, activeMovie, {
+      isFavorite: value
+    }));
+  };
+
   useEffect(()=> {
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH && !isCatchError) {
-      setActualMovie(Object.assign({}, activeMovie, {
-        isFavorite: false
-      }));
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      setFavoriteMovie(false);
     }
   }, [authorizationStatus]);
 
   const handleButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
 
   const addFavoriteMovie = () => {
-    dispatch(addMovieToMyMovieList({filmId: movieId, status: STATUS_ADD_MOVIE}));
-    if (!isCatchError) {
-      setActualMovie(Object.assign({}, activeMovie, {
-        isFavorite: true
-      }));
-    }
+    setFavoriteMovie(true);
+    dispatch(addMovieToMyMovieList({filmId: movieId, status: STATUS_ADD_MOVIE}))
+      .catch(()=> setFavoriteMovie(false));
   };
 
   const deleteFavoriteMovie = () => {
-    dispatch(deleteMovieFromMyMovieList({filmId: movieId, status: STATUS_DELETE_MOVIE}));
-    if (!isCatchError) {
-      setActualMovie(Object.assign({}, activeMovie, {
-        isFavorite: false
-      }));
-    }
+    setFavoriteMovie(false);
+    dispatch(deleteMovieFromMyMovieList({filmId: movieId, status: STATUS_DELETE_MOVIE}))
+      .catch(()=> setFavoriteMovie(true));
   };
 
   const onSubmit = isFavorite ? deleteFavoriteMovie : addFavoriteMovie;
