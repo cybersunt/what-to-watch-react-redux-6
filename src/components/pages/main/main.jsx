@@ -13,7 +13,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isPromoMovieLoaded || !promoMovie) {
+    if (!isPromoMovieLoaded || !promoMovie || promoMovie.isFavorite) {
       dispatch(fetchPromoMovie());
     }
   }, [promoMovie, isPromoMovieLoaded]);
