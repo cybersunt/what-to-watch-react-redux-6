@@ -63,7 +63,7 @@ const VideoPlayer = ({
       const playPromise = videoRef.current.play();
 
       if (playPromise) {
-        playPromise.catch(()=> {});
+        playPromise.catch(()=> setIsPlaying(false));
       }
       return;
     }
