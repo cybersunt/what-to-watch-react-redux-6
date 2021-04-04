@@ -41,7 +41,7 @@ const MovieCardButtons = ({fullVersion}) => {
     }
   }, [authorizationStatus]);
 
-  const handleButtonPlayClick = () => id ? history.push(`${RoutePath.PLAYER}${id}`) : history.push(`${RoutePath.PLAYER}${promoMovie.id}`);
+  const handleButtonPlayClick = () => id === undefined ? history.push(`${RoutePath.PLAYER}${promoMovie.id}`) : history.push(`${RoutePath.PLAYER}${id}`);
 
   const addFavoriteMovie = () => {
     setFavoriteMovie(true);
