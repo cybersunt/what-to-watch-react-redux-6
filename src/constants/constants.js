@@ -20,7 +20,6 @@ export const MIN_LENGTH_COMMENT = 50;
 export const MAX_LENGTH_COMMENT = 400;
 
 export const MAX_ID_FILM = 25;
-export const PROMO_MOVIE_ID = 1;
 
 export const TIMEOUT_MSEC = 1000;
 
