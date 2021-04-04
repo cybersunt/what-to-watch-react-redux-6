@@ -12,9 +12,7 @@ const LinkWrapper = ({children, activeLink = false, className = null}) => {
   const {promoMovie} = useSelector((state) => state.DATA_ITEM);
 
   const handleClick = () => {
-    if (!promoMovie.isFavorite) {
-      dispatch(resetPromoMovie());
-    }
+    dispatch(resetPromoMovie());
   };
 
   return activeLink ?
