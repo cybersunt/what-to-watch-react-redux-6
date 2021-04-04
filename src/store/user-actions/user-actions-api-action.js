@@ -13,11 +13,13 @@ export const fetchMyMoviesList = () => (dispatch, _getState, api) => (
 export const addMovieToMyMovieList = ({filmId, status}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.MY_LIST}/${filmId}/${status}`, {filmId, status})
     .then(({data}) => dispatch(addFavoriteMovie(data)))
+    .catch(()=> dispatch(catchError()))
 );
 
 export const deleteMovieFromMyMovieList = ({filmId, status}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.MY_LIST}/${filmId}/${status}`, {filmId, status})
     .then(({data}) => dispatch(deleteFavoriteMovie(data)))
+    .catch(()=> dispatch(catchError()))
 );
 
 export const addReview = (id, {comment, rating}) => (dispatch, _getState, api) => (

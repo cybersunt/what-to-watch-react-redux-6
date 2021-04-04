@@ -19,6 +19,7 @@ import {
 const MovieCardButtons = ({fullVersion}) => {
   const history = useHistory();
   const {id} = useParams();
+  const {isCatchError} = useSelector((state) => state.ERROR);
   const {promoMovie, currentMovie} = useSelector((state) => state.DATA_ITEM);
   const {authorizationStatus} = useSelector((state) => state.USER_DATA);
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const MovieCardButtons = ({fullVersion}) => {
   const {isFavorite} = actualMovie;
 
   const iconButtonMyList = isFavorite ? ICON_NAME_DELETE : ICON_NAME_ADD;
+
+  console.log(isCatchError);
 
   useEffect(()=> {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
@@ -41,16 +44,20 @@ const MovieCardButtons = ({fullVersion}) => {
 
   const addFavoriteMovie = () => {
     dispatch(addMovieToMyMovieList({filmId: movieId, status: STATUS_ADD_MOVIE}));
-    setActualMovie(Object.assign({}, activeMovie, {
-      isFavorite: true
-    }));
+    if (!isCatchError) {
+      setActualMovie(Object.assign({}, activeMovie, {
+        isFavorite: true
+      }));
+    }
   };
 
   const deleteFavoriteMovie = () => {
     dispatch(deleteMovieFromMyMovieList({filmId: movieId, status: STATUS_DELETE_MOVIE}));
-    setActualMovie(Object.assign({}, activeMovie, {
-      isFavorite: false
-    }));
+    if (!isCatchError) {
+      setActualMovie(Object.assign({}, activeMovie, {
+        isFavorite: false
+      }));
+    }
   };
 
   const onSubmit = isFavorite ? deleteFavoriteMovie : addFavoriteMovie;
