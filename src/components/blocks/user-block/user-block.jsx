@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import {logout} from "../../../store/user-data/user-data-api-action";
 import {AuthorizationStatus, RoutePath} from "../../../constants/constants";
 import './user-block.css';
-import {resetPromoMovie} from "../../../store/movie-data/movie-data-action";
+import {resetCurrentMovie, resetPromoMovie} from "../../../store/movie-data/movie-data-action";
 import {resetFavoriteMovies} from "../../../store/user-actions/user-actions-action";
 
 const SignIn = () => {
@@ -38,6 +38,7 @@ const UserBlock = () => {
     dispatch(logout({login: null, password: null}));
     dispatch(resetFavoriteMovies());
     dispatch(resetPromoMovie());
+    dispatch(resetCurrentMovie());
   };
 
   return authorizationStatus === AuthorizationStatus.AUTH ?

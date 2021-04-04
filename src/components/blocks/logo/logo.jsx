@@ -4,7 +4,7 @@ import classnames from "classnames";
 import {Link} from "react-router-dom";
 import {RoutePath} from "../../../constants/constants";
 import {useDispatch} from "react-redux";
-import {resetPromoMovie} from "../../../store/movie-data/movie-data-action";
+import {resetCurrentMovie, resetPromoMovie} from "../../../store/movie-data/movie-data-action";
 
 const LinkWrapper = ({children, activeLink = false, className = null}) => {
 
@@ -12,6 +12,7 @@ const LinkWrapper = ({children, activeLink = false, className = null}) => {
 
   const handleClick = () => {
     dispatch(resetPromoMovie());
+    dispatch(resetCurrentMovie());
   };
 
   return activeLink ?
