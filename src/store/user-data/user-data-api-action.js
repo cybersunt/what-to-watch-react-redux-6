@@ -25,4 +25,5 @@ export const logout = ({login: email, password}) => (dispatch, _getState, api) =
   api.get(APIRoute.LOG_OUT, {email, password})
     .then(({data}) => dispatch(logOut(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .catch(()=> dispatch(catchError()))
 );

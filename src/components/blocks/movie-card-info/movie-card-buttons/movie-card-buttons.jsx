@@ -31,7 +31,7 @@ const MovieCardButtons = ({fullVersion}) => {
   const iconButtonMyList = isFavorite ? ICON_NAME_DELETE : ICON_NAME_ADD;
 
   useEffect(()=> {
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH && !isCatchError) {
       setActualMovie(Object.assign({}, activeMovie, {
         isFavorite: false
       }));
