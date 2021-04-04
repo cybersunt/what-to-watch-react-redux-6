@@ -22,7 +22,7 @@ const RatingStars = ({rating, onChange, ratingSize}) => {
 };
 
 RatingStars.propTypes = {
-  rating: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequried,
+  rating: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   ratingSize: PropTypes.number.isRequired,
   onChange: PropTypes.func
 };
