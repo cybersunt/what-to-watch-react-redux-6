@@ -10,12 +10,12 @@ import {useSelector} from "react-redux";
 const Player = ({id}) => {
   const history = useHistory();
   const [currentMovie, isCurrentMovieLoaded] = useLoadedMovie(id);
-  const {promoMovie} = useSelector((state) => state.DATA_ITEM);
+  const {promoMovie, isPromoMovieLoaded} = useSelector((state) => state.DATA_ITEM);
   const videoLink = id === undefined ? promoMovie.videoLink : currentMovie.videoLink;
 
   return (
     <MainLayout>
-      {isCurrentMovieLoaded ? <VideoPlayer
+      {isCurrentMovieLoaded || isPromoMovieLoaded ? <VideoPlayer
         src={videoLink}
         onButtonExitClick={()=> history.goBack()}/> : <Loader fullscreen/>}
     </MainLayout>
